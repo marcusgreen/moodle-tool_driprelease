@@ -31,7 +31,6 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
     }
 }
 
-
  /**
   * Adds/updates an instance of driprelease and its related
   * selections

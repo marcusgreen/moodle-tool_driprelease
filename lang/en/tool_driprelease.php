@@ -38,6 +38,10 @@ $string['activitiesincourse'] = 'Activities in course';
 $string['dripreleaseforcourse'] = 'Driprelease for course';
 $string['dripreleasesettings'] = 'Settings';
 $string['dripreleasefieldset'] = 'Fieldset';
+
+$string['driprelease_header'] = 'Driprelease help';
+$string['driprelease_header_help'] = 'A description of What Driprelease does';
+
 $string['schedulestart'] = 'Start';
 $string['schedulestart_help'] = 'The time periods/intervals that activities are available are set here. First at the
 "Start:" section, the day, month and year that the activity cycle will start is set. The
@@ -75,8 +79,6 @@ $string['sessionscounterror'] = 'Number of sessions must be more than zero';
 $string['activitiespersession'] = 'Activities per session';
 $string['activitiespersession_text'] = 'Set the number of activitie that are available in each session, e.g. if a session is one week 5 will give you one per day';
 $string['activitiespersession_help'] = 'How many items per session, for example if set to 10 and "Repeat every" is set to 2 (weeks), students would see 5 activities per week';
-
-$string['dripreleasename'] = 'String 1';
 $string['pluginadministration'] = 'Driprelease administration';
 $string['name'] = 'Name';
 $string['descriptions'] = 'Description';
@@ -86,12 +88,4 @@ $string['to'] = 'To';
 $string['dateformat'] = 'Date format';
 $string['dateformat_text'] = 'Date format explanation xxxxx';
 $string['dripreleasename_help'] = 'Content scheduler help information';
-
-
-
-
-
-
-
-
-
+$string['privacy:null_reason'] = 'The Dripelease admin tool does not effect or store any data itself.';
