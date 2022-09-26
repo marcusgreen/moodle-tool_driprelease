@@ -113,7 +113,6 @@ class tool_driprelease_form extends moodleform {
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
         $mform->setType('activitiespersession', PARAM_INT);
         $mform->setDefault('activitiespersession', get_config('tool_driprelease', 'activitiespersession'));
-
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
 
         $this->add_action_buttons();
@@ -123,10 +122,10 @@ class tool_driprelease_form extends moodleform {
         parent::validation($fromform, $tabledata);
         $errors = [];
         if ($fromform['activitiespersession'] < 1) {
-            $errors['activitiespersession'] = get_string('activitiespersessionerror', 'driprelease');
+            $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease');
         }
         if ($fromform['repeatgroup']['repeatcount'] < 1) {
-            $errors['repeatgroup'] = get_string('repeatcounterror', 'driprelease');
+            $errors['repeatgroup'] = get_string('repeatcounterror', 'tool_driprelease');
         }
 
         if ($errors) {
