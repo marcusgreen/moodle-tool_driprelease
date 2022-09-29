@@ -38,6 +38,13 @@ class tool_driprelease_form extends moodleform {
     public static $datefieldoptions = array('optional' => false);
 
     /**
+     * Array of display table rows
+     *
+     * @var array
+     */
+    public $tabledata;
+
+    /**
      * Defines forms elements
      */
     public function definition() {
