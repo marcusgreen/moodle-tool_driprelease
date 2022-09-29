@@ -17,7 +17,7 @@
 /**
  * Prints an instance of mod_driprelease.
  *
- * @package     mod_driprelease
+ * @package     tool_driprelease
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

@@ -17,7 +17,7 @@
 /**
  * Capability definitions for the driprelease
  *
- * @package    mod_driprelease
+ * @package    tool_driprelease
  * @copyright  2022 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

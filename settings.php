@@ -17,7 +17,7 @@
 /**
  * Data to control defaults when creating an instance of dripreleaswe
  *
- * @package    mod_driprelease
+ * @package    tool_driprelease
  * @copyright  2022Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

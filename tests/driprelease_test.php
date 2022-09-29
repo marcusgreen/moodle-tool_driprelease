@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Unit tests for mod_driprelease.
+ * Unit tests for tool_driprelease.
  *
- * @package    mod_driprelease
+ * @package    tool_driprelease
  * @copyright  2022 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

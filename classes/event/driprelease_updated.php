@@ -17,7 +17,7 @@
 /**
  * The tool_driprelease updated.
  *
- * @package     admin_tool_driprelease
+ * @package     tool_driprelease
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,9 +25,9 @@
 namespace tool_driprelease\event;
 
 /**
- * The admin_tool_driprelease  viewed event class.
+ * The ool_driprelease  viewed event class.
  *
- * @package     admin_tool_driprelease_driprelease
+ * @package     tool_driprelease
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
