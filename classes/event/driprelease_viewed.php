@@ -40,7 +40,11 @@ class driprelease_viewed extends \core\event\base {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
-
+    /**
+     * What appears when the log is viewed
+     *
+     * @return string
+     */
     public function get_description() {
         return 'User '.$this->data['other']['username']. ' viewed driprelease for course '.$this->data['other']['course'];
     }

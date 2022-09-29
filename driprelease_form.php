@@ -36,6 +36,7 @@ require_once($CFG->libdir . '/formslib.php');
 class tool_driprelease_form extends moodleform {
     /** @var array options to be used with date_time_selector fields in the quiz. */
     public static $datefieldoptions = array('optional' => false);
+
     public $tabledata;
 
     /**
@@ -118,6 +119,13 @@ class tool_driprelease_form extends moodleform {
         $this->add_action_buttons();
     }
 
+    /**
+     * Check for errors in the form data
+     *
+     * @param array $fromform
+     * @param array $tabledata
+     * @return boolean
+     */
     public function validation($fromform, $tabledata) {
         parent::validation($fromform, $tabledata);
         $errors = [];
@@ -134,7 +142,15 @@ class tool_driprelease_form extends moodleform {
             return true;
         }
     }
-    public function get_modules($course, $modtype) : array {
+
+    /**
+     * Get an array of the modules of a specified type within a courseß
+     *
+     * @param \stdClass $course
+     * @param string $modtype
+     * @return array
+     */
+    public function get_modules(\stdClass $course, string $modtype) : array {
 
         $modinfo = get_fast_modinfo($course);
         if (!isset($modinfo->instances[$modtype])) {
@@ -172,6 +188,14 @@ class tool_driprelease_form extends moodleform {
         }
         return $dbselections;
     }
+    /**
+     * Duplicate the functionality of the mod forms action buttons
+     *
+     * @param boolean $cancel
+     * @param string $submitlabel
+     * @param string $submit2label
+     * @return void
+     */
     public function add_action_buttons($cancel=true, $submitlabel=null, $submit2label=null) {
         if (is_null($submitlabel)) {
             $submitlabel = get_string('savechangesanddisplay');

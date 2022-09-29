@@ -40,7 +40,11 @@ class driprelease_updated extends \core\event\base {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_OTHER;
     }
-
+    /**
+     * What is displayed when the log is viewed
+     *
+     * @return string
+     */
     public function get_description() {
         return 'User '.$this->data['other']['username']. ' updated driprelease for course '.$this->data['other']['course'];
     }

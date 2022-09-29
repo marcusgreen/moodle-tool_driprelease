@@ -73,6 +73,13 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
     return [$selections, $driprelease];
 }
 
+/**
+ * Process the checkbox selections and upsert the database records
+ *
+ * @param \stdClass $fromform
+ * @param integer $dripreleaseid
+ * @return void
+ */
 function manage_selections(\stdClass $fromform, int $dripreleaseid) {
     global $DB;
     $moduleids = [];
@@ -98,6 +105,12 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
     }
 }
 
+/**
+ * Get course modules given an instance of driprelease
+ *
+ * @param \stdClass $driprelease
+ * @return array
+ */
 function get_modules(\stdClass $driprelease) : array {
     global $DB;
     $course = $DB->get_record('course', ['id' => $driprelease->courseid]);
