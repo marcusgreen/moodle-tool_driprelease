@@ -37,8 +37,6 @@ class tool_driprelease_form extends moodleform {
     /** @var array options to be used with date_time_selector fields in the quiz. */
     public static $datefieldoptions = array('optional' => false);
 
-    public $tabledata;
-
     /**
      * Defines forms elements
      */

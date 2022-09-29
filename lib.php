@@ -22,7 +22,14 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
+/**
+ * A core callback to make ther plugin appear in the "more" dropdown of courses
+ *
+ * @param navigation_node $navigation
+ * @param stdClass $course
+ * @param context_course $context
+ * @return void
+ */
 function tool_driprelease_extend_navigation_course(navigation_node $navigation, stdClass $course, context_course $context) {
     if (has_capability('moodle/course:update', $context)) {
         $url = new moodle_url('/admin/tool/driprelease/view.php', array('courseid' => $course->id));
@@ -31,14 +38,13 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
     }
 }
 
- /**
-  * Adds/updates an instance of driprelease and its related
-  * selections
-  *
-  * @param \stdClass $fromform
-  * @param integer $courseid
-  * @return array
-  */
+/**
+ * Adds/updates an instance of driprelease and its related
+ *
+ * @param \stdClass $fromform
+ * @param int $courseid
+ * @return array
+ */
 function driprelease_update(\stdClass $fromform , int $courseid) : array {
     global $DB;
 
@@ -77,7 +83,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
  * Process the checkbox selections and upsert the database records
  *
  * @param \stdClass $fromform
- * @param integer $dripreleaseid
+ * @param int $dripreleaseid
  * @return void
  */
 function manage_selections(\stdClass $fromform, int $dripreleaseid) {
@@ -125,6 +131,12 @@ function get_modules(\stdClass $driprelease) : array {
     }
     return $modules;
 }
+/**
+ * Add another session header in the display/preview of scheduled modules
+ *
+ * @param array $row
+ * @return array
+ */
 function add_header(array $row)  :array {
     $header = $row;
     $header['isheader'] = true;
@@ -132,6 +144,12 @@ function add_header(array $row)  :array {
     $header['name'] = 'Session';
     return $header;
 }
+/**
+ * Get the rows to be displayed in the schedule of dripped out modules
+ *
+ * @param \stdClass $driprelease
+ * @return array
+ */
 function get_table_data(\stdClass $driprelease) : array {
     global $DB;
     $modules = get_modules($driprelease);
@@ -236,13 +254,14 @@ function get_availability(?string $json) : array {
     }
     return $availability;
 }
-/**
- * Calculate the dripping out of availability and format the dates for the session labels
- *
- * @param \stdClass $customdata
- * @param integer $sessioncounter
- * @return array
- */
+
+  /**
+   * Calculate the dripping out of availability and format the dates for the session labels
+   *
+   * @param \stdClass $driprelease
+   * @param int $sessioncounter
+   * @return array
+   */
 function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
     $row = [];
     $weekrepeat = $sessioncounter * $driprelease->repeatcount;
@@ -257,15 +276,16 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $row['endformatted'] = date('D d M Y h:h', $end);
     return $row;
 }
+
 /**
  * This is designed to return the coursemods in the order they are displayed on the course
  * It is currently not used and may be deleted at some point, or the need for it may be obscured
  * by the way test data means course activities are always in the order they were created.
  *
- * @param stClass $data
+ * @param \stdClass $data
  * @return array
  */
-function get_sequence(\stdClass $data) {
+function get_sequence(\stdClass $data) : array {
     global $DB;
     $sql = 'SELECT sequence FROM {course_sections} WHERE course = :course AND sequence > "" ORDER BY section';
     $coursesequence = $DB->get_records_sql($sql, ['course' => $data->course]);

@@ -42,7 +42,18 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
  */
 class driprelease_test extends \advanced_testcase {
 
+    /**
+     * Test course
+     *
+     * @var \stdClass
+     */
     public $course1;
+
+    /**
+     * Array of modules
+     *
+     * @var array
+     */
     public $modules;
 
     public function setUp() : void {
