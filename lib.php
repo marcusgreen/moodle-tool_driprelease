@@ -75,7 +75,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
         $driprelease->id = $dripreleaseid;
     }
     manage_selections($fromform, $dripreleaseid);
-    $selections = $DB->get_records_menu('tool_driprel_selections', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
+    $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
     return [$selections, $driprelease];
 }
 
@@ -94,12 +94,12 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
             $moduleids[] = explode('_', $key)[1];
         }
     }
-    $selections = $DB->get_records_menu('tool_driprel_selections', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
+    $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
 
     $todelete = array_diff($selections, $moduleids);
     if ($todelete) {
         list($insql, $inparams) = $DB->get_in_or_equal($todelete);
-        $DB->delete_records_select("tool_driprel_selections", "coursemoduleid $insql", $inparams);
+        $DB->delete_records_select("tool_driprelease_select", "coursemoduleid $insql", $inparams);
     }
     $toinsert = array_diff($moduleids, $selections);
     foreach ($toinsert as $moduleid) {
@@ -107,7 +107,7 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
             'driprelease' => $dripreleaseid,
             'coursemoduleid' => $moduleid
         ];
-        $DB->insert_record('tool_driprel_selections', $dataobject);
+        $DB->insert_record('tool_driprelease_select', $dataobject);
     }
 }
 
@@ -157,7 +157,7 @@ function get_table_data(\stdClass $driprelease) : array {
     $sessioncounter = 0;
     $selections = [];
     if (isset($driprelease->id)) {
-        $selections = $DB->get_records_menu('tool_driprel_selections', ['driprelease' => $driprelease->id],
+        $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $driprelease->id],
             null, 'id,coursemoduleid');
     }
     foreach ($modules as $cm) {
