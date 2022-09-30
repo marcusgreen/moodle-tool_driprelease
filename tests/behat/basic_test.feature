@@ -9,7 +9,7 @@ Feature: Drip release modifies activity availability
     And the following "courses" exist:
         | fullname     | shortname | format | enablecompletion |
         | Course 1     | C1        | topics | 1                |
-        | Empty Course | C2        | topics | 1                |
+        | Empty course | C2        | topics | 1                |
     And the following "course enrolments" exist:
         | user     | course | role           |
         | teacher1 | C1     | editingteacher |
