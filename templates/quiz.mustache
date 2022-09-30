@@ -37,15 +37,18 @@
     <div class="table-responsive">
 
 <table class = "table table-hover table-bordered table-striped " >
-    <tr></tr>
-        <th><input type='checkbox' name='selectall' title="Toggle selection of all items" id='id_selectall' ></th>
-        <th>{{#str}}name{{/str}}</th>
-        <th>{{#str}}description{{/str}}</th>
-        <th>{{#str}}qcount, tool_driprelease{{/str}}</th>
-        <th>{{#str}}from{{/str}}</th>
-        <th>{{#str}}to{{/str}}</th>
-</tr>
+    <thead>
+        <tr>
+            <th><input type='checkbox' name='selectall' title="Toggle selection of all items" id='id_selectall' ></th>
+            <th>{{#str}}name{{/str}}</th>
+            <th>{{#str}}description{{/str}}</th>
+            <th>{{#str}}qcount, tool_driprelease{{/str}}</th>
+            <th>{{#str}}from{{/str}}</th>
+            <th>{{#str}}to{{/str}}</th>
+        </tr>
+</thead>
 
+<tbody
     {{^tabledata}}
     <tr><td colspan = "6"> {{#str}} nomodulesincourse, tool_driprelease {{/str}}</td></tr>
     {{/tabledata}}
@@ -69,6 +72,7 @@
         {{/isheader}}
 
     {{/tabledata}}
+        </tbody>
 </table>
 </div>
 </div>
