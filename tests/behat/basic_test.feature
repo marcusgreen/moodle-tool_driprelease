@@ -126,7 +126,7 @@ Feature: Drip release modifies activity availability
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
     # Select quiz 3
-    And I click on "select" "checkbox" in the "Quiz 3" "table_row"
+    And I click on "select" "checkbox" in the "Quiz3" "table_row"
     And I set the field "schedulestart[day]" to "1"
     And I set the field "schedulestart[month]" to "February"
     And I press "Save and display"
