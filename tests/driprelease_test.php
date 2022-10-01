@@ -56,8 +56,22 @@ class driprelease_test extends \advanced_testcase {
      */
     public $modules;
 
+    /**
+     * instance of driprelease
+     *
+     * @var \stdClass
+     */
+    public $driprelease;
+
+    /**
+     * data from form submission
+     *
+     * @var \stdClass
+     */
+    public $fromform;
+
     public function setUp() : void {
-        global $CFG;
+        global $CFG, $DB;
          // Create course with availability enabled.
         $CFG->enableavailability = true;
         $generator = $this->getDataGenerator();
@@ -78,6 +92,36 @@ class driprelease_test extends \advanced_testcase {
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
                 'attempts' => 10));
 
+
+        foreach ($this->modules as $module) {
+            $activitygroup['activity_'.$module->id] = 0;
+        }
+
+        $this->fromform = (object) [
+            'modtype' => 'quiz',
+            'activitiespersession' => 3,
+            'repeatgroup' => ['repeatcount' => 1],
+            'activitygroup' => $activitygroup,
+            'schedulestart' => time(),
+            'schedulefinish' => time()
+        ];
+        list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
+        $this->assertCount(0, $selections);
+        $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
+    }
+
+    /**
+     * Confirm modules/quizzes in a course are returned
+     * as expected
+     *
+     *
+     * @covers ::get_course_modules()
+     */
+    public function test_get_course_modules() {
+        $this->resetAfterTest();
+        $modules = get_modules($this->driprelease);
+        $modulecount = count($modules);
+        $this->assertEquals(count($this->modules), $modulecount);
     }
     /**
      * Check that update doesn't fall over and
@@ -89,29 +133,13 @@ class driprelease_test extends \advanced_testcase {
         $this->resetAfterTest();
         global $DB;
         $activitygroup = [];
-        foreach ($this->modules as $module) {
-            $activitygroup['activity_'.$module->id] = 0;
-        }
-        $fromform = (object) [
-            'modtype' => 'quiz',
-            'activitiespersession' => 3,
-            'repeatgroup' => ['repeatcount' => 1],
-            'activitygroup' => $activitygroup,
-            'schedulestart' => time(),
-            'schedulefinish' => time()
-        ];
-        list($selections, $driprelease) = driprelease_update($fromform , $this->course1->id);
-        $this->assertCount(0, $selections);
-        $driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
 
         foreach ($this->modules as $module) {
             $activitygroup['activity_'.$module->id] = 1;
         }
-        $fromform->activitygroup = $activitygroup;
-        list($selections, $driprelease) = driprelease_update($fromform , $this->course1->id);
+        $this->fromform->activitygroup = $activitygroup;
+        list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
-        $driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
-
+        $this->assertEquals($driprelease->id, $this->driprelease->id);
     }
-
 }
