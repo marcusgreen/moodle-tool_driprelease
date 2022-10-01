@@ -92,7 +92,6 @@ class driprelease_test extends \advanced_testcase {
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
                 'attempts' => 10));
 
-
         foreach ($this->modules as $module) {
             $activitygroup['activity_'.$module->id] = 0;
         }
