@@ -188,6 +188,7 @@ function get_table_data(\stdClass $driprelease) : array {
  * Write the availability back to the course_modules table
  *
  * @param array $data
+ * @param \stdClass $driprelease
  * @return void
  */
 function update_availability(array $data, \stdClass $driprelease) {
