@@ -190,13 +190,16 @@ function get_table_data(\stdClass $driprelease) : array {
  * @param array $data
  * @return void
  */
-function update_availability(array $data) {
+function update_availability(array $data, \stdClass $driprelease) {
     global $DB, $COURSE;
     foreach ($data as $module) {
 
         if (!$module['isheader']) {
             if (!$module['selected'] == "checked") {
                 continue;
+            }
+            if ($module['calculatedavailability'] > $driprelease->schedulestart) {
+                    continue;
             }
             $availability = $module['calculatedavailability'];
                         $availablestart = [

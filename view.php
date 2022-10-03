@@ -89,7 +89,7 @@ if ($fromform = $mform->get_data()) {
         $driprelease->schedulestart = $fromform->schedulestart;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         $tabledata = get_table_data($driprelease, 'quiz');
-        update_availability($tabledata);
+        update_availability($tabledata, $driprelease);
 
         $event = driprelease_updated::create($eventdata);
         $event->trigger();
