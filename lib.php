@@ -199,7 +199,7 @@ function update_availability(array $data, \stdClass $driprelease) {
             if (!$module['selected'] == "checked") {
                 continue;
             }
-            if ($module['calculatedavailability'] > $driprelease->schedulestart) {
+            if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
                     continue;
             }
             $availability = $module['calculatedavailability'];
