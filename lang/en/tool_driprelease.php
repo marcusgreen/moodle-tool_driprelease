@@ -43,6 +43,7 @@ $string['driprelease_header'] = 'Driprelease help';
 $string['driprelease_header_help'] = 'A description of What Driprelease does';
 
 $string['schedulestart'] = 'Start';
+$string['noselections'] = 'No items selected, no availability updated';
 $string['schedulestart_help'] = 'The time periods/intervals that activities are available are set here. First at the
 "Start:" section, the day, month and year that the activity cycle will start is set. The
 blue calendar will open a pop-up calendar to select dates as an option.';
@@ -57,12 +58,13 @@ $string['repeatcounterror'] = 'Repeat frequency must be more than zero';
 $string['activitiespersessionerror'] = 'Activities per session must be more than zero';
 $string['repeat_help'] =
  'Decides how long the intervals are. e.g. a new
- set of activities will be available every 2 weeks and the currently available ones
+ set of activities will be available every 7 days and the currently available ones
  will then become unavailable.';
 $string['session'] = 'Session';
 $string['sessioncount'] = 'Week count';
 $string['sessioncount_text'] = 'Week count help description';
 $string['weeks'] = 'week(s)';
+$string['days'] = 'day(s)';
 $string['repeatenable'] = 'Enable';
 $string['sessioncount_text'] = 'Session count help for settings';
 $string['sessioncount'] = 'Number of sessions';

@@ -84,7 +84,7 @@ class tool_driprelease_form extends moodleform {
         $driprelease->repeatcount = $driprelease->repeatcount ?? get_config('tool_driprelease', 'repeatcount');
         $group[] = $mform->createElement('text', 'repeatcount', get_string('repeat', 'tool_driprelease'),
                 ['value' => $driprelease->repeatcount, 'size' => 3]);
-        $group[] = $mform->createElement('html', get_string('weeks', 'tool_driprelease'));
+        $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'));
 
         $mform->addGroup($group, 'repeatgroup', get_string('repeat', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
         $mform->addRule('repeatgroup', null, 'required', null, 'client');

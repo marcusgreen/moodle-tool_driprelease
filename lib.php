@@ -34,7 +34,7 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
     if (has_capability('moodle/course:update', $context)) {
         $url = new moodle_url('/admin/tool/driprelease/view.php', array('courseid' => $course->id));
         $name = get_string('pluginname', 'tool_driprelease');
-        $navigation->add($name, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('i/report', ''));
+        $navigation->add($name, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('e/insert_date', ''));
     }
 }
 
@@ -269,6 +269,21 @@ function get_availability(?string $json) : array {
 function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
     $row = [];
     $weekrepeat = $sessioncounter * $driprelease->repeatcount;
+    $weeksoffset = " + $weekrepeat day";
+    $start = strtotime(' + ' . $weekrepeat . ' day', $driprelease->schedulestart);
+    $weeksoffset = " + " . ($weekrepeat + $driprelease->repeatcount) . " day ";
+    $end = strtotime($weeksoffset, $driprelease->schedulestart);
+    $row['sessioncounter'] = $sessioncounter + 1;
+    $row['start'] = $start;
+    $row['end'] = $end;
+    $row['startformatted'] = date('D d M Y h:h', $start);
+    $row['endformatted'] = date('D d M Y h:h', $end);
+    return $row;
+}
+
+function x_driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
+    $row = [];
+    $weekrepeat = $sessioncounter * $driprelease->repeatcount;
     $weeksoffset = " + $weekrepeat week ";
     $start = strtotime(' + ' . $weekrepeat . ' week', $driprelease->schedulestart);
     $weeksoffset = " + " . ($weekrepeat + $driprelease->repeatcount) . " week ";
@@ -280,7 +295,6 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $row['endformatted'] = date('D d M Y h:h', $end);
     return $row;
 }
-
 /**
  * This is designed to return the coursemods in the order they are displayed on the course
  * It is currently not used and may be deleted at some point, or the need for it may be obscured
