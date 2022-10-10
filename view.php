@@ -89,7 +89,7 @@ if ($fromform = $mform->get_data()) {
         $driprelease->schedulestart = $fromform->schedulestart;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         if (count($selections) == 0) {
-            $msg = get_string('noselections','tool_driprelease');
+            $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
         $tabledata = get_table_data($driprelease, 'quiz');
