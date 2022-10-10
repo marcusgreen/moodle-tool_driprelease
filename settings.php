@@ -30,7 +30,7 @@ if ($hassiteconfig) {
                 'tool_driprelease/repeatcount',
                 get_string('repeatcount', 'tool_driprelease'),
                 get_string('repeatcount_text', 'tool_driprelease'),
-                '1',
+                '7',
                 PARAM_ALPHANUMEXT,
                 3
         ));

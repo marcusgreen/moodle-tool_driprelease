@@ -281,20 +281,6 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     return $row;
 }
 
-function x_driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
-    $row = [];
-    $weekrepeat = $sessioncounter * $driprelease->repeatcount;
-    $weeksoffset = " + $weekrepeat week ";
-    $start = strtotime(' + ' . $weekrepeat . ' week', $driprelease->schedulestart);
-    $weeksoffset = " + " . ($weekrepeat + $driprelease->repeatcount) . " week ";
-    $end = strtotime($weeksoffset, $driprelease->schedulestart);
-    $row['sessioncounter'] = $sessioncounter + 1;
-    $row['start'] = $start;
-    $row['end'] = $end;
-    $row['startformatted'] = date('D d M Y h:h', $start);
-    $row['endformatted'] = date('D d M Y h:h', $end);
-    return $row;
-}
 /**
  * This is designed to return the coursemods in the order they are displayed on the course
  * It is currently not used and may be deleted at some point, or the need for it may be obscured

@@ -51,7 +51,7 @@ $string['schedulefinish'] = 'Finish';
 $string['schedulefinish_help'] = 'The date that all activities/final session will close. The time will remain
 this time to finish a session before the next one begins.';
 $string['repeatcount'] = 'Repeat count';
-$string['repeatcount_text'] = 'Help for repeatcount in settings';
+$string['repeatcount_text'] = 'Length in days of each session';
 $string['repeat'] = 'Repeat frequency';
 $string['repeat_text'] = 'Repeat settings help';
 $string['repeatcounterror'] = 'Repeat frequency must be more than zero';
