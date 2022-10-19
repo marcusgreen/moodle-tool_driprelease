@@ -220,7 +220,7 @@ function update_availability(array $data, \stdClass $driprelease) {
                                 '0' => $availablestart,
                                 '1' => $availablend
                             ],
-                            'showc' => [false,false],
+                            'showc' => [false, false],
                         ];
 
                         $DB->set_field(
