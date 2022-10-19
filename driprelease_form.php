@@ -111,7 +111,8 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
         $mform->setType('activitiespersession', PARAM_INT);
-        $mform->setDefault('activitiespersession', get_config('tool_driprelease', 'activitiespersession'));
+        $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config('tool_driprelease',
+             'activitiespersession'));
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
 
         $this->add_action_buttons();
