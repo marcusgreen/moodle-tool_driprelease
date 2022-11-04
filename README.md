@@ -1,6 +1,6 @@
 # Moodle Driprelease by Marcus Green #
 
-Make quiz activities available on a timed release basis. For example a set of 5 quizzes can become available, then unavailable one week at a time.
+Make quiz activities available on a timed release basis. For example An example of its use is to make a new quiz become available each  day and then replaced by a new quiz on the following day. Another scenario is to make 5 quizzes available for a week, and the following week another 5 quizzes are made available.
 
 This project was funded by Sojo University Japan and initiated by Rob Hirschel and Chris Tempest.
 
