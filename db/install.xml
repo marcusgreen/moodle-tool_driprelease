@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
         <FIELD NAME="modtype" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="the module or other activity type"/>
-        <FIELD NAME="repeatcount" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Number of weeks over which to add new activiti/ies"/>
+        <FIELD NAME="sessionlength" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Number of days over which to add new activiti/ies"/>
         <FIELD NAME="activitiespersession" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Activities per repeated session, e.g. 5 quizzes per week"/>
         <FIELD NAME="schedulestart" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="datetime when activity becomes available"/>
         <FIELD NAME="schedulefinish" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="datetime when last set of activities will be available"/>

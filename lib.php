@@ -56,7 +56,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'modtype' => $fromform->modtype,
             'courseid' => $courseid,
             'activitiespersession' => $fromform->activitiespersession,
-            'repeatcount' => $fromform->repeatgroup['repeatcount'] ?? $fromform->repeatcount,
+            'sessionlength' => $fromform->sessiongroup['sessionlength'] ?? $fromform->sessionlength,
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish
         ];
@@ -67,7 +67,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'courseid' => $courseid,
             'modtype' => $fromform->modtype,
             'activitiespersession' => $fromform->activitiespersession,
-            'repeatcount' => $fromform->repeatgroup['repeatcount'],
+            'sessionlength' => $fromform->sessiongroup['sessionlength'],
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish
         ];
@@ -268,10 +268,10 @@ function get_availability(?string $json) : array {
    */
 function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
     $row = [];
-    $weekrepeat = $sessioncounter * $driprelease->repeatcount;
+    $weekrepeat = $sessioncounter * $driprelease->sessionlength;
     $weeksoffset = " + $weekrepeat day";
     $start = strtotime(' + ' . $weekrepeat . ' day', $driprelease->schedulestart);
-    $weeksoffset = " + " . ($weekrepeat + $driprelease->repeatcount) . " day ";
+    $weeksoffset = " + " . ($weekrepeat + $driprelease->sessionlength) . " day ";
     $end = strtotime($weeksoffset, $driprelease->schedulestart);
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;

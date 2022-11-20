@@ -63,7 +63,7 @@ if (!$driprelease) {
         'modtype' => $modtype,
         'activitiespersession' => $config->activitiespersession,
         'schedulestart' => time(),
-        'repeatcount' => $config->repeatcount
+        'sessionlength' => $config->sessionlength
     ];
 } else {
     $driprelease->modtype = $modtype;

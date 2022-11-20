@@ -81,16 +81,16 @@ class tool_driprelease_form extends moodleform {
 
         $mform->addHelpButton('schedulestart', 'schedulestart', 'tool_driprelease');
 
-        $driprelease->repeatcount = $driprelease->repeatcount ?? get_config('tool_driprelease', 'repeatcount');
-        $group[] = $mform->createElement('text', 'repeatcount', get_string('repeat', 'tool_driprelease'),
-                ['value' => $driprelease->repeatcount, 'size' => 3]);
+        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'sessionlength');
+        $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
+                ['value' => $driprelease->sessionlength, 'size' => 3]);
         $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'));
 
-        $mform->addGroup($group, 'repeatgroup', get_string('repeat', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
-        $mform->addRule('repeatgroup', null, 'required', null, 'client');
+        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
+        $mform->addRule('sessiongroup', null, 'required', null, 'client');
 
-        $mform->setType('repeatgroup', PARAM_RAW);
-        $mform->addHelpButton('repeatgroup', 'repeat', 'tool_driprelease');
+        $mform->setType('sessiongroup', PARAM_RAW);
+        $mform->addHelpButton('sessiongroup', 'session', 'tool_driprelease');
 
         // Finish dates.
         $mform->addElement(
@@ -131,8 +131,8 @@ class tool_driprelease_form extends moodleform {
         if ($fromform['activitiespersession'] < 1) {
             $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease');
         }
-        if ($fromform['repeatgroup']['repeatcount'] < 1) {
-            $errors['repeatgroup'] = get_string('repeatcounterror', 'tool_driprelease');
+        if ($fromform['sessiongroup']['sessionlength'] < 1) {
+            $errors['sessiongroup'] = get_string('sessionlengtherror', 'tool_driprelease');
         }
 
         if ($errors) {

@@ -27,9 +27,9 @@ if ($hassiteconfig) {
         $settings = new admin_settingpage('tool_driprelease_settings', new lang_string('pluginname', 'tool_driprelease'));
 
         $settings->add(new admin_setting_configtext(
-                'tool_driprelease/repeatcount',
-                get_string('repeatcount', 'tool_driprelease'),
-                get_string('repeatcount_text', 'tool_driprelease'),
+                'tool_driprelease/sessionlength',
+                get_string('sessionlength', 'tool_driprelease'),
+                get_string('sessionlength_text', 'tool_driprelease'),
                 '7',
                 PARAM_ALPHANUMEXT,
                 3

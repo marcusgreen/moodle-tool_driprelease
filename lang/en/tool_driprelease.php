@@ -50,20 +50,16 @@ blue calendar will open a pop-up calendar to select dates as an option.';
 $string['schedulefinish'] = 'Finish';
 $string['schedulefinish_help'] = 'The date that all activities/final session will close. The time will remain
 this time to finish a session before the next one begins.';
-$string['repeatcount'] = 'Repeat count';
-$string['repeatcount_text'] = 'Length in days of each session';
-$string['repeat'] = 'Repeat frequency';
-$string['repeat_text'] = 'Repeat settings help';
-$string['repeatcounterror'] = 'Repeat frequency must be more than zero';
+$string['sessionlength_text'] = 'Length in days of each session';
+$string['sessionlength'] = 'Session length';
+$string['session_text'] = 'Repeat settings help';
+$string['sessionlengtherror'] = 'Session length must be more than zero';
 $string['activitiespersessionerror'] = 'Activities per session must be more than zero';
-$string['repeat_help'] =
+$string['session_help'] =
  'Decides how long the intervals are. e.g. a new
  set of activities will be available every 7 days and the currently available ones
  will then become unavailable.';
 $string['session'] = 'Session';
-$string['sessioncount'] = 'Week count';
-$string['sessioncount_text'] = 'Week count help description';
-$string['weeks'] = 'week(s)';
 $string['days'] = 'day(s)';
 $string['repeatenable'] = 'Enable';
 $string['sessioncount_text'] = 'Session count help for settings';
