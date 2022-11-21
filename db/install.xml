@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/driprelease/db" VERSION="20220919" COMMENT="XMLDB file for Moodle mod_driprelease"
+<XMLDB PATH="admin/tool/driprelease/db" VERSION="20221121" COMMENT="XMLDB file for Moodle mod_driprelease"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
     <TABLE NAME="tool_driprelease" COMMENT="Stores the driprelease activity course instances.">
@@ -9,10 +9,11 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
         <FIELD NAME="modtype" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false" COMMENT="the module or other activity type"/>
-        <FIELD NAME="sessionlength" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Number of days over which to add new activiti/ies"/>
-        <FIELD NAME="activitiespersession" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Activities per repeated session, e.g. 5 quizzes per week"/>
         <FIELD NAME="schedulestart" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="datetime when activity becomes available"/>
         <FIELD NAME="schedulefinish" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="datetime when last set of activities will be available"/>
+        <FIELD NAME="sessionlength" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Number of days over which to add new activiti/ies"/>
+        <FIELD NAME="activitiespersession" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Activities per repeated session, e.g. 5 quizzes per week"/>
+        <FIELD NAME="stayavailable" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Don't set a until value in restrictions. Activities will stay available at the end of sessions."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
