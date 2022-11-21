@@ -78,19 +78,7 @@ class tool_driprelease_form extends moodleform {
             $driprelease->schedulestart
         );
         $mform->setDefault('schedulestart', ($driprelease->schedulestart ?? ''));
-
         $mform->addHelpButton('schedulestart', 'schedulestart', 'tool_driprelease');
-
-        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'sessionlength');
-        $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
-                ['value' => $driprelease->sessionlength, 'size' => 3]);
-        $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'));
-
-        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
-        $mform->addRule('sessiongroup', null, 'required', null, 'client');
-
-        $mform->setType('sessiongroup', PARAM_RAW);
-        $mform->addHelpButton('sessiongroup', 'session', 'tool_driprelease');
 
         // Finish dates.
         $mform->addElement(
@@ -107,6 +95,19 @@ class tool_driprelease_form extends moodleform {
         $driprelease->schedulefinish = $finishdate;
         $mform->setDefault('schedulefinish', $finishdate);
         $mform->addHelpButton('schedulefinish', 'schedulefinish', 'tool_driprelease');
+
+        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'sessionlength');
+        $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
+                ['value' => $driprelease->sessionlength, 'size' => 3]);
+        $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'). '&nbsp;&nbsp;&nbsp;');
+        $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
+        $mform->addHelpButton('stayavailable', 'stayavailable', 'tool_driprelease');
+
+        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
+        $mform->addRule('sessiongroup', null, 'required', null, 'client');
+
+        $mform->setType('sessiongroup', PARAM_RAW);
+        $mform->addHelpButton('sessiongroup', 'session', 'tool_driprelease');
 
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
