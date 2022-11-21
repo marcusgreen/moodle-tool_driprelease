@@ -25,22 +25,25 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Drip release';
-$string['modulenameplural'] = 'Drip release';
-$string['pluginname'] = 'Drip release';
-$string['name'] = 'Name';
+$string['activitiesincourse'] = 'Activities in course';
 $string['defaultname'] = 'Default name';
 $string['defaultname_text'] = 'Default name appearing in form when editing form opens';
-$string['timing'] = 'Timing';
-$string['nomodulesincourse'] = 'No modules in course';
-$string['qcount'] = 'Q Count';
-$string['activitiesincourse'] = 'Activities in course';
+$string['dripreleasefieldset'] = 'Fieldset';
 $string['dripreleaseforcourse'] = 'Driprelease for course';
 $string['dripreleasesettings'] = 'Settings';
-$string['dripreleasefieldset'] = 'Fieldset';
-
 $string['driprelease_header'] = 'Driprelease help';
 $string['driprelease_header_help'] = 'A description of What Driprelease does';
+$string['dateformat'] = 'Date format';
+$string['dateformat_text'] = 'Date format explanation xxxxx';
+$string['dripreleasename_help'] = 'Content scheduler help information';
+$string['descriptions'] = 'Description';
+$string['modulename'] = 'Drip release';
+$string['modulenameplural'] = 'Drip release';
+$string['name'] = 'Name';
+$string['nomodulesincourse'] = 'No modules in course';
+$string['pluginname'] = 'Drip release';
+$string['qcount'] = 'Q Count';
+$string['timing'] = 'Timing';
 
 $string['schedulestart'] = 'Start';
 $string['noselections'] = 'No items selected, no availability updated';
@@ -74,16 +77,14 @@ set at 4, then the period would be 4 weeks, 16 weeks/4 sessions. Finally if the
 sessions was 16, it would be a cycle every week.';
 $string['sessioncountenable'] = 'Enable';
 $string['sessionscounterror'] = 'Number of sessions must be more than zero';
+$string['stayavailable'] = 'Stay available after session finish';
+$string['stayavailable_help'] = 'Items  will stay available at the session end. The equivalent of not setting the Until field in the restrictions setting';
 $string['activitiespersession'] = 'Activities per session';
 $string['activitiespersession_text'] = 'Set the number of activitie that are available in each session, e.g. if a session is one week 5 will give you one per day';
 $string['activitiespersession_help'] = 'How many items per session, for example if set to 10 and "Repeat every" is set to 2 (weeks), students would see 5 activities per week';
 $string['pluginadministration'] = 'Driprelease administration';
 $string['name'] = 'Name';
-$string['descriptions'] = 'Description';
 $string['questions'] = 'Question';
 $string['from'] = 'From';
 $string['to'] = 'To';
-$string['dateformat'] = 'Date format';
-$string['dateformat_text'] = 'Date format explanation xxxxx';
-$string['dripreleasename_help'] = 'Content scheduler help information';
 $string['privacy:null_reason'] = 'The Dripelease admin tool does not effect or store any data itself.';
