@@ -21,6 +21,7 @@
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+use \core_availability\tree;
 
 /**
  * A core callback to make ther plugin appear in the "more" dropdown of courses
@@ -58,7 +59,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'activitiespersession' => $fromform->activitiespersession,
             'sessionlength' => $fromform->sessiongroup['sessionlength'] ?? $fromform->sessionlength,
             'schedulestart' => $fromform->schedulestart,
-            'schedulefinish' => $fromform->schedulefinish
+            'schedulefinish' => $fromform->schedulefinish,
+            'stayavailable' => $fromform->stayavailable
         ];
         $DB->update_record('tool_driprelease', $driprelease);
         manage_selections($fromform, $dripreleaseid);
@@ -69,13 +71,15 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'activitiespersession' => $fromform->activitiespersession,
             'sessionlength' => $fromform->sessiongroup['sessionlength'],
             'schedulestart' => $fromform->schedulestart,
-            'schedulefinish' => $fromform->schedulefinish
+            'schedulefinish' => $fromform->schedulefinish,
+            'stayavailable' => $fromform->stayavailable
+
         ];
         $dripreleaseid = $DB->insert_record('tool_driprelease', $driprelease);
         $driprelease->id = $dripreleaseid;
     }
     manage_selections($fromform, $dripreleaseid);
-    $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
+    $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
     return [$selections, $driprelease];
 }
 
@@ -94,12 +98,12 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
             $moduleids[] = explode('_', $key)[1];
         }
     }
-    $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
+    $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $dripreleaseid], null, 'id,coursemoduleid');
 
     $todelete = array_diff($selections, $moduleids);
     if ($todelete) {
         list($insql, $inparams) = $DB->get_in_or_equal($todelete);
-        $DB->delete_records_select("tool_driprelease_select", "coursemoduleid $insql", $inparams);
+        $DB->delete_records_select("tool_driprelease_cmids", "coursemoduleid $insql", $inparams);
     }
     $toinsert = array_diff($moduleids, $selections);
     foreach ($toinsert as $moduleid) {
@@ -107,7 +111,7 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
             'driprelease' => $dripreleaseid,
             'coursemoduleid' => $moduleid
         ];
-        $DB->insert_record('tool_driprelease_select', $dataobject);
+        $DB->insert_record('tool_driprelease_cmids', $dataobject);
     }
 }
 
@@ -157,7 +161,7 @@ function get_table_data(\stdClass $driprelease) : array {
     $sessioncounter = 0;
     $selections = [];
     if (isset($driprelease->id)) {
-        $selections = $DB->get_records_menu('tool_driprelease_select', ['driprelease' => $driprelease->id],
+        $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],
             null, 'id,coursemoduleid');
     }
     foreach ($modules as $cm) {
@@ -186,7 +190,7 @@ function get_table_data(\stdClass $driprelease) : array {
 
 /**
  * Write the availability back to the course_modules table
- *
+ * See https://docs.moodle.org/dev/Availability_API#Implementing_new_availability_conditions
  * @param array $data
  * @param \stdClass $driprelease
  * @return void
@@ -203,32 +207,21 @@ function update_availability(array $data, \stdClass $driprelease) {
                     continue;
             }
             $availability = $module['calculatedavailability'];
-                        $availablestart = [
-                            'type' => 'date',
-                            'd' => ">=",
-                            't' => $availability['start']
-                        ];
+            $dates = [];
+            $dates[] = \availability_date\condition::get_json(">=", $availability['start']);
+            if (!$driprelease->stayavailable) {
+                $dates[] = \availability_date\condition::get_json("<", $availability['end']);
+            }
 
-                        $availablend = [
-                            'type' => 'date',
-                            'd' => "<",
-                            't' => $availability['end']
-                        ];
-                        $avob = (object) [
-                            'op' => '&',
-                            'c' => [
-                                '0' => $availablestart,
-                                '1' => $availablend
-                            ],
-                            'showc' => [false, false],
-                        ];
+            $showc = array_fill(0, count($dates), false);
+            $restrictions = tree::get_root_json($dates, tree::OP_AND, $showc);
 
-                        $DB->set_field(
-                            'course_modules',
-                            'availability',
-                            json_encode($avob),
-                            array('id' => $module['cm']->id)
-                        );
+            $DB->set_field(
+                'course_modules',
+                'availability',
+                json_encode($restrictions),
+                array('id' => $module['cm']->id)
+            );
         }
     }
     rebuild_course_cache($COURSE->id);

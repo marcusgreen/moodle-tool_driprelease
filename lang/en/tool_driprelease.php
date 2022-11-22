@@ -79,6 +79,7 @@ $string['sessioncountenable'] = 'Enable';
 $string['sessionscounterror'] = 'Number of sessions must be more than zero';
 $string['stayavailable'] = 'Stay available after session finish';
 $string['stayavailable_help'] = 'Items  will stay available at the session end. The equivalent of not setting the Until field in the restrictions setting';
+$string['stayavailable_text'] = 'Stay available after session finish, set no end date';
 $string['activitiespersession'] = 'Activities per session';
 $string['activitiespersession_text'] = 'Set the number of activitie that are available in each session, e.g. if a session is one week 5 will give you one per day';
 $string['activitiespersession_help'] = 'How many items per session, for example if set to 10 and "Repeat every" is set to 2 (weeks), students would see 5 activities per week';

@@ -43,6 +43,15 @@ if ($hassiteconfig) {
                 PARAM_ALPHANUMEXT,
                 3
         ));
+        $settings->add(new admin_setting_configcheckbox(
+                'tool_driprelease/stayavailable',
+                get_string('stayavailable', 'tool_driprelease'),
+                get_string('stayavailable_text', 'tool_driprelease'),
+                '5',
+                PARAM_ALPHANUMEXT,
+                1
+        ));
+
 
         $ADMIN->add('tools', $settings);
 

@@ -176,7 +176,7 @@ class tool_driprelease_form extends moodleform {
         $mform = $this->_form;
         $activitygroup = $mform->getElement('activitygroup');
         $checkboxes = $activitygroup->getElements();
-        $dbselections = $DB->get_records_menu('tool_driprelease_select',
+        $dbselections = $DB->get_records_menu('tool_driprelease_cmids',
                 ['driprelease' => $driprelease->id], null, 'id,coursemoduleid');
 
         foreach ($checkboxes as $checkbox) {

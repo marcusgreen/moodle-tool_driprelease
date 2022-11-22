@@ -20,7 +20,7 @@
         <KEY NAME="fk_course" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="tool_driprelease_select" COMMENT="When content will be available">
+    <TABLE NAME="tool_driprelease_cmids" COMMENT="When content will be available">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="driprelease" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="id of the driprelease"/>
