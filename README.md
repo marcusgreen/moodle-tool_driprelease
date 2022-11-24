@@ -6,6 +6,9 @@ Make quiz activities available on a timed release basis. For example An example 
 
 This project was funded by Sojo University Japan and initiated by Rob Hirschel and Chris Tempest.
 
+The latest source can be found at
+
+https://github.com/marcusgreen/moodle-tool_driprelease
 ## Installing via uploaded ZIP file ##
 
 1. Log in to your Moodle site as an admin and go to _Site administration >
