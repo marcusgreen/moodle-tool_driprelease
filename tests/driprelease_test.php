@@ -102,7 +102,8 @@ class driprelease_test extends \advanced_testcase {
             'sessiongroup' => ['sessionlength' => 1],
             'activitygroup' => $activitygroup,
             'schedulestart' => time(),
-            'schedulefinish' => time()
+            'schedulefinish' => time(),
+            'stayavailable' => 0
         ];
         list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
         $this->assertCount(0, $selections);
