@@ -96,7 +96,7 @@ class tool_driprelease_form extends moodleform {
         $mform->setDefault('schedulefinish', $finishdate);
         $mform->addHelpButton('schedulefinish', 'schedulefinish', 'tool_driprelease');
 
-        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'sessionlength');
+        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
                 ['value' => $driprelease->sessionlength, 'size' => 3]);
         $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'). '&nbsp;&nbsp;&nbsp;');
@@ -114,8 +114,8 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
         $mform->setType('activitiespersession', PARAM_INT);
-        $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config('tool_driprelease',
-             'activitiespersession'));
+        $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config('activitiespersession',
+             'tool_driprelease'));
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
 
         $this->add_action_buttons();

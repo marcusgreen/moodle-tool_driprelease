@@ -47,7 +47,7 @@ if ($hassiteconfig) {
                 'tool_driprelease/stayavailable',
                 get_string('stayavailable', 'tool_driprelease'),
                 get_string('stayavailable_text', 'tool_driprelease'),
-                '5',
+                0,
                 PARAM_ALPHANUMEXT,
                 1
         ));
