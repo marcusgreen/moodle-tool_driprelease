@@ -46,7 +46,6 @@ Feature: Drip release modifies activity availability
     And I am on "Empty course" course homepage with editing mode on
     And I navigate to "Drip release" in current page administration
     Then I should see "No modules in course"
-    And I pause
     And I am on "Course 1" course homepage with editing mode on
     And I navigate to "Drip release" in current page administration
     # Can I follow the link to view the settings of the quiz
