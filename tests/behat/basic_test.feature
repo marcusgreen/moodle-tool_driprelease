@@ -66,7 +66,7 @@ Feature: Drip release modifies activity availability
 
     And I click on "Add restriction..." "button"
     And I click on "Activity completion" "button" in the "Add restriction..." "dialogue"
-    And I click on "Displayed greyed-out if user does not meet this condition • Click to hide" "link"
+    And I click on ".availability-item .availability-eye img" "css_element"
     And I set the field "Activity or resource" to "Previous activity with completion"
     And I press "Save and return to course"
 
