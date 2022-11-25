@@ -102,7 +102,8 @@ class tool_driprelease_form extends moodleform {
         $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'). '&nbsp;&nbsp;&nbsp;');
         $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
         $mform->addHelpButton('stayavailable', 'stayavailable', 'tool_driprelease');
-        $mform->setDefault('stayavailable', get_config('tool_driprelease', 'stayavailable'));
+
+        $mform->setDefault('stayavailable', get_config('stayavailable', 'tool_driprelease'));
 
         $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
         $mform->addRule('sessiongroup', null, 'required', null, 'client');
