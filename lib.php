@@ -35,7 +35,8 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
     if (has_capability('moodle/course:update', $context)) {
         $url = new moodle_url('/admin/tool/driprelease/view.php', array('courseid' => $course->id));
         $name = get_string('pluginname', 'tool_driprelease');
-        $navigation->add($name, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('e/insert_date', ''));
+        $navigation->add($name, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('icon', 'Driprelease',
+                     'tool_driprelease'));
     }
 }
 
