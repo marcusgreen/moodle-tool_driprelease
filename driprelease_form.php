@@ -36,7 +36,8 @@ require_once($CFG->libdir . '/formslib.php');
 class tool_driprelease_form extends moodleform {
     /** @var array options to be used with date_time_selector fields in the quiz. */
     public static $datefieldoptions = array('optional' => false);
-
+    /** @var array modules on the course */
+    public $modules;
     /**
      * Defines forms elements
      */
@@ -62,9 +63,9 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('text', 'modtype', '', ['hidden=true']);
         $mform->setDefault('modtype', 'quiz');
         $mform->setType('modtype', PARAM_TEXT);
-        $modules = $this->get_modules($course, 'quiz');
+        $this->modules = $this->get_modules($course, 'quiz');
         if ($modules) {
-            foreach ($modules as $module) {
+            foreach ($this->modules as $module) {
                     $activitycbx[] = $mform->createElement('advcheckbox', 'activity_'.$module->id, null, null, ['hidden=true']);
             }
             $mform->addGroup( $activitycbx, 'activitygroup');
@@ -131,6 +132,10 @@ class tool_driprelease_form extends moodleform {
     public function validation($fromform, $tabledata) {
         parent::validation($fromform, $tabledata);
         $errors = [];
+        $duration = $fromform['schedulefinish'] - $fromform['schedulestart'];
+        if ($duration < DAYSECS) {
+            $errors['schedulefinish'] = get_string('starttofinishmustbe', 'tool_driprelease');
+        }
         if ($fromform['activitiespersession'] < 1) {
             $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease');
         }
@@ -172,6 +177,9 @@ class tool_driprelease_form extends moodleform {
      */
     public function set_data($driprelease) {
         if (!isset($driprelease->id)) {
+            return;
+        }
+        if (empty($this->modules)) {
             return;
         }
         global $DB;

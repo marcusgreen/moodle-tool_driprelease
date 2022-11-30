@@ -92,6 +92,9 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
  */
 function manage_selections(\stdClass $fromform, int $dripreleaseid) {
     global $DB;
+    if (!isset($fromform->activitygroup)) {
+        return;
+    }
     $moduleids = [];
     foreach ($fromform->activitygroup as $key => $value) {
         if ($value == 1) {

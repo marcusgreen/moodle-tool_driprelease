@@ -36,6 +36,7 @@ $string['driprelease_header_help'] = 'A description of What Driprelease does';
 $string['dateformat'] = 'Date format';
 $string['dateformat_text'] = 'Date format explanation xxxxx';
 $string['dripreleasename_help'] = 'Content scheduler help information';
+$string['starttofinishmustbe'] = 'Start to finish must be at least one day';
 $string['descriptions'] = 'Description';
 $string['modulename'] = 'Drip release';
 $string['modulenameplural'] = 'Drip release';
