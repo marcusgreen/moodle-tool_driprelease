@@ -49,7 +49,16 @@ if ($hassiteconfig) {
                 get_string('stayavailable_text', 'tool_driprelease'),
                 0,
                 PARAM_ALPHANUMEXT,
-                1
+                0
+        ));
+
+        $settings->add(new admin_setting_configcheckbox(
+                'tool_driprelease/hideunselected',
+                get_string('hideunselected', 'tool_driprelease'),
+                get_string('hideunselected_text', 'tool_driprelease'),
+                0,
+                PARAM_ALPHANUMEXT,
+                0
         ));
 
 

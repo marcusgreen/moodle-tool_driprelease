@@ -45,8 +45,10 @@ $string['nomodulesincourse'] = 'No modules in course';
 $string['pluginname'] = 'Drip release';
 $string['qcount'] = 'Q Count';
 $string['timing'] = 'Timing';
-
 $string['schedulestart'] = 'Start';
+$string['hideunselected'] = 'Hide unselected';
+$string['hideunselected_help'] = 'XXXXHide unselected';
+$string['hideunselected_text'] = 'XXXXHide unselected help for settings';
 $string['noselections'] = 'No items selected, no availability updated';
 $string['schedulestart_help'] = 'The time periods/intervals that activities are available are set here. First at the
 "Start:" section, the day, month and year that the activity cycle will start is set. The

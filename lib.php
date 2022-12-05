@@ -61,7 +61,9 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'sessionlength' => $fromform->sessiongroup['sessionlength'] ?? $fromform->sessionlength,
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
-            'stayavailable' => $fromform->stayavailable
+            'stayavailable' => $fromform->stayavailable,
+            'hideunselected' => $fromform->hideunselected
+
         ];
         $DB->update_record('tool_driprelease', $driprelease);
         manage_selections($fromform, $dripreleaseid);
@@ -73,8 +75,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'sessionlength' => $fromform->sessiongroup['sessionlength'],
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
-            'stayavailable' => $fromform->stayavailable
-
+            'stayavailable' => $fromform->stayavailable,
+            'hideunselected' => $fromform->hideunselected
         ];
         $dripreleaseid = $DB->insert_record('tool_driprelease', $driprelease);
         $driprelease->id = $dripreleaseid;

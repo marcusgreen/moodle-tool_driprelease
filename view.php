@@ -88,6 +88,8 @@ if ($fromform = $mform->get_data()) {
     if (isset($fromform->submitbutton) || isset($fromform->submitbutton2)) {
         $driprelease->schedulestart = $fromform->schedulestart;
         $driprelease->stayavailable = $fromform->stayavailable;
+        $driprelease->hideunselected = $fromform->hideunselected;
+
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         if (count($selections) == 0) {
             $msg = get_string('noselections', 'tool_driprelease');
