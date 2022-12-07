@@ -24,6 +24,7 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/lib.php');
+xdebug_break();
 
 use \tool_driprelease\event\driprelease_updated;
 use \tool_driprelease\event\driprelease_viewed;
@@ -36,6 +37,11 @@ $modtype = 'quiz';
 if (!$courseid) {
     redirect(new moodle_url('/'));
 }
+$context = context_course::instance($courseid);
+
+if (!has_capability('moodle/course:update', $context)) {
+    redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
+}
 $cancel = optional_param('cancel', null, PARAM_TEXT);
 if (isset($cancel)) {
     redirect (new moodle_url('/course/view.php', ['id' => $courseid]));
@@ -44,7 +50,7 @@ require_login($courseid);
 
 require_once($CFG->dirroot . '/admin/tool/driprelease/driprelease_form.php');
 
-$PAGE->set_context(context_course::instance($courseid));
+$PAGE->set_context($context);
 
 $PAGE->set_url('/tool/admin/driprelease/view.php', ['courseid' => $courseid]);
 

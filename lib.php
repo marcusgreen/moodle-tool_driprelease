@@ -203,15 +203,23 @@ function get_table_data(\stdClass $driprelease) : array {
  */
 function update_availability(array $data, \stdClass $driprelease) {
     global $DB, $COURSE;
+
     foreach ($data as $module) {
 
         if (!$module['isheader']) {
             if (!$module['selected'] == "checked") {
+                $cm = $module['cm'];
+                set_coursemodule_visible($cm->id, false, false);
+                \core\event\course_module_updated::create_from_cm($cm)->trigger();
                 continue;
             }
             if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
                     continue;
             }
+            $cm = $module['cm'];
+            set_coursemodule_visible($cm->id, true, true);
+            \core\event\course_module_updated::create_from_cm($cm)->trigger();
+
             $availability = $module['calculatedavailability'];
             $dates = [];
             $dates[] = \availability_date\condition::get_json(">=", $availability['start']);
@@ -232,6 +240,15 @@ function update_availability(array $data, \stdClass $driprelease) {
     }
     rebuild_course_cache($COURSE->id);
 }
+function set_visibility(bool $visible){
+
+    // Make sure visibility is set correctly (in particular in calendar).
+    if (has_capability('moodle/course:activityvisibility', $modcontext)) {
+        set_coursemodule_visible($moduleinfo->coursemodule, $moduleinfo->visible, $moduleinfo->visibleoncoursepage);
+    }
+}
+
+
 /**
  * Get the date related availability for an activity
  *
