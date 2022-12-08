@@ -76,7 +76,7 @@ class tool_driprelease_form extends moodleform {
             'date_time_selector',
             'schedulestart',
             get_string('schedulestart', 'tool_driprelease'),
-            $dripreleaseschedulestart
+            $driprelease->schedulestart
         );
         $mform->setDefault('schedulestart', ($driprelease->schedulestart ?? ''));
         $mform->addHelpButton('schedulestart', 'schedulestart', 'tool_driprelease');
