@@ -76,26 +76,22 @@ class tool_driprelease_form extends moodleform {
             'date_time_selector',
             'schedulestart',
             get_string('schedulestart', 'tool_driprelease'),
-            $driprelease->schedulestart
+            $dripreleaseschedulestart
         );
         $mform->setDefault('schedulestart', ($driprelease->schedulestart ?? ''));
         $mform->addHelpButton('schedulestart', 'schedulestart', 'tool_driprelease');
+
+        $driprelease->schedulefinish = $driprelease->schedulefinish ?? (time() + DAYSECS);
 
         // Finish dates.
         $mform->addElement(
             'date_time_selector',
             'schedulefinish',
             get_string('schedulefinish', 'tool_driprelease'),
-            $driprelease->schedulefinish ?? 0
+            $driprelease->schedulefinish
         );
-
-        $week = strtotime('7 day', 0);
-        $sessioncount = get_config('sessioncount', 'driprelease');
-        $finishdate = time() + ($week * $sessioncount);
+        $mform->setDefault('schedulefinish', ($driprelease->schedulefinish ?? ''));
         $mform->setType('schedulefinish', PARAM_INT);
-        $driprelease->schedulefinish = $finishdate;
-        $mform->setDefault('schedulefinish', $finishdate);
-        $mform->addHelpButton('schedulefinish', 'schedulefinish', 'tool_driprelease');
 
         $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
@@ -104,11 +100,11 @@ class tool_driprelease_form extends moodleform {
 
         $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
         $mform->addHelpButton('stayavailable', 'stayavailable', 'tool_driprelease');
-        $mform->setDefault('stayavailable', get_config('stayavailable', 'tool_driprelease'));
+        $mform->setDefault('stayavailable', $driprelease->stayavailable ?? get_config('stayavailable', 'tool_driprelease'));
 
         $mform->addElement('advcheckbox', 'hideunselected', get_string('hideunselected', 'tool_driprelease'));
         $mform->addHelpButton('hideunselected', 'hideunselected', 'tool_driprelease');
-        $mform->setDefault('hideunselected', get_config('hideunselected', 'tool_driprelease'));
+        $mform->setDefault('hideunselected', $driprelease->hideunselected ?? get_config('hideunselected', 'tool_driprelease'));
 
         $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
         $mform->addRule('sessiongroup', null, 'required', null, 'client');

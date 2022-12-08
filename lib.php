@@ -240,14 +240,6 @@ function update_availability(array $data, \stdClass $driprelease) {
     }
     rebuild_course_cache($COURSE->id);
 }
-function set_visibility(bool $visible){
-
-    // Make sure visibility is set correctly (in particular in calendar).
-    if (has_capability('moodle/course:activityvisibility', $modcontext)) {
-        set_coursemodule_visible($moduleinfo->coursemodule, $moduleinfo->visible, $moduleinfo->visibleoncoursepage);
-    }
-}
-
 
 /**
  * Get the date related availability for an activity

@@ -24,7 +24,6 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/lib.php');
-xdebug_break();
 
 use \tool_driprelease\event\driprelease_updated;
 use \tool_driprelease\event\driprelease_viewed;
