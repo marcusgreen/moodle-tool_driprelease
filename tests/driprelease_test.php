@@ -124,6 +124,12 @@ class driprelease_test extends \advanced_testcase {
         $modulecount = count($modules);
         $this->assertEquals(count($this->modules), $modulecount);
     }
+
+    public function test_get_table_data() {
+        $this->resetAfterTest();
+        $tabledata = get_table_data($this->driprelease);
+    }
+
     /**
      * Check that update doesn't fall over and
      * selections are set as expected

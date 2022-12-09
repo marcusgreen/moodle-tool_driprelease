@@ -147,7 +147,7 @@ function get_modules(\stdClass $driprelease) : array {
  * @param array $row
  * @return array
  */
-function add_header(array $row)  :array {
+function add_header(array $row) :array {
     $header = $row;
     $header['isheader'] = true;
     $header['cm'] = (object) ['id' => -1];
@@ -196,7 +196,7 @@ function get_table_data(\stdClass $driprelease) : array {
 
 /**
  * Write the availability back to the course_modules table
- * See https://docs.moodle.org/dev/Availability_API#Implementing_new_availability_conditions
+ * See https://moodledev.io/docs/apis/subsystems/availability/
  * @param array $data
  * @param \stdClass $driprelease
  * @return void
