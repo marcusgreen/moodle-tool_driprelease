@@ -101,8 +101,8 @@ class driprelease_test extends \advanced_testcase {
             'activitiespersession' => 3,
             'sessiongroup' => ['sessionlength' => 1],
             'activitygroup' => $activitygroup,
-            'schedulestart' => time(),
-            'schedulefinish' => time(),
+            'schedulestart' => mktime(0, 0, 0, 1, 1, 2023), // First Jan.
+            'schedulefinish' => mktime(0, 0, 0, 2, 1, 2023),// First Feb.
             'stayavailable' => 0,
             'hideunselected' => 0
         ];
@@ -150,7 +150,6 @@ class driprelease_test extends \advanced_testcase {
      */
     public function test_update_instance() {
         $this->resetAfterTest();
-        global $DB;
         $activitygroup = [];
 
         foreach ($this->modules as $module) {

@@ -284,8 +284,8 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;
     $row['end'] = $end;
-    $row['startformatted'] = date('D d M Y h:h', $start);
-    $row['endformatted'] = date('D d M Y h:h', $end);
+    $row['startformatted'] = date('D d M Y h:m', $start);
+    $row['endformatted'] = date('D d M Y h:m', $end);
     return $row;
 }
 
