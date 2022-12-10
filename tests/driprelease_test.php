@@ -124,10 +124,22 @@ class driprelease_test extends \advanced_testcase {
         $modulecount = count($modules);
         $this->assertEquals(count($this->modules), $modulecount);
     }
-
+    /**
+     * Get the data that will be output by the mustache table
+     *
+     *
+     * @covers ::get_table_data()
+     */
     public function test_get_table_data() {
         $this->resetAfterTest();
         $tabledata = get_table_data($this->driprelease);
+        // First row is header row.
+        $header = $tabledata[0];
+        $this->assertIsBool($header['isheader'], true);
+        $row1 = $tabledata[1];
+        $this->assertEquals($row1['name'], "Quiz 1");
+        $this->assertEquals($row1['selected'], "");
+        $this->assertEquals($row1['questioncount'], 0);
     }
 
     /**
