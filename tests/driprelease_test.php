@@ -98,11 +98,11 @@ class driprelease_test extends \advanced_testcase {
 
         $this->fromform = (object) [
             'modtype' => 'quiz',
-            'activitiespersession' => 3,
-            'sessiongroup' => ['sessionlength' => 1],
+            'activitiespersession' => 1,
+            'sessiongroup' => ['sessionlength' => 1],// Sessions last 1 day.
             'activitygroup' => $activitygroup,
             'schedulestart' => mktime(0, 0, 0, 1, 1, 2023), // First Jan.
-            'schedulefinish' => mktime(0, 0, 0, 2, 1, 2023),// First Feb.
+            'schedulefinish' => mktime(0, 0, 0, 2, 1, 2023), // First Feb.
             'stayavailable' => 0,
             'hideunselected' => 0
         ];
@@ -135,13 +135,20 @@ class driprelease_test extends \advanced_testcase {
         $tabledata = get_table_data($this->driprelease);
         // First row is header row.
         $header = $tabledata[0];
-        $this->assertIsBool($header['isheader'], true);
+        $this->assertEquals($header['isheader'], true);
         $row1 = $tabledata[1];
+        $row2 = $tabledata[3];
+
+        $this->assertEquals($row1['isheader'], false);
         $this->assertEquals($row1['name'], "Quiz 1");
         $this->assertEquals($row1['selected'], "");
         $this->assertEquals($row1['questioncount'], 0);
-    }
+        $this->assertEquals($row1['calculatedavailability']['startformatted'], "Sun 01 Jan 2023 12:01");
+        $this->assertEquals($row1['calculatedavailability']['endformatted'], "Mon 02 Jan 2023 12:01");
 
+        $this->assertEquals($row2['calculatedavailability']['startformatted'], "Mon 02 Jan 2023 12:01");
+        $this->assertEquals($row2['calculatedavailability']['endformatted'], "Tue 03 Jan 2023 12:01");
+    }
     /**
      * Check that update doesn't fall over and
      * selections are set as expected
