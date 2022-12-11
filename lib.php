@@ -256,10 +256,10 @@ function get_availability(?string $json) : array {
                 $operator = $restriction->d;
                 if ($operator == ">=") {
                     $datetime = $restriction->t;
-                    $availability['from'] = userdate($datetime, '%d %b %Y');
+                    $availability['from'] = userdate($datetime, '%a %d %b %Y %H:%M');
                 } else {
                     $datetime = $restriction->t;
-                    $availability['to'] = userdate($datetime, '%d %b %Y');
+                    $availability['to'] = userdate($datetime, '%a %d %b %Y %H:%M');
                 }
             }
         }
@@ -284,8 +284,8 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;
     $row['end'] = $end;
-    $row['startformatted'] = userdate($start);
-    $row['endformatted'] = userdate($end);
+    $row['startformatted'] = userdate($start, '%a %d %b %Y %H:%M');
+    $row['endformatted'] = userdate($end, '%a %d %b %Y %H:%M');
     return $row;
 }
 
