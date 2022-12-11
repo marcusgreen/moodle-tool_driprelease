@@ -256,10 +256,10 @@ function get_availability(?string $json) : array {
                 $operator = $restriction->d;
                 if ($operator == ">=") {
                     $datetime = $restriction->t;
-                    $availability['from'] = userdate($datetime);
+                    $availability['from'] = userdate($datetime, '%d %b %Y');
                 } else {
                     $datetime = $restriction->t;
-                    $availability['to'] = userdate($datetime);
+                    $availability['to'] = userdate($datetime, '%d %b %Y');
                 }
             }
         }

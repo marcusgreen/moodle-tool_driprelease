@@ -99,11 +99,11 @@ Feature: Drip release modifies activity availability
     And I navigate to "Drip release" in current page administration
     # Check the table and modules availability has been updated
 
-    Then I should see "01 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
-    Then I should not see "01 Jan 2017" in the "Quiz2" "table_row"
+    Then I should not see "1 Jan 2017" in the "Quiz2" "table_row"
 
-    Then I should see "08 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "8 Jan 2017" in the "Quiz1" "table_row"
 
     And I am on "Course 1" course homepage with editing mode on
     # Confirming that Moodle is saving/displaying the updated availability
@@ -114,16 +114,16 @@ Feature: Drip release modifies activity availability
 
     And I navigate to "Drip release" in current page administration
     # Check the dates have been saved
-    Then I should see "01 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
-    Then I should not see "08 Jan 2017" in the "Quiz2" "table_row"
-    Then I should see "08 Jan 2017" in the "Quiz1" "table_row"
+    Then I should not see "8 Jan 2017" in the "Quiz2" "table_row"
+    Then I should see "8 Jan 2017" in the "Quiz1" "table_row"
     # Now select the second module/quiz
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
     And I press "Save and display"
     # Check the table and modules availability has been updated
-    Then I should see "01 Jan 2017" in the "Quiz1" "table_row"
-    Then I should see "08 Jan 2017" in the "Quiz2" "table_row"
+    Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "8 Jan 2017" in the "Quiz2" "table_row"
     # Deselect rows for Quiz1 and 2
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
@@ -132,12 +132,12 @@ Feature: Drip release modifies activity availability
     And I set the field "schedulestart[day]" to "1"
     And I set the field "schedulestart[month]" to "February"
     And I press "Save and display"
-    Then I should see "01 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
 
-    Then I should see "01 Feb 2017" in the "Quiz3" "table_row"
+    Then I should see "1 Feb 2017" in the "Quiz3" "table_row"
     # This will toggle all rows to checked
     And I click on "selectall" "checkbox"
     And I press "Save and display"
-    Then I should see "01 Feb 2017" in the "Quiz5" "table_row"
+    Then I should see "1 Feb 2017" in the "Quiz5" "table_row"
     # The next session
-    Then I should see "08 Feb 2017" in the "Quiz6" "table_row"
+    Then I should see "8 Feb 2017" in the "Quiz6" "table_row"
