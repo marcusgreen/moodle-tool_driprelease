@@ -51,7 +51,7 @@ require_once($CFG->dirroot . '/admin/tool/driprelease/driprelease_form.php');
 
 $PAGE->set_context($context);
 
-$PAGE->set_url('/tool/admin/driprelease/view.php', ['courseid' => $courseid]);
+$PAGE->set_url('/admin/tool/driprelease/view.php', ['courseid' => $courseid]);
 
 if (!$course = $DB->get_record('course', array('id' => $courseid))) {
     throw new moodle_exception('invalid course id');
