@@ -48,7 +48,7 @@ $string['timing'] = 'Timing';
 $string['schedulestart'] = 'Start';
 $string['hideunselected'] = 'Hide unselected';
 $string['hideunselected_help'] = 'Any item not selected will be hidden from students, including in the gradebookxa sxzcz  xAXS \,MSZ0\oZ\\\ZNJ\Zkj\ZKJ v\v \ ';
-$string['hideunselected_text'] = 'XXXXHide unselected help for settings';
+$string['hideunselected_text'] = 'Any unselected course modules will be hidden';
 $string['noselections'] = 'No items selected, no availability updated';
 $string['schedulestart_help'] = 'The time periods/intervals that activities are available are set here. First at the
 "Start:" section, the day, month and year that the activity cycle will start is set. The
