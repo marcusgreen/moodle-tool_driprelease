@@ -93,7 +93,7 @@ class driprelease_test extends \advanced_testcase {
                 'attempts' => 10));
 
         foreach ($this->modules as $module) {
-            $activitygroup['activity_'.$module->id] = 0;
+            $activitygroup['activity_'.$module->id] = 1;
         }
 
         $this->fromform = (object) [
@@ -107,7 +107,7 @@ class driprelease_test extends \advanced_testcase {
             'hideunselected' => 0
         ];
         list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
-        $this->assertCount(0, $selections);
+        $this->assertCount(3, $selections);
         $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
     }
 
@@ -167,5 +167,24 @@ class driprelease_test extends \advanced_testcase {
         list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
         $this->assertEquals($driprelease->id, $this->driprelease->id);
+    }
+    /**
+     * Check manage_selections adds modules
+     * when when they have been selected in
+     * the form.
+     *
+     * @covers ::manage_selections()
+     */
+    public function test_manage_selections() {
+        $this->resetAfterTest();
+        global $DB;
+        $cmids = $DB->get_records('tool_driprelease_cmids');
+        // Three records created by setUp.
+        $this->assertCount(3,$cmids);
+        $this->fromform->activitygroup['activity_101'] = 1;
+        manage_selections($this->fromform, $this->driprelease->id);
+        $cmids = $DB->get_records('tool_driprelease_cmids');
+        // Four after manage_selections was called.
+        $this->assertCount(4,$cmids);
     }
 }
