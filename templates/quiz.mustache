@@ -38,25 +38,15 @@
 
 <table class = "table table-hover table-bordered table-striped " >
     <thead>
-            <colgroup>
-            <col>
-            <col class="col-md-0">
-            <col class="col-md-4">
-            <col class="col-md-1">
-            <col class="col-md-2">
-            <col class="col-md-2">
-
-        </colgroup>
         <tr>
             <th><input type='checkbox' name='selectall' title="Toggle selection of all items" id='id_selectall' >   </th>
-            <th>{{#str}}name{{/str}}</th>
-            <th>{{#str}}description{{/str}}</th>
-            <th>{{#str}}questioncount,tool_driprelease {{/str}} </th>
-            <th>{{#str}}from{{/str}}</th>
-            <th>    {{#str}}to{{/str}}</th>
+            <th class="col-md-0">{{#str}}name{{/str}}</th>
+            <th class="col-md-4">{{#str}}description{{/str}}</th>
+            <th class="col-md-1">{{#str}}questioncount,tool_driprelease {{/str}} </th>
+            <th class="col-md-2">{{#str}}from{{/str}}</th>
+            <th class="col-md-2"> {{#str}}to{{/str}}</th>
         </tr>
     </thead>
-
 <tbody>
     {{^tabledata}}
     <tr><td colspan = "6"> {{#str}} nomodulesincourse, tool_driprelease {{/str}}</td></tr>
