@@ -180,11 +180,11 @@ class driprelease_test extends \advanced_testcase {
         global $DB;
         $cmids = $DB->get_records('tool_driprelease_cmids');
         // Three records created by setUp.
-        $this->assertCount(3,$cmids);
+        $this->assertCount(3, $cmids);
         $this->fromform->activitygroup['activity_101'] = 1;
         manage_selections($this->fromform, $this->driprelease->id);
         $cmids = $DB->get_records('tool_driprelease_cmids');
         // Four after manage_selections was called.
-        $this->assertCount(4,$cmids);
+        $this->assertCount(4, $cmids);
     }
 }
