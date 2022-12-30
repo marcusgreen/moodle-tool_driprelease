@@ -142,7 +142,7 @@ function get_modules(\stdClass $driprelease) : array {
     return $modules;
 }
 /**
- * Add another session header in the display/preview of scheduled modules
+ * Add another session header row in the display/preview of scheduled modules
  *
  * @param array $row
  * @return array
@@ -201,10 +201,9 @@ function get_table_data(\stdClass $driprelease) : array {
  * @param \stdClass $driprelease
  * @return void
  */
-function update_availability(array $data, \stdClass $driprelease) {
+function update_availability(array $tabledata, \stdClass $driprelease) {
     global $DB, $COURSE;
-
-    foreach ($data as $module) {
+    foreach ($tabledata as $module) {
 
         if (!$module['isheader']) {
             if (!$module['selected'] == "checked") {

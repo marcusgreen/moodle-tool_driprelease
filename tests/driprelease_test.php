@@ -110,6 +110,30 @@ class driprelease_test extends \advanced_testcase {
         $this->assertCount(3, $selections);
         $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
     }
+    /**
+    * Confirm course_modules table has been
+    * written to
+    *
+    * @covers ::update_availability()
+    */
+    public function test_update_availability(){
+        $this->resetAfterTest();
+        global $DB;
+        $course_modules = $DB->get_records('course_modules');
+        $cm = reset($course_modules);
+        $this->assertEquals($cm->availability, '');
+        $tabledata = get_table_data($this->driprelease, 'quiz');
+        // Element 0 is a header row.
+        $tabledata[1]['selected'] = 1;
+        update_availability($tabledata, $this->driprelease);
+        $course_modules = $DB->get_records('course_modules');
+        $cm = reset($course_modules);
+        $startdate = $this->driprelease->schedulestart;
+        // Sessions set to one day in setUp.
+        $enddate = strtotime('+1 day', $startdate);
+        $this->assertStringContainsString($startdate, $cm->availability);
+        $this->assertStringContainsString($enddate, $cm->availability);
+    }
 
     /**
      * Confirm modules/quizzes in a course are returned
@@ -126,7 +150,6 @@ class driprelease_test extends \advanced_testcase {
     }
     /**
      * Get the data that will be output by the mustache table
-     *
      *
      * @covers ::get_table_data()
      */
@@ -186,5 +209,33 @@ class driprelease_test extends \advanced_testcase {
         $cmids = $DB->get_records('tool_driprelease_cmids');
         // Four after manage_selections was called.
         $this->assertCount(4, $cmids);
+    }
+
+    /**
+     * Check add_header, a row containing
+     * The date/time values for the start
+     * and end of a activity session,
+     * e.g. a weeks worth of quizzes.
+     *
+     * @covers ::add_header()
+     */
+    public function test_add_header() {
+        $this->resetAfterTest();
+        $header = add_header([]);
+        $this->assertEquals(true, $header['isheader']);
+        $this->assertEquals('Session', $header['name']);
+        $this->assertEquals(-1,$header['cm']->id);
+    }
+
+    /**
+     * Check get_modules returns items
+     * configured in setUp function
+     *
+     * @covers ::get_modules()
+     */
+    public function test_get_modules(){
+        $this->resetAfterTest();
+        $cmids = $modules = get_modules($this->driprelease);
+        $this->assertCount(3, $cmids);
     }
 }
