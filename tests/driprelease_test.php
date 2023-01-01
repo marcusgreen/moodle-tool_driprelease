@@ -111,23 +111,23 @@ class driprelease_test extends \advanced_testcase {
         $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
     }
     /**
-    * Confirm course_modules table has been
-    * written to
-    *
-    * @covers ::update_availability()
-    */
-    public function test_update_availability(){
+     * Confirm course_modules table has been
+     * written to
+     *
+     * @covers ::update_availability()
+     */
+    public function test_update_availability() {
         $this->resetAfterTest();
         global $DB;
-        $course_modules = $DB->get_records('course_modules');
-        $cm = reset($course_modules);
+        $coursemodules = $DB->get_records('course_modules');
+        $cm = reset($coursemodules);
         $this->assertEquals($cm->availability, '');
         $tabledata = get_table_data($this->driprelease, 'quiz');
         // Element 0 is a header row.
         $tabledata[1]['selected'] = 1;
         update_availability($tabledata, $this->driprelease);
-        $course_modules = $DB->get_records('course_modules');
-        $cm = reset($course_modules);
+        $coursemodules = $DB->get_records('course_modules');
+        $cm = reset($coursemodules);
         $startdate = $this->driprelease->schedulestart;
         // Sessions set to one day in setUp.
         $enddate = strtotime('+1 day', $startdate);
@@ -224,7 +224,7 @@ class driprelease_test extends \advanced_testcase {
         $header = add_header([]);
         $this->assertEquals(true, $header['isheader']);
         $this->assertEquals('Session', $header['name']);
-        $this->assertEquals(-1,$header['cm']->id);
+        $this->assertEquals(-1, $header['cm']->id);
     }
 
     /**
@@ -233,7 +233,7 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::get_modules()
      */
-    public function test_get_modules(){
+    public function test_get_modules() {
         $this->resetAfterTest();
         $cmids = $modules = get_modules($this->driprelease);
         $this->assertCount(3, $cmids);
