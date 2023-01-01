@@ -197,7 +197,7 @@ function get_table_data(\stdClass $driprelease) : array {
 /**
  * Write the availability back to the course_modules table
  * See https://moodledev.io/docs/apis/subsystems/availability/
- * @param array $data
+ * @param array $tabledata
  * @param \stdClass $driprelease
  * @return void
  */
