@@ -20,6 +20,7 @@ Feature: Unselected course items are set to hidden on save
         | Schema | Course short name | C2       |
     And I am on "Course 2" course homepage with editing mode on
     And I navigate to "Drip release" in current page administration
+    And I set the field "Session length" to "1"
     # This will toggle all rows to checked
     And I click on "selectall" "checkbox"
     And I click on "Hide unselected" "checkbox"

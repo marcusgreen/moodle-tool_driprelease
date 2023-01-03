@@ -1,4 +1,4 @@
-@tool @tool_driprelease
+@tool @tool_driprelease @tool_driprelease_basic
 Feature: Drip release modifies activity availability
     In order to set a course activities for drip/sequential availabiliy
         Background:
