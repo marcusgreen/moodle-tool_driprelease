@@ -78,6 +78,7 @@ E.g. Say the number of weeks between the start date and the finish date was
 session would be 2 weeks, 16 weeks / 8 sessions. However, if the sessions was
 set at 4, then the period would be 4 weeks, 16 weeks/4 sessions. Finally if the
 sessions was 16, it would be a cycle every week.';
+$string['sessionlengthislonger'] = 'Session length is longer than Start to Finish, shorten the session or set a later finish';
 $string['sessioncountenable'] = 'Enable';
 $string['sessionscounterror'] = 'Number of sessions must be more than zero';
 $string['stayavailable'] = 'Stay available after session finish';

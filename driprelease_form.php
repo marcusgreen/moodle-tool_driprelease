@@ -60,8 +60,16 @@ class tool_driprelease_form extends moodleform {
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
-        $mform->addElement('text', 'modtype', '', ['hidden=true']);
+        // $mform->addElement('text', 'modtype', '', ['hidden=true']);
+        // $mform->setDefault('modtype', 'quiz');
+        // $mform->setType('modtype', PARAM_TEXT);
+        $mform->addElement('html', "<div id=hidemodtypes style='display:none;'>");
+        $modtypes = ['quiz' => 'Quiz', 'assign' => 'Assign'];
+        $mform->addElement('select', 'modtype', 'Module type', $modtypes);
         $mform->setDefault('modtype', 'quiz');
+        $mform->addElement('html', "</div>");
+
+
         $mform->setType('modtype', PARAM_TEXT);
         $this->modules = $this->get_modules($course, 'quiz');
         if ($this->modules) {
@@ -139,8 +147,13 @@ class tool_driprelease_form extends moodleform {
         if ($fromform['activitiespersession'] < 1) {
             $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease');
         }
-        if ($fromform['sessiongroup']['sessionlength'] < 1) {
+        $sessionlength = $fromform['sessiongroup']['sessionlength'];
+
+        if ($sessionlength < 1) {
             $errors['sessiongroup'] = get_string('sessionlengtherror', 'tool_driprelease');
+        }
+        if (($sessionlength * DAYSECS) > $duration) {
+            $errors['sessiongroup'] = get_string('sessionlengthislonger', 'tool_driprelease');
         }
 
         if ($errors) {
