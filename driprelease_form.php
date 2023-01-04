@@ -60,11 +60,11 @@ class tool_driprelease_form extends moodleform {
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
-        $mform->addElement('html', "<div id=hidemodtypes style='display:none;'>");
+        // $mform->addElement('html', "<div id=hidemodtypes style='display:none;'>");
         $modtypes = ['quiz' => 'Quiz', 'assign' => 'Assign'];
         $mform->addElement('select', 'modtype', 'Module type', $modtypes);
         $mform->setDefault('modtype', 'quiz');
-        $mform->addElement('html', "</div>");
+        // $mform->addElement('html', "</div>");
 
         $mform->setType('modtype', PARAM_TEXT);
         $this->modules = $this->get_modules($course, $driprelease->modtype);
