@@ -27,11 +27,12 @@ require_once(__DIR__.'/lib.php');
 
 use \tool_driprelease\event\driprelease_updated;
 use \tool_driprelease\event\driprelease_viewed;
+xdebug_break();
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
 
-$modtype = 'quiz';
+$modtype = optional_param('modtype', 'quiz', PARAM_RAW);
 
 if (!$courseid) {
     redirect(new moodle_url('/'));
@@ -100,7 +101,7 @@ if ($fromform = $mform->get_data()) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
-        $tabledata = get_table_data($driprelease, 'quiz');
+        $tabledata = get_table_data($driprelease, $modtype);
         update_availability($tabledata, $driprelease);
 
         $event = driprelease_updated::create($eventdata);
@@ -112,7 +113,7 @@ if ($fromform = $mform->get_data()) {
 }
 
 $tabledata = get_table_data($driprelease);
-
+$tabledata['modtype'] = $driprelease->modtype;
 $out = $OUTPUT->render_from_template('tool_driprelease/'.$modtype, ['tabledata' => $tabledata]);
 
 $mform->set_data($driprelease);

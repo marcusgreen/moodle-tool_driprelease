@@ -175,7 +175,7 @@ function get_table_data(\stdClass $driprelease) : array {
         if ($contentcounter % ($driprelease->activitiespersession) == 0) {
             $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
             $sessioncounter++;
-            $data[] = add_header($row);
+            $data['mods'] = add_header($row);
         }
         $contentcounter++;
         $details = $DB->get_record($driprelease->modtype, ['id' => $cm->instance]);
@@ -189,8 +189,9 @@ function get_table_data(\stdClass $driprelease) : array {
         $row['name'] = $cm->name;
         $row['intro'] = strip_tags($details->intro);
         $row['moduleavailability'] = get_availability($cm->availability);
-        $data[] = $row;
+        $data['mods'] = $row;
     }
+
     return $data ?? [];
 }
 
