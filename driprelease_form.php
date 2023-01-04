@@ -67,7 +67,7 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('html', "</div>");
 
         $mform->setType('modtype', PARAM_TEXT);
-        $this->modules = $this->get_modules($course, 'quiz');
+        $this->modules = $this->get_modules($course, $driprelease->modtype);
         if ($this->modules) {
             foreach ($this->modules as $module) {
                     $activitycbx[] = $mform->createElement('advcheckbox', 'activity_'.$module->id, null, null, ['hidden=true']);
