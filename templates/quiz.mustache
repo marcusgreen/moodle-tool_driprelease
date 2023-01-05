@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template plugintype_pluginname/template_name
+    @template tool_driprelease/quiz
 
     Template purpose and description.
 
@@ -26,10 +26,30 @@
     * none
 
     Context variables required for this template:
-    * none
+        * isheader - bool
+        * questioncount - int count of quesitons in this quiz
+        * id - Unique id of the module_instance of the quiz
+        * selected - bool is the checkbox selected
+        * name - text  name of the module
+        * intro -text
+        * sessioncounter -int count of this session, i.e. first 7 days of 7 day long sessions
+        * startformatted - start date
+        * endformatted - finish date
+
 
     Example context (json):
     {
+      "isheader":true,
+      "questioncount":0,
+      "id":"83",
+      "selected":"",
+      "name":"Quiz1",
+      "intro":"",
+      "calculatedavailability":{
+         "sessioncounter":1,
+         "startformatted":"Thu 5 Jan 2023 22:12",
+         "endformatted":"Thu 12 Jan 2023 22:12"
+      }
     }
 }}
 
