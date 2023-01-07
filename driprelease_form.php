@@ -134,7 +134,6 @@ class tool_driprelease_form extends moodleform {
      * @return boolean
      */
     public function validation($fromform, $tabledata) {
-        xdebug_break();
         parent::validation($fromform, $tabledata);
         $modulecount = count($this->modules);
         $errors = [];
@@ -153,6 +152,10 @@ class tool_driprelease_form extends moodleform {
         }
         if (($sessionlength * DAYSECS) > $duration) {
             $errors['sessiongroup'] = get_string('sessionlengthislonger', 'tool_driprelease');
+        }
+        if ($modulecount < $activitiespersession) {
+            $a = (object) ['activitiespersession' => $activitiespersession, 'modulecount' => $modulecount];
+            $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease', $a);
         }
 
         if ($errors) {
