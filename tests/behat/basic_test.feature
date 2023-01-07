@@ -84,7 +84,9 @@ Feature: Drip release modifies activity availability
     And I set the field "sessiongroup[sessionlength]" to "1"
     And I set the field "activitiespersession" to ""
     And I should see "You must supply a value here"
-    And I set the field "activitiespersession" to "5"
+    And I set the field "activitiespersession" to "100"
+    And I press "Save and return to course"
+    Then I should see "Activities per session is 100 but the course only has 7 activities"
 
     And I press "Cancel"
     # Confirm I am back on the course page
