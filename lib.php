@@ -203,8 +203,9 @@ function get_table_data(\stdClass $driprelease) : array {
  */
 function update_availability(array $tabledata, \stdClass $driprelease) {
     global $DB, $COURSE;
-    foreach ($tabledata as $module) {
+    $updatecount = 0;
 
+    foreach ($tabledata as $module) {
         if (!$module['isheader']) {
             if (!$module['selected'] == "checked") {
                 $cm = $module['cm'];
@@ -235,8 +236,12 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 json_encode($restrictions),
                 array('id' => $module['cm']->id)
             );
+            $updatecount++;
         }
     }
+    $modulenameplural = get_string('modulenameplural', $driprelease->modtype);
+    $msg = get_string('updated', 'moodle', $updatecount). " ".$modulenameplural;
+    \core\notification::add($msg, \core\notification::SUCCESS);
     rebuild_course_cache($COURSE->id);
 }
 
