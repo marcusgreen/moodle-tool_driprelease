@@ -24,18 +24,24 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-
+$string['activitiespersession'] = 'Activities per session';
+$string['activitiespersession_text'] = 'Set the number of activitie that are available in each session, e.g. if a session is one week 5 will give you one per day';
+$string['activitiespersession_help'] = 'How many items per session, for example if set to 10 and "Repeat every" is set to 2 (weeks), students would see 5 activities per week';
 $string['activitiesincourse'] = 'Activities in course';
+$string['days'] = 'day(s)';
 $string['defaultname'] = 'Default name';
 $string['defaultname_text'] = 'Default name appearing in form when editing form opens';
 $string['dripreleasefieldset'] = 'Fieldset';
 $string['dripreleaseforcourse'] = 'Driprelease for course';
 $string['dripreleasesettings'] = 'Settings';
 $string['driprelease_header'] = 'Driprelease help';
+$string['driprelease:view'] = 'View driprelease for the course';
 $string['driprelease_header_help'] = 'A description of What Driprelease does';
 $string['dateformat'] = 'Date format';
-$string['dateformat_text'] = 'Date format explanation xxxxx';
 $string['dripreleasename_help'] = 'Content scheduler help information';
+$string['hideunselected'] = 'Hide unselected';
+$string['hideunselected_help'] = 'Any item not selected will be hidden from students, including in the gradebook';
+$string['hideunselected_text'] = 'Any unselected course modules will be hidden';
 $string['starttofinishmustbe'] = 'Start to finish must be at least one day';
 $string['descriptions'] = 'Description';
 $string['modulename'] = 'Drip release';
@@ -44,11 +50,8 @@ $string['name'] = 'Name';
 $string['nomodulesincourse'] = 'No modules in course';
 $string['pluginname'] = 'Drip release';
 $string['questioncount'] = 'Question count';
-$string['timing'] = 'Timing';
 $string['schedulestart'] = 'Start';
-$string['hideunselected'] = 'Hide unselected';
-$string['hideunselected_help'] = 'Any item not selected will be hidden from students, including in the gradebook';
-$string['hideunselected_text'] = 'Any unselected course modules will be hidden';
+$string['timing'] = 'Timing';
 $string['noselections'] = 'No items selected, no availability updated';
 $string['schedulestart_help'] = 'The time periods/intervals that activities are available are set here. First at the
 "Start:" section, the day, month and year that the activity cycle will start is set. The
@@ -66,7 +69,6 @@ $string['session_help'] =
  set of activities will be available every 7 days and the currently available ones
  will then become unavailable.';
 $string['session'] = 'Session';
-$string['days'] = 'day(s)';
 $string['repeatenable'] = 'Enable';
 $string['sessioncount_text'] = 'Session count help for settings';
 $string['sessioncount'] = 'Number of sessions';
@@ -85,9 +87,6 @@ $string['sessionscounterror'] = 'Number of sessions must be more than zero';
 $string['stayavailable'] = 'Stay available after session finish';
 $string['stayavailable_help'] = 'Items  will stay available at the session end. The equivalent of not setting the Until field in the restrictions setting';
 $string['stayavailable_text'] = 'Stay available after session finish, set no end date';
-$string['activitiespersession'] = 'Activities per session';
-$string['activitiespersession_text'] = 'Set the number of activitie that are available in each session, e.g. if a session is one week 5 will give you one per day';
-$string['activitiespersession_help'] = 'How many items per session, for example if set to 10 and "Repeat every" is set to 2 (weeks), students would see 5 activities per week';
 $string['pluginadministration'] = 'Driprelease administration';
 $string['name'] = 'Name';
 $string['questions'] = 'Question';
