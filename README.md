@@ -15,6 +15,11 @@ This project was funded by Sojo University Japan and initiated by Rob Hirschel a
 The latest source can be found at
 
 https://github.com/marcusgreen/moodle-tool_driprelease
+
+A user guide can be found at
+https://github.com/marcusgreen/moodle-tool_driprelease/wiki
+
+
 ## Installing via uploaded ZIP file ##
 
 1. Log in to your Moodle site as an admin and go to _Site administration >
