@@ -139,9 +139,9 @@ class tool_driprelease_form extends moodleform {
         $errors = [];
         $activitiespersession = $fromform['activitiespersession'];
         $sessionlength = $fromform['sessiongroup']['sessionlength'];
-        $duration = $fromform['schedulefinish'] - $fromform['schedulestart'];
+        $duration = round(($fromform['schedulefinish'] - $fromform['schedulestart'])/DAYSECS);
 
-        if ($duration < DAYSECS) {
+        if ($duration < 1) {
             $errors['schedulefinish'] = get_string('starttofinishmustbe', 'tool_driprelease');
         }
         if ($activitiespersession < 1) {
@@ -150,7 +150,8 @@ class tool_driprelease_form extends moodleform {
         if ($sessionlength < 1) {
             $errors['sessiongroup'] = get_string('sessionlengtherror', 'tool_driprelease');
         }
-        if (($sessionlength * DAYSECS) > $duration) {
+        // Is the session lenght more than the start to finish duration.
+        if (($sessionlength) > $duration) {
             $errors['sessiongroup'] = get_string('sessionlengthislonger', 'tool_driprelease');
         }
         if ($modulecount < $activitiespersession) {

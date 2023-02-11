@@ -209,8 +209,10 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
         if (!$module['isheader']) {
             if (!$module['selected'] == "checked") {
                 $cm = $module['cm'];
-                set_coursemodule_visible($cm->id, false, false);
-                \core\event\course_module_updated::create_from_cm($cm)->trigger();
+                if ($driprelease->hideunselected) {
+                    set_coursemodule_visible($cm->id, false, false);
+                    \core\event\course_module_updated::create_from_cm($cm)->trigger();
+                }
                 continue;
             }
             if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
