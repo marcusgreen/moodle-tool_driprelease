@@ -139,7 +139,7 @@ class tool_driprelease_form extends moodleform {
         $errors = [];
         $activitiespersession = $fromform['activitiespersession'];
         $sessionlength = $fromform['sessiongroup']['sessionlength'];
-        $duration = round(($fromform['schedulefinish'] - $fromform['schedulestart'])/DAYSECS);
+        $duration = round(($fromform['schedulefinish'] - $fromform['schedulestart']) / DAYSECS);
 
         if ($duration < 1) {
             $errors['schedulefinish'] = get_string('starttofinishmustbe', 'tool_driprelease');
