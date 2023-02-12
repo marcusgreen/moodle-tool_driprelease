@@ -289,6 +289,12 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $start = strtotime(' + ' . $daysrepeat . ' day', $driprelease->schedulestart);
     $daysoffset = " + " . (($daysrepeat - 1) + $driprelease->sessionlength) . " day ";
     $end = strtotime($daysoffset, $driprelease->schedulestart);
+
+    $midnight = strtotime('today midnight', $driprelease->schedulefinish);
+    $endminutes = $driprelease->schedulefinish - $midnight;
+    $end = strtotime('today midnight', $end );
+    $end += $endminutes;
+
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;
     $row['end'] = $end;
