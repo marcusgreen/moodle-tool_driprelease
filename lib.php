@@ -62,7 +62,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
             'stayavailable' => $fromform->stayavailable,
-            'hideunselected' => $fromform->hideunselected
+            'hideunselected' => $fromform->hideunselected,
+            'resetunselected' => $fromform->resetunselected
 
         ];
         $DB->update_record('tool_driprelease', $driprelease);
@@ -76,7 +77,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
             'stayavailable' => $fromform->stayavailable,
-            'hideunselected' => $fromform->hideunselected
+            'hideunselected' => $fromform->hideunselected,
+            'resetunselected' => $fromform->resetunselected
         ];
         $dripreleaseid = $DB->insert_record('tool_driprelease', $driprelease);
         $driprelease->id = $dripreleaseid;
@@ -215,6 +217,14 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 } else {
                     set_coursemodule_visible($cm->id, true, true);
                 }
+                if ($driprelease->resetunselected) {
+                    $DB->set_field(
+                        'course_modules',
+                        'availability',
+                        '',
+                        array('id' => $module['cm']->id)
+                    );
+                }
                 continue;
             }
             if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
@@ -248,6 +258,7 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
     \core\notification::add($msg, \core\notification::SUCCESS);
     rebuild_course_cache($COURSE->id);
 }
+
 
 /**
  * Get the date related availability for an activity

@@ -109,6 +109,9 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('advcheckbox', 'hideunselected', get_string('hideunselected', 'tool_driprelease'));
         $mform->addHelpButton('hideunselected', 'hideunselected', 'tool_driprelease');
         $mform->setDefault('hideunselected', $driprelease->hideunselected ?? get_config('hideunselected', 'tool_driprelease'));
+        $mform->addElement('advcheckbox', 'resetunselected', get_string('resetunselected', 'tool_driprelease'));
+        $mform->addHelpButton('resetunselected', 'resetunselected', 'tool_driprelease');
+        $mform->setDefault('resetunselected', false);
 
         $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
         $mform->addRule('sessiongroup', null, 'required', null, 'client');
