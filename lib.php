@@ -212,6 +212,8 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 if ($driprelease->hideunselected) {
                     set_coursemodule_visible($cm->id, false, false);
                     \core\event\course_module_updated::create_from_cm($cm)->trigger();
+                } else {
+                    set_coursemodule_visible($cm->id, true, true);
                 }
                 continue;
             }
@@ -282,11 +284,11 @@ function get_availability(?string $json) : array {
    */
 function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
     $row = [];
-    $weekrepeat = $sessioncounter * $driprelease->sessionlength;
-    $weeksoffset = " + $weekrepeat day";
-    $start = strtotime(' + ' . $weekrepeat . ' day', $driprelease->schedulestart);
-    $weeksoffset = " + " . ($weekrepeat + $driprelease->sessionlength) . " day ";
-    $end = strtotime($weeksoffset, $driprelease->schedulestart);
+    $daysrepeat = $sessioncounter * $driprelease->sessionlength;
+    $daysoffset = " + $daysrepeat day";
+    $start = strtotime(' + ' . $daysrepeat . ' day', $driprelease->schedulestart);
+    $daysoffset = " + " . (($daysrepeat - 1) + $driprelease->sessionlength) . " day ";
+    $end = strtotime($daysoffset, $driprelease->schedulestart);
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;
     $row['end'] = $end;
