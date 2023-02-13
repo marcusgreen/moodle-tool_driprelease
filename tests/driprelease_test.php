@@ -130,6 +130,8 @@ class driprelease_test extends \advanced_testcase {
         $startdate = $this->driprelease->schedulestart;
         // Sessions set to one day in setUp.
         $this->assertStringContainsString($startdate, $cm->availability);
+        var_dump($startdate);
+        var_dump($cm->availability);
     }
 
     /**
