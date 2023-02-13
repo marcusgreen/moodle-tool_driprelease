@@ -104,8 +104,7 @@ Feature: Drip release modifies activity availability
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
     Then I should not see "1 Jan 2017" in the "Quiz2" "table_row"
-
-    Then I should see "8 Jan 2017" in the "Quiz1" "table_row"
+    Then I should see "7 Jan 2017" in the "Quiz1" "table_row"
 
     And I am on "Course 1" course homepage with editing mode on
     # Confirming that Moodle is saving/displaying the updated availability
@@ -118,14 +117,14 @@ Feature: Drip release modifies activity availability
     # Check the dates have been saved
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
-    Then I should not see "8 Jan 2017" in the "Quiz2" "table_row"
-    Then I should see "8 Jan 2017" in the "Quiz1" "table_row"
+    Then I should not see "7 Jan 2017" in the "Quiz2" "table_row"
+    Then I should see "7 Jan 2017" in the "Quiz1" "table_row"
     # Now select the second module/quiz
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
     And I press "Save and display"
     # Check the table and modules availability has been updated
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
-    Then I should see "8 Jan 2017" in the "Quiz2" "table_row"
+    Then I should see "7 Jan 2017" in the "Quiz2" "table_row"
     # Deselect rows for Quiz1 and 2
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
