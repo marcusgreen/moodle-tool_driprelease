@@ -217,14 +217,14 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 } else {
                     set_coursemodule_visible($cm->id, true, true);
                 }
-                if ($driprelease->resetunselected) {
-                    $DB->set_field(
-                        'course_modules',
-                        'availability',
-                        '',
-                        array('id' => $module['cm']->id)
-                    );
-                }
+                // if ($driprelease->resetunselected) {
+                //     $DB->set_field(
+                //         'course_modules',
+                //         'availability',
+                //         '',
+                //         array('id' => $module['cm']->id)
+                //     );
+                // }
                 continue;
             }
             if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
