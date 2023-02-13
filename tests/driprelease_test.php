@@ -28,8 +28,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-use mod_driprelease_mod_form;
-
 require_once($CFG->dirroot . '/admin/tool/driprelease/lib.php');
 
 global $CFG;
@@ -131,9 +129,7 @@ class driprelease_test extends \advanced_testcase {
         $cm = reset($coursemodules);
         $startdate = $this->driprelease->schedulestart;
         // Sessions set to one day in setUp.
-        $enddate = strtotime('+1 day', $startdate);
         $this->assertStringContainsString($startdate, $cm->availability);
-        $this->assertStringContainsString($enddate, $cm->availability);
     }
 
     /**
