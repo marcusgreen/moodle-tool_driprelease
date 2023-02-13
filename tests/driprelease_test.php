@@ -165,10 +165,10 @@ class driprelease_test extends \advanced_testcase {
         $this->assertEquals($row1['questioncount'], 0);
 
         $this->assertEquals("Sun 1 Jan 2023 00:00", $row1['calculatedavailability']['startformatted']);
-        $this->assertEquals("Mon 2 Jan 2023 00:00", $row1['calculatedavailability']['endformatted']);
+        $this->assertEquals("Sun 1 Jan 2023 00:00", $row1['calculatedavailability']['endformatted']);
 
         $this->assertEquals("Mon 2 Jan 2023 00:00", $row2['calculatedavailability']['startformatted']);
-        $this->assertEquals("Tue 3 Jan 2023 00:00", $row2['calculatedavailability']['endformatted']);
+        $this->assertEquals("Mon 2 Jan 2023 00:00", $row2['calculatedavailability']['endformatted']);
     }
     /**
      * Check that update doesn't fall over and
