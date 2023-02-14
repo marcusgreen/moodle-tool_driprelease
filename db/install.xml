@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/driprelease/db" VERSION="20230212" COMMENT="XMLDB file for Moodle mod_driprelease"
+<XMLDB PATH="admin/tool/driprelease/db" VERSION="20230214" COMMENT="XMLDB file for Moodle mod_driprelease"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
 >
@@ -14,8 +14,9 @@
         <FIELD NAME="sessionlength" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="1" SEQUENCE="false" COMMENT="Number of days over which to add new activiti/ies"/>
         <FIELD NAME="activitiespersession" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Activities per repeated session, e.g. 5 quizzes per week"/>
         <FIELD NAME="stayavailable" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Don't set a until value in restrictions. Activities will stay available at the end of sessions."/>
-        <FIELD NAME="hideunselected" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="If a course module is not selected then hide it."/>
+        <FIELD NAME="hideunselected" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="If a course module is not selected then hide it."/>
         <FIELD NAME="resetunselected" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Clear the availability settings for any item not selected."/>
+        <FIELD NAME="displaydisabled" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Where an item is not available, display it disabled, i.e. without a clickable link"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

@@ -100,18 +100,6 @@ class tool_driprelease_form extends moodleform {
         $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
                 ['value' => $driprelease->sessionlength, 'size' => 3]);
-        $group[] = $mform->createElement('html', get_string('days', 'tool_driprelease'). '&nbsp;&nbsp;&nbsp;');
-
-        $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
-        $mform->addHelpButton('stayavailable', 'stayavailable', 'tool_driprelease');
-        $mform->setDefault('stayavailable', $driprelease->stayavailable ?? get_config('stayavailable', 'tool_driprelease'));
-
-        $mform->addElement('advcheckbox', 'hideunselected', get_string('hideunselected', 'tool_driprelease'));
-        $mform->addHelpButton('hideunselected', 'hideunselected', 'tool_driprelease');
-        $mform->setDefault('hideunselected', $driprelease->hideunselected ?? get_config('hideunselected', 'tool_driprelease'));
-        $mform->addElement('advcheckbox', 'resetunselected', get_string('resetunselected', 'tool_driprelease'));
-        $mform->addHelpButton('resetunselected', 'resetunselected', 'tool_driprelease');
-        $mform->setDefault('resetunselected', false);
 
         $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
         $mform->addRule('sessiongroup', null, 'required', null, 'client');
@@ -125,6 +113,27 @@ class tool_driprelease_form extends moodleform {
         $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config('activitiespersession',
              'tool_driprelease'));
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
+
+        $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
+        $mform->addHelpButton('stayavailable', 'stayavailable', 'tool_driprelease');
+        $mform->setDefault('stayavailable', $driprelease->stayavailable ?? get_config('stayavailable', 'tool_driprelease'));
+        $mform->setAdvanced('stayavailable');
+
+        $mform->addElement('advcheckbox', 'hideunselected', get_string('hideunselected', 'tool_driprelease'));
+        $mform->addHelpButton('hideunselected', 'hideunselected', 'tool_driprelease');
+        $mform->setDefault('hideunselected', $driprelease->hideunselected ?? get_config('hideunselected', 'tool_driprelease'));
+        $mform->setAdvanced('hideunselected');
+
+        $mform->addElement('advcheckbox', 'resetunselected', get_string('resetunselected', 'tool_driprelease'));
+        $mform->addHelpButton('resetunselected', 'resetunselected', 'tool_driprelease');
+        $mform->setDefault('resetunselected', false);
+        $mform->setAdvanced('resetunselected');
+
+
+        $mform->addElement('advcheckbox', 'displaydisabled', get_string('displaydisabled', 'tool_driprelease'));
+        $mform->addHelpButton('displaydisabled', 'displaydisabled', 'tool_driprelease');
+        $mform->setDefault('displaydisabled', $driprelease->displaydisabled);
+        $mform->setAdvanced('resetunselected');
 
         $this->add_action_buttons();
     }

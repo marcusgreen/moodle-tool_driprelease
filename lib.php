@@ -63,8 +63,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'schedulefinish' => $fromform->schedulefinish,
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
-            'resetunselected' => $fromform->resetunselected
-
+            'resetunselected' => $fromform->resetunselected,
+            'displaydisabled' => $fromform->displaydisabled
         ];
         $DB->update_record('tool_driprelease', $driprelease);
         manage_selections($fromform, $dripreleaseid);
@@ -78,7 +78,8 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'schedulefinish' => $fromform->schedulefinish,
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
-            'resetunselected' => $fromform->resetunselected
+            'resetunselected' => $fromform->resetunselected,
+            'displaydisabled' => $fromform->displaydisabled
         ];
         $dripreleaseid = $DB->insert_record('tool_driprelease', $driprelease);
         $driprelease->id = $dripreleaseid;
@@ -240,8 +241,12 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
             if (!$driprelease->stayavailable) {
                 $dates[] = \availability_date\condition::get_json("<", $availability['end']);
             }
+            $showvalue = false;
+            if ($driprelease->displaydisabled) {
+                $showvalue = true;
+            }
 
-            $showc = array_fill(0, count($dates), false);
+            $showc = array_fill(0, count($dates), $showvalue);
             $restrictions = tree::get_root_json($dates, tree::OP_AND, $showc);
 
             $DB->set_field(

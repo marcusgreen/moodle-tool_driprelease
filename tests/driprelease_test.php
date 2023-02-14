@@ -103,7 +103,8 @@ class driprelease_test extends \advanced_testcase {
             'schedulefinish' => mktime(0, 0, 0, 2, 1, 2023), // First Feb.
             'stayavailable' => 0,
             'hideunselected' => 0,
-            'resetunselected' => 0
+            'resetunselected' => 0,
+            'displaydisabled' => 0
         ];
         list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
