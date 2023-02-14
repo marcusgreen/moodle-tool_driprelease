@@ -114,6 +114,8 @@ Feature: Drip release modifies activity availability
     Then I should see "Not available unless"
 
     And I navigate to "Drip release" in current page administration
+    And I follow "Show more..."
+
     # Check the dates have been saved
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated

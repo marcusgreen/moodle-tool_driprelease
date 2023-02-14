@@ -131,8 +131,8 @@ class tool_driprelease_form extends moodleform {
 
         $mform->addElement('advcheckbox', 'displaydisabled', get_string('displaydisabled', 'tool_driprelease'));
         $mform->addHelpButton('displaydisabled', 'displaydisabled', 'tool_driprelease');
-        $mform->setDefault('displaydisabled', $driprelease->displaydisabled);
-        $mform->setAdvanced('resetunselected');
+        $mform->setDefault('displaydisabled', $driprelease->displaydisabled ?? false);
+        $mform->setAdvanced('displaydisabled');
 
         $this->add_action_buttons();
     }
