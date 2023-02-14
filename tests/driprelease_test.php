@@ -127,9 +127,7 @@ class driprelease_test extends \advanced_testcase {
         update_availability($tabledata, $this->driprelease);
         $coursemodules = $DB->get_records('course_modules');
         $cm = reset($coursemodules);
-        var_dump($cm->availability);
         $startdate = $this->driprelease->schedulestart;
-        var_dump($startdate);
 
         // Sessions set to one day in setUp.
         $this->assertStringContainsString($startdate, $cm->availability);
