@@ -11,6 +11,9 @@ Make quiz activities available on a timed release basis. For example An example 
 
 This project was funded by Sojo University Japan and initiated by Rob Hirschel and Chris Tempest.
 
+For Moodle development and consultancy contact Moodle partner Catalyst EU 
+https://www.catalyst-eu.net/contact-us/brighton
+
 
 The latest source can be found at
 
