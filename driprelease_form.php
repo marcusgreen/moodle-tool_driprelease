@@ -42,7 +42,7 @@ class tool_driprelease_form extends moodleform {
      * Defines forms elements
      */
     public function definition() {
-        global $CFG, $DB, $PAGE;
+        global $CFG, $DB, $PAGE, $COURSE;
         require_once($CFG->dirroot . '/course/externallib.php');
 
         $mform = $this->_form;
@@ -96,6 +96,15 @@ class tool_driprelease_form extends moodleform {
         );
         $mform->setDefault('schedulefinish', ($driprelease->schedulefinish ?? ''));
         $mform->setType('schedulefinish', PARAM_INT);
+
+        if ($COURSE->groupmode) {
+            $groupinfo = groups_get_all_groups($COURSE->id);
+            $coursegroups = ['' => ''];
+            foreach ($groupinfo as $coursegroup) {
+                $coursegroups[$coursegroup->id] = $coursegroup->name;
+            }
+            $mform->addElement('select', 'coursegroup', 'Groups', $coursegroups);
+        }
 
         $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
@@ -161,7 +170,8 @@ class tool_driprelease_form extends moodleform {
         if ($sessionlength < 1) {
             $errors['sessiongroup'] = get_string('sessionlengtherror', 'tool_driprelease');
         }
-        // Is the session lenght more than the start to finish duration.
+
+        // Is the session length more than the start to finish duration.
         if (($sessionlength) > $duration) {
             $errors['sessiongroup'] = get_string('sessionlengthislonger', 'tool_driprelease');
         }

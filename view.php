@@ -94,6 +94,7 @@ if ($fromform = $mform->get_data()) {
         $driprelease->schedulestart = $fromform->schedulestart;
         $driprelease->stayavailable = $fromform->stayavailable;
         $driprelease->hideunselected = $fromform->hideunselected;
+        $driprelease->coursegroup = $fromform->coursegroup;
 
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         if (count($selections) == 0) {

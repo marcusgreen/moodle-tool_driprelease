@@ -61,6 +61,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'sessionlength' => $fromform->sessiongroup['sessionlength'] ?? $fromform->sessionlength,
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
+            'coursegroup' => $fromform->coursegroup,
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
             'resetunselected' => $fromform->resetunselected,
@@ -76,6 +77,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'sessionlength' => $fromform->sessiongroup['sessionlength'],
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
+            'coursegroup' => $fromform->coursegroup,
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
             'resetunselected' => $fromform->resetunselected,
@@ -238,6 +240,7 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
             $availability = $module['calculatedavailability'];
             $dates = [];
             $dates[] = \availability_date\condition::get_json(">=", $availability['start']);
+            $coursegroup = \availability_group\condition::get_json($driprelease->coursegroup);
             if (!$driprelease->stayavailable) {
                 $dates[] = \availability_date\condition::get_json("<", $availability['end']);
             }
