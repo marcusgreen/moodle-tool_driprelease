@@ -66,9 +66,9 @@ if (!$driprelease) {
     $driprelease = (object)[
         'courseid' => $courseid,
         'modtype' => $modtype,
-        'activitiespersession' => $config->activitiespersession,
+        'activitiespersession' => $config->activitiespersession ?? 0,
         'schedulestart' => time(),
-        'sessionlength' => $config->sessionlength
+        'sessionlength' => $config->sessionlength ?? 0
     ];
 } else {
     $driprelease->modtype = $modtype;

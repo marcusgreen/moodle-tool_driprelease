@@ -97,14 +97,19 @@ class tool_driprelease_form extends moodleform {
         $mform->setDefault('schedulefinish', ($driprelease->schedulefinish ?? ''));
         $mform->setType('schedulefinish', PARAM_INT);
 
-        if ($COURSE->groupmode) {
-            $groupinfo = groups_get_all_groups($COURSE->id);
-            $coursegroups = ['' => ''];
-            foreach ($groupinfo as $coursegroup) {
-                $coursegroups[$coursegroup->id] = $coursegroup->name;
-            }
-            $mform->addElement('select', 'coursegroup', 'Groups', $coursegroups);
+        $coursegroups = ['' => ''];
+        if ($COURSE->groupmode == NOGROUPS) {
+            $coursegroups = ['' => get_string('coursesettingnogroups', 'tool_driprelease')];
         }
+        $groupinfo = groups_get_all_groups($COURSE->id);
+        $coursegroups = [];
+        foreach ($groupinfo as $coursegroup) {
+            $coursegroups[$coursegroup->id] = $coursegroup->name;
+        }
+        if (count($coursegroups) == 0 ) {
+            $coursegroups = ['' => get_string('courshasnogroups', 'tool_driprelease')];
+        }
+        $mform->addElement('select', 'coursegroup', get_string('coursegroups', 'tool_driprelease' ), $coursegroups);
 
         $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
@@ -221,6 +226,7 @@ class tool_driprelease_form extends moodleform {
         }
         global $DB;
         $mform = $this->_form;
+        $mform->getElement('coursegroup')->setValue($driprelease->coursegroup);
         $activitygroup = $mform->getElement('activitygroup');
         $checkboxes = $activitygroup->getElements();
         $dbselections = $DB->get_records_menu('tool_driprelease_cmids',
@@ -233,7 +239,7 @@ class tool_driprelease_form extends moodleform {
                  $checkbox->setValue(true);
             }
         }
-        return $dbselections;
+        // return $dbselections;
     }
     /**
      * Duplicate the functionality of the mod forms action buttons

@@ -279,7 +279,7 @@ function get_availability(?string $json) : array {
     if ($json > "") {
         $decoded = json_decode($json);
         foreach ($decoded->c as $restriction) {
-            if ($restriction->type == "date") {
+            if (property_exists($restriction, 'type') && $restriction->type == "date") {
                 $operator = $restriction->d;
                 if ($operator == ">=") {
                     $datetime = $restriction->t;
