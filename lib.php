@@ -238,24 +238,26 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
             \core\event\course_module_updated::create_from_cm($cm)->trigger();
 
             $availability = $module['calculatedavailability'];
-            $dates = [];
-            $dates[] = \availability_date\condition::get_json(">=", $availability['start']);
-            $coursegroup = \availability_group\condition::get_json($driprelease->coursegroup);
+            $restrictions = [];
+            if ($driprelease->coursegroup) {
+                $restrictions[] = \availability_group\condition::get_json($driprelease->coursegroup);
+            }
+            $restrictions[] = \availability_date\condition::get_json(">=", $availability['start']);
             if (!$driprelease->stayavailable) {
-                $dates[] = \availability_date\condition::get_json("<", $availability['end']);
+                $restrictions[] = \availability_date\condition::get_json("<", $availability['end']);
             }
             $showvalue = false;
             if ($driprelease->displaydisabled) {
                 $showvalue = true;
             }
 
-            $showc = array_fill(0, count($dates), $showvalue);
-            $restrictions = tree::get_root_json($dates, tree::OP_AND, $showc);
+            $showc = array_fill(0, count($restrictions), $showvalue);
+            $restrictionsclass = tree::get_root_json($restrictions, tree::OP_AND, $showc);
 
             $DB->set_field(
                 'course_modules',
                 'availability',
-                json_encode($restrictions),
+                json_encode($restrictionsclass),
                 array('id' => $module['cm']->id)
             );
             $updatecount++;
