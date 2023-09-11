@@ -102,7 +102,7 @@ class tool_driprelease_form extends moodleform {
             $coursegroups = ['' => get_string('coursesettingnogroups', 'tool_driprelease')];
         }
         $groupinfo = groups_get_all_groups($COURSE->id);
-        $coursegroups = [];
+        $coursegroups = ['' => ''];
         foreach ($groupinfo as $coursegroup) {
             $coursegroups[$coursegroup->id] = $coursegroup->name;
         }
