@@ -177,9 +177,14 @@ function get_table_data(\stdClass $driprelease) : array {
     }
     foreach ($modules as $cm) {
         $row['cm'] = $cm;
+        $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
+
         if ($contentcounter % ($driprelease->activitiespersession) == 0) {
-            $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
-            $sessioncounter++;
+            if ($row['selected'] > "") {
+                $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
+                $sessioncounter++;
+            }
+            // $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
             $data[] = add_header($row);
         }
         $contentcounter++;
