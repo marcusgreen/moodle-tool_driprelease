@@ -184,7 +184,6 @@ function get_table_data(\stdClass $driprelease) : array {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
             }
-            // $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
             $data[] = add_header($row);
         }
         $contentcounter++;
