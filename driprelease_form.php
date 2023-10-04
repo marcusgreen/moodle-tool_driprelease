@@ -239,7 +239,6 @@ class tool_driprelease_form extends moodleform {
                  $checkbox->setValue(true);
             }
         }
-        // return $dbselections;
     }
     /**
      * Duplicate the functionality of the mod forms action buttons
