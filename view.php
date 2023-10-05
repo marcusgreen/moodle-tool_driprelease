@@ -68,6 +68,7 @@ if (!$driprelease) {
         'modtype' => $modtype,
         'activitiespersession' => $config->activitiespersession ?? 0,
         'schedulestart' => time(),
+        'coursegroup' => '',
         'sessionlength' => $config->sessionlength ?? 0
     ];
 } else {
@@ -101,7 +102,8 @@ if ($fromform = $mform->get_data()) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
-        $tabledata = get_table_data($driprelease, $modtype);
+
+        $tabledata = get_table_data($driprelease);
         update_availability($tabledata, $driprelease);
 
         $event = driprelease_updated::create($eventdata);

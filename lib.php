@@ -96,12 +96,12 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
  *
  * @param \stdClass $fromform
  * @param int $dripreleaseid
- * @return void
+ * @return int $insertedcount // For future testing purposes.
  */
-function manage_selections(\stdClass $fromform, int $dripreleaseid) {
+function manage_selections(\stdClass $fromform, int $dripreleaseid) : int {
     global $DB;
     if (!isset($fromform->activitygroup)) {
-        return;
+        return 0;
     }
     $moduleids = [];
     foreach ($fromform->activitygroup as $key => $value) {
@@ -117,13 +117,16 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) {
         $DB->delete_records_select("tool_driprelease_cmids", "coursemoduleid $insql", $inparams);
     }
     $toinsert = array_diff($moduleids, $selections);
+    $insertedcount = 0;
     foreach ($toinsert as $moduleid) {
         $dataobject = (object) [
             'driprelease' => $dripreleaseid,
             'coursemoduleid' => $moduleid
         ];
         $DB->insert_record('tool_driprelease_cmids', $dataobject);
+        $insertedcount ++;
     }
+    return $insertedcount;
 }
 
 /**

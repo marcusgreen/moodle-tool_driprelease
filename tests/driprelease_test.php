@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 /**
  * Unit tests for admin_tool_driprelease
  *
- * @copyright  2022 Marcus Green
+ * @copyright  2023 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class driprelease_test extends \advanced_testcase {
@@ -90,8 +90,10 @@ class driprelease_test extends \advanced_testcase {
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
                 'attempts' => 10));
 
+        $cmods = $DB->get_records('course_modules');
+
         foreach ($this->modules as $module) {
-            $activitygroup['activity_'.$module->id] = 1;
+            $activitygroup['activity_'.$module->cmid] = 1;
         }
 
         $this->fromform = (object) [
@@ -105,8 +107,9 @@ class driprelease_test extends \advanced_testcase {
             'coursegroup' => 0,
             'hideunselected' => 0,
             'resetunselected' => 0,
-            'displaydisabled' => 0
+            'displaydisabled' => 0,
         ];
+
         list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
         $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
@@ -123,7 +126,7 @@ class driprelease_test extends \advanced_testcase {
         $coursemodules = $DB->get_records('course_modules');
         $cm = reset($coursemodules);
         $this->assertEquals($cm->availability, '');
-        $tabledata = get_table_data($this->driprelease, 'quiz');
+        $tabledata = get_table_data($this->driprelease);
         // Element 0 is a header row.
         $tabledata[1]['selected'] = 1;
         update_availability($tabledata, $this->driprelease);
@@ -165,7 +168,7 @@ class driprelease_test extends \advanced_testcase {
 
         $this->assertEquals($row1['isheader'], false);
         $this->assertEquals($row1['name'], "Quiz 1");
-        $this->assertEquals($row1['selected'], "");
+        $this->assertEquals($row1['selected'], "checked");
         $this->assertEquals($row1['questioncount'], 0);
 
         $this->assertEquals("Sun 1 Jan 2023 00:00", $row1['calculatedavailability']['startformatted']);
