@@ -1,6 +1,6 @@
 @tool @tool_driprelease @tool_driprelease_hideunselected
 Feature: Unselected course items are set to hidden on save
-        Background:
+  Background:
     Given the following "users" exist:
         | username | firstname | lastname | email                |
         | teacher1 | Teacher   | 1        | teacher1@example.com |

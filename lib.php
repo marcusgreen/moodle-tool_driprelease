@@ -186,10 +186,10 @@ function get_table_data(\stdClass $driprelease) : array {
             if ($row['selected'] > "") {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
+                $contentcounter++;
             }
             $data[] = add_header($row);
         }
-        $contentcounter++;
         $details = $DB->get_record($driprelease->modtype, ['id' => $cm->instance]);
         if ($cm->modname == 'quiz') {
             $questions = $DB->get_records('quiz_slots', ['quizid' => $cm->instance]);
@@ -237,6 +237,10 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 }
                 continue;
             }
+            if (!array_key_exists('calculatedavailability', $module)) {
+                continue;
+            }
+            // Don't write any availability restrictions after the end of the schedule.
             if ($module['calculatedavailability']['start'] > $driprelease->schedulefinish) {
                     continue;
             }

@@ -130,10 +130,12 @@ Feature: Drip release modifies activity availability
     # Deselect rows for Quiz1 and 2
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
+
     # Select quiz 3
     And I click on "select" "checkbox" in the "Quiz3" "table_row"
     And I set the field "schedulestart[day]" to "1"
     And I set the field "schedulestart[month]" to "February"
+
     And I press "Save and display"
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
 
@@ -143,4 +145,4 @@ Feature: Drip release modifies activity availability
     And I press "Save and display"
     Then I should see "1 Feb 2017" in the "Quiz5" "table_row"
     # The next session
-    Then I should see "8 Feb 2017" in the "Quiz6" "table_row"
+    Then I should see "1 Feb 2017" in the "Quiz6" "table_row"
