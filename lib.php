@@ -186,10 +186,10 @@ function get_table_data(\stdClass $driprelease) : array {
             if ($row['selected'] > "") {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
-                $contentcounter++;
             }
             $data[] = add_header($row);
         }
+        $contentcounter++;
         $details = $DB->get_record($driprelease->modtype, ['id' => $cm->instance]);
         if ($cm->modname == 'quiz') {
             $questions = $DB->get_records('quiz_slots', ['quizid' => $cm->instance]);
