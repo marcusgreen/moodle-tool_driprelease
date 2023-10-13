@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_driprelease';
-$plugin->release = '0.2.0';
-$plugin->version = 2023021600;
+$plugin->release = '1.5.0';
+$plugin->version = 2023100300;
 $plugin->requires = 2020110900;
 $plugin->maturity = MATURITY_BETA;
