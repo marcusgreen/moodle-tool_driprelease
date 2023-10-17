@@ -81,9 +81,9 @@ Feature: Drip release modifies activity availability
     And I should not see "Session 0"
 
     # Check the validation checks for empty fields works
-    And I set the field "sessiongroup[sessionlength]" to ""
+    And I set the field "sessionlength" to ""
     And I should see "You must supply a value here"
-    And I set the field "sessiongroup[sessionlength]" to "1"
+    And I set the field "sessionlength" to "1"
     And I set the field "activitiespersession" to ""
     And I should see "You must supply a value here"
     And I set the field "activitiespersession" to "100"
