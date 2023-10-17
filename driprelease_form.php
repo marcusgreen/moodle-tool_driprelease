@@ -115,7 +115,7 @@ class tool_driprelease_form extends moodleform {
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
                 ['value' => $driprelease->sessionlength, 'size' => 3]);
 
-        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
+        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', false, []);
         $mform->addRule('sessiongroup', null, 'required', null, 'client');
 
         $mform->setType('sessiongroup', PARAM_RAW);
