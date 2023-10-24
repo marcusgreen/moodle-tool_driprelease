@@ -51,9 +51,9 @@ Feature: Drip release modifies activity availability
     And I navigate to "Drip release" in current page administration
 
     # Check the validation checks for empty fields works
-    And I set the field "sessiongroup[sessionlength]" to ""
+    And I set the field "sessionlength" to ""
     And I should see "You must supply a value here"
-    And I set the field "sessiongroup[sessionlength]" to "1"
+    And I set the field "sessionlength" to "1"
     And I set the field "activitiespersession" to "1"
     And I set the field "coursegroup" to "Group 1"
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
