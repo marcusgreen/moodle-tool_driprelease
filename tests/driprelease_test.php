@@ -90,8 +90,6 @@ class driprelease_test extends \advanced_testcase {
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
                 'attempts' => 10));
 
-        $cmods = $DB->get_records('course_modules');
-
         foreach ($this->modules as $module) {
             $activitygroup['activity_'.$module->cmid] = 1;
         }
@@ -239,7 +237,7 @@ class driprelease_test extends \advanced_testcase {
      */
     public function test_get_modules() {
         $this->resetAfterTest();
-        $cmids = $modules = get_modules($this->driprelease);
+        $cmids = get_modules($this->driprelease);
         $this->assertCount(3, $cmids);
     }
 }
