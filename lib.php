@@ -74,7 +74,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'courseid' => $courseid,
             'modtype' => $fromform->modtype,
             'activitiespersession' => $fromform->activitiespersession,
-            'sessionlength' => $fromform->sessiongroup['sessionlength'],
+            'sessionlength' => $fromform->sessionlength,
             'schedulestart' => $fromform->schedulestart,
             'schedulefinish' => $fromform->schedulefinish,
             'coursegroup' => $fromform->coursegroup,
