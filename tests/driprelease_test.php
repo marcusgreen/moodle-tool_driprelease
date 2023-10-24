@@ -99,7 +99,7 @@ class driprelease_test extends \advanced_testcase {
         $this->fromform = (object) [
             'modtype' => 'quiz',
             'activitiespersession' => 1,
-            'sessiongroup' => ['sessionlength' => 1], // Sessions last 1 day.
+            'sessionlength' => 1, // Sessions last 1 day.
             'activitygroup' => $activitygroup,
             'schedulestart' => mktime(0, 0, 0, 1, 1, 2023), // First Jan.
             'schedulefinish' => mktime(0, 0, 0, 2, 1, 2023), // First Feb.
