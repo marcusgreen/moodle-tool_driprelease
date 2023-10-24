@@ -115,11 +115,13 @@ class tool_driprelease_form extends moodleform {
         $group[] = $mform->createElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
                 ['value' => $driprelease->sessionlength, 'size' => 3]);
 
-        $mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', false);
-        $mform->addRule('sessiongroup', null, 'required', null, 'client');
+        //$mform->addGroup($group, 'sessiongroup', get_string('sessionlength', 'tool_driprelease') . '&nbsp;&nbsp;', '', ' ', []);
+        $mform->addElement('text', 'sessionlength', get_string('sessionlength','tool_driprelease'),['value' => $driprelease->sessionlength, 'size' => 2]);
 
-        $mform->setType('sessiongroup', PARAM_RAW);
-        $mform->addHelpButton('sessiongroup', 'session', 'tool_driprelease');
+        $mform->addRule('sessionlength', null, 'required', null, 'client');
+
+        $mform->setType('sessionlength', PARAM_RAW);
+        $mform->addHelpButton('sessionlength', 'session', 'tool_driprelease');
 
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
@@ -163,7 +165,7 @@ class tool_driprelease_form extends moodleform {
         $modulecount = count($this->modules);
         $errors = [];
         $activitiespersession = $fromform['activitiespersession'];
-        $sessionlength = $fromform['sessiongroup']['sessionlength'];
+        $sessionlength = $fromform['sessionlength'];
         $duration = round(($fromform['schedulefinish'] - $fromform['schedulestart']) / DAYSECS);
 
         if ($duration < 1) {
