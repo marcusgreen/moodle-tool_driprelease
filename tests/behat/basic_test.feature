@@ -58,7 +58,6 @@ Feature: Drip release modifies activity availability
 
     And I click on "Edit settings" "link" in the "Quiz1" activity
     And I expand all fieldsets
-    And I pause
     And I set the field "Completion tracking" to "Show activity as complete when conditions are met"
     And I set the field "completionusegrade" to "1"
     And I press "Save and return to course"
@@ -158,4 +157,5 @@ Feature: Drip release modifies activity availability
     # Skip date count over the unselected items.
     And I press "Save and display"
     Then I should see "1 Feb 2017" in the "Quiz6" "table_row"
+    #There may still be some inconsistancies in the start from checked code.
 
