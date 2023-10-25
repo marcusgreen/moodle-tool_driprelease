@@ -179,7 +179,6 @@ function get_table_data(\stdClass $driprelease) : array {
             null, 'id,coursemoduleid');
     }
     foreach ($modules as $cm) {
-        $row['cm'] = $cm;
         $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
 
         if ($contentcounter % ($driprelease->activitiespersession) == 0) {
@@ -190,20 +189,27 @@ function get_table_data(\stdClass $driprelease) : array {
             $data[] = add_header($row);
         }
         $contentcounter++;
-        $details = $DB->get_record($driprelease->modtype, ['id' => $cm->instance]);
-        if ($cm->modname == 'quiz') {
-            $questions = $DB->get_records('quiz_slots', ['quizid' => $cm->instance]);
-            $row['questioncount'] = count($questions);
-        }
-        $row['isheader'] = false;
-        $row['id'] = $cm->id;
-        $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
-        $row['name'] = $cm->name;
-        $row['intro'] = strip_tags($details->intro);
-        $row['moduleavailability'] = get_availability($cm->availability);
-        $data[] = $row;
+        $row['modtype'] = $driprelease->modtype;
+        $data[] = row_fill($row, $cm);
     }
     return $data ?? [];
+}
+
+function row_fill(array $row, $cm) : array {
+    global $DB;
+
+    $details = $DB->get_record($row['modtype'], ['id' => $cm->instance]);
+    $row['cm'] = $cm;
+    $row['intro'] = strip_tags($details->intro);
+    if ($cm->modname == 'quiz') {
+        $questions = $DB->get_records('quiz_slots', ['quizid' => $cm->instance]);
+        $row['questioncount'] = count($questions);
+    }
+    $row['isheader'] = false;
+    $row['id'] = $cm->id;
+    $row['name'] = $cm->name;
+    $row['moduleavailability'] = get_availability($cm->availability);
+    return $row;
 }
 
 /**
