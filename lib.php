@@ -195,7 +195,14 @@ function get_table_data(\stdClass $driprelease) : array {
     return $data ?? [];
 }
 
-function row_fill(array $row, $cm) : array {
+/**
+ * Simplify get_table_data
+ *
+ * @param array $row
+ * @param cm_info $cm
+ * @return array
+ */
+function row_fill(array $row, cm_info $cm) : array {
     global $DB;
 
     $details = $DB->get_record($row['modtype'], ['id' => $cm->instance]);
