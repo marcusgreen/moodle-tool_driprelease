@@ -39,12 +39,15 @@ export const init = () => {
         e.addEventListener('click', cmidClick);
     });
     configureSelectAll();
+    configureSessions();
 
     /**
      *
      * @param {*} e
      */
     function cmidClick(e) {
+            debugger;
+            console.log('hello');
             var id = e.currentTarget.id.split('_')[2];
             var checkboxid = 'id_activitygroup_activity_' +id;
             var checkbox = document.getElementById(checkboxid);
@@ -52,6 +55,20 @@ export const init = () => {
             configureSelectAll();
     }
 
+
+    function configureSessions(){
+        var sessions = document.querySelectorAll('input[id*="_ses_"]');
+        sessions.forEach(function(e) {
+            e.addEventListener('click', sessionClick());
+        });
+    }
+    function sessionClick(e){
+        debugger;
+        console.log('hello');
+        var sessionid = e.currentTarget.id.split('_')[3];
+        // debugger;
+        // console.log(sessionid);
+    }
     /**
      * Set up the selectAll checkbox
      */
