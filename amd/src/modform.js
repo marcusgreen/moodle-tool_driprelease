@@ -46,28 +46,31 @@ export const init = () => {
      * @param {*} e
      */
     function cmidClick(e) {
-            debugger;
-            console.log('hello');
             var id = e.currentTarget.id.split('_')[2];
             var checkboxid = 'id_activitygroup_activity_' +id;
             var checkbox = document.getElementById(checkboxid);
             checkbox.checked = !checkbox.checked;
             configureSelectAll();
+            configureSessions();
     }
 
 
     function configureSessions(){
-        var sessions = document.querySelectorAll('input[id*="_ses_"]');
-        sessions.forEach(function(e) {
-            e.addEventListener('click', sessionClick());
-        });
+        var selectButtons = document.querySelectorAll('button[id^="sessionid_"]');
+        selectButtons.forEach(function(e) {
+            e.addEventListener('click', sessionClick);
+        })
     }
     function sessionClick(e){
-        debugger;
         console.log('hello');
-        var sessionid = e.currentTarget.id.split('_')[3];
-        // debugger;
-        // console.log(sessionid);
+        var sessionid = e.currentTarget.id.split('_')[1];
+        sesscbx = document.querySelectorAll('input[id^="id_cmid_"]');
+        sesscbx.forEach((cbx) => {
+            var cboxid = cbx.id.split('_')[4];
+            if (cboxid == sessionid) {
+                cbx.checked = !cbx.checked;
+            }
+        });
     }
     /**
      * Set up the selectAll checkbox

@@ -186,10 +186,12 @@ function get_table_data(\stdClass $driprelease) : array {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
             }
+
             $data[] = add_header($row);
         }
         $contentcounter++;
         $row['modtype'] = $driprelease->modtype;
+        $row['sessioncounter'] = $sessioncounter;
         $data[] = row_fill($row, $cm);
     }
     return $data ?? [];
