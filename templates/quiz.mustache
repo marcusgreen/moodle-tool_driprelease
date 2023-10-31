@@ -78,7 +78,15 @@
                 <td colspan="6">
                 <button id=sessionid_{{calculatedavailability.sessioncounter}}>Session</button>
                     {{#str}} session, tool_driprelease {{/str}} {{{calculatedavailability.sessioncounter}}}:
-                    {{calculatedavailability.startformatted}} - {{calculatedavailability.endformatted}}
+                    {{< core/time_element }}
+                    {{$timestampval}}{{calculatedavailability.start}}{{/timestampval}}
+                    {{$userdateformatval}}%a %d %b %Y %H:%M{{/userdateformatval}}
+                    {{/core/time_element}}
+                    -
+                    {{< core/time_element }}
+                    {{$timestampval}}{{calculatedavailability.end}}{{/timestampval}}
+                    {{$userdateformatval}}%a %d %b %Y %H:%M{{/userdateformatval}}
+                    {{/core/time_element}}
                 </td>
             </tr>
 

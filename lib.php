@@ -196,8 +196,6 @@ function get_table_data(\stdClass $driprelease) : array {
                     $availability = get_availability($record->availability);
                    $row['calculatedavailability']['start'] = $availability['from'] ?? '';
                    $row['calculatedavailability']['end'] = $availability['to'] ?? '';
-                   $row['calculatedavailability']['startformatted'] = $availability['from'] ?? '';
-                   $row['calculatedavailability']['endformatted'] = $availability['to'] ?? '';
             }
             $row['sessioncounter'] = $sessioncounter;
 
@@ -358,8 +356,6 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
     $row['sessioncounter'] = $sessioncounter + 1;
     $row['start'] = $start;
     $row['end'] = $end;
-    $row['startformatted'] = userdate($start, '%a %d %b %Y %H:%M');
-    $row['endformatted'] = userdate($end, '%a %d %b %Y %H:%M');
     return $row;
 }
 
