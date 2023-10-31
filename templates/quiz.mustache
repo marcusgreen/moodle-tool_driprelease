@@ -77,15 +77,19 @@
             <tr>
             <td colspan="6 ">
                 {{#str}} session, tool_driprelease {{/str}} {{{calculatedavailability.sessioncounter}}}:
+                {{#calculatedavailability.start}}
                 {{< core/time_element }}
                 {{$timestampval}}{{calculatedavailability.start}}{{/timestampval}}
                 {{$userdateformatval}}%a %d %b %Y %H:%M{{/userdateformatval}}
                 {{/core/time_element}}
+                {{/calculatedavailability.start}}
                 -
+                {{#calculatedavailability.end}}
                 {{< core/time_element }}
                 {{$timestampval}}{{calculatedavailability.end}}{{/timestampval}}
                 {{$userdateformatval}}%a %d %b %Y %H:%M{{/userdateformatval}}
                 {{/core/time_element}}
+                {{/calculatedavailability.end}}
             </tr>
         {{/isheader}}
 
