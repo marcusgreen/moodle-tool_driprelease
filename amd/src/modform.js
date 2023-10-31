@@ -62,13 +62,13 @@ export const init = () => {
         })
     }
     function sessionClick(e){
-        console.log('hello');
         var sessionid = e.currentTarget.id.split('_')[1];
         sesscbx = document.querySelectorAll('input[id^="id_cmid_"]');
         sesscbx.forEach((cbx) => {
             var cboxid = cbx.id.split('_')[4];
+            debugger;
             if (cboxid == sessionid) {
-                cbx.checked = !cbx.checked;
+                cbx.checked = true;
             }
         });
     }

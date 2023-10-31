@@ -158,7 +158,7 @@ function get_modules(\stdClass $driprelease) : array {
 function add_header(array $row) :array {
     $header = $row;
     $header['isheader'] = true;
-    $header['cm'] = (object) ['id' => -1];
+    $header['cm'] = (object) ['id' => $header['sessioncounter']];
     $header['name'] = 'Session';
     return $header;
 }
@@ -177,6 +177,7 @@ function get_table_data(\stdClass $driprelease) : array {
     if (isset($driprelease->id)) {
         $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],
             null, 'id,coursemoduleid');
+    //  $cmids =  $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],'','coursemoduleid,id');
     }
     foreach ($modules as $cm) {
         $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
@@ -185,13 +186,25 @@ function get_table_data(\stdClass $driprelease) : array {
             if ($row['selected'] > "") {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
+            } else {
+                $sessioncounter++;
+                 $record = $DB->get_record(
+                    'course_modules',
+                    ['id' => $cm->id],
+                    'availability'
+                );
+                    $availability = get_availability($record->availability);
+                   $row['calculatedavailability']['start'] = $availability['from'] ?? '';
+                   $row['calculatedavailability']['end'] = $availability['to'] ?? '';
+                   $row['calculatedavailability']['startformatted'] = $availability['from'] ?? '';
+                   $row['calculatedavailability']['endformatted'] = $availability['to'] ?? '';
             }
+            $row['sessioncounter'] = $sessioncounter;
 
             $data[] = add_header($row);
         }
         $contentcounter++;
         $row['modtype'] = $driprelease->modtype;
-        $row['sessioncounter'] = $sessioncounter;
         $data[] = row_fill($row, $cm);
     }
     return $data ?? [];
