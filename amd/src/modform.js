@@ -67,9 +67,9 @@ export const init = () => {
         sesscbx.forEach((cbx) => {
             var cboxid = cbx.id.split('_')[4];
             debugger;
-            if (cboxid == sessionid) {
-                cbx.checked = true;
-            }
+                if ((cboxid == sessionid) && (cboxid > 0)) {
+                    cbx.checked = !cbx.checked;
+                }
         });
     }
     /**

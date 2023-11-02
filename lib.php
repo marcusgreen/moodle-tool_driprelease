@@ -174,6 +174,7 @@ function get_table_data(\stdClass $driprelease) : array {
     $contentcounter = 0;
     $sessioncounter = 0;
     $selections = [];
+    $flag = false;
     if (isset($driprelease->id)) {
         $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],
             null, 'id,coursemoduleid');
@@ -193,12 +194,11 @@ function get_table_data(\stdClass $driprelease) : array {
                     ['id' => $cm->id],
                     'availability'
                 );
-                    $availability = get_availability($record->availability);
-                   $row['calculatedavailability']['start'] = $availability['from'] ?? '';
-                   $row['calculatedavailability']['end'] = $availability['to'] ?? '';
+                $fromto = get_from_to($record->availability);
+                $row['calculatedavailability']['start'] = $fromto['from'] ?? '';
+                $row['calculatedavailability']['end'] = $fromto['to'] ?? '';
             }
             $row['sessioncounter'] = $sessioncounter;
-
             $data[] = add_header($row);
         }
         $contentcounter++;
@@ -207,7 +207,15 @@ function get_table_data(\stdClass $driprelease) : array {
     }
     return $data ?? [];
 }
-
+function get_from_to($availability) {
+    $ob = json_decode($availability);
+    if (!$ob) {
+        return [];
+    }
+    $fromto['from'] = $ob->c[1]->t;
+    $fromto['to'] = $ob->c[2]->t;
+    return $fromto;
+}
 /**
  * Simplify get_table_data
  *

@@ -76,8 +76,8 @@
         {{#isheader}}
             <tr>
                 <td colspan="6">
-                <button id=sessionid_{{calculatedavailability.sessioncounter}}>Session</button>
-                    {{#str}} session, tool_driprelease {{/str}} {{{calculatedavailability.sessioncounter}}}:
+                <button id=sessionid_{{sessioncounter}}>Session</button>
+                    {{#str}} session, tool_driprelease {{/str}} {{{sessioncounter}}}:
                     {{#calculatedavailability.start}}
                     {{< core/time_element }}
                     {{$timestampval}}{{calculatedavailability.start}}{{/timestampval}}
@@ -98,7 +98,7 @@
 
         {{^isheader}}
             <tr>
-            <td> <input name = "select" type='checkbox' id='id_cmid_{{id}}_ses_{{calculatedavailability.sessioncounter}}' {{selected}} >
+            <td> <input name = "select" type='checkbox' id='id_cmid_{{id}}_ses_{{sessioncounter}}' {{selected}} >
             </td>
             <td><a href={{config.wwwroot}}/mod/quiz/view.php?id={{id}} >{{{name}}}</a></td><td>{{{intro}}}</td>
             <td>{{questioncount}}</td>
