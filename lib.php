@@ -178,7 +178,6 @@ function get_table_data(\stdClass $driprelease) : array {
     if (isset($driprelease->id)) {
         $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],
             null, 'id,coursemoduleid');
-    //  $cmids =  $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $driprelease->id],'','coursemoduleid,id');
     }
     foreach ($modules as $cm) {
         $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
@@ -207,7 +206,14 @@ function get_table_data(\stdClass $driprelease) : array {
     }
     return $data ?? [];
 }
-function get_from_to($availability) {
+/**
+ * Get from and to dates as unixtimestamps
+ *
+ * @param string $availability // In json format.
+ * @return array // Two elements from and in unixtime format
+ */
+function get_from_to(string $availability) :array {
+
     $ob = json_decode($availability);
     if (!$ob) {
         return [];
