@@ -5,6 +5,15 @@ between dates and by course group membership.
 
 Changed date incrementation so it starts from the first selected checkbox, rather than the first item from the list of activities.
 
+Added behat test coursegroup.feature to confirm that the course groups works as expected.
+
+Fix for deprecation message with PHP 8.1 "Deprecated: Automatic conversion of false to array is deprecated in /var/www/html/master/lib/pear/HTML/Common.php on line 249"
+
+Updates to documentation and clarification of the help strings
+
+
+
+
 Version 1.0.1 of the Moodle driprelease tool Oct 2023
 
 Fixed errors in the form code that showed when Debug was set higher than Normal.
