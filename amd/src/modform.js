@@ -42,8 +42,11 @@ export const init = () => {
     configureSessions();
 
     /**
+     * When an item checkbox is clicked, toggle the matching
+     * checkbox in the activitygroup_activity group of checkboxes
+     * This is to ensure the options are passed to form processing.
      *
-     * @param {*} e
+     * @param {PointerEvent} e
      */
     function cmidClick(e) {
             var id = e.currentTarget.id.split('_')[2];
@@ -54,20 +57,33 @@ export const init = () => {
             configureSessions();
     }
 
-
+    /**
+     * Add event listener to all the session buttons that
+     * toggle the items within a session.
+     */
     function configureSessions(){
         var selectButtons = document.querySelectorAll('button[id^="sessionid_"]');
         selectButtons.forEach(function(e) {
             e.addEventListener('click', sessionClick);
-        })
+        });
     }
+    /**
+     * Toggle all the checkboxes for the session and
+     * the matching checkboxes in the hidden group
+     * (for passing through to form processing)
+     *
+     * @param {PointerEvent} e
+     */
     function sessionClick(e){
         var sessionid = e.currentTarget.id.split('_')[1];
-        sesscbx = document.querySelectorAll('input[id^="id_cmid_"]');
+        var sesscbx = document.querySelectorAll('input[id^="id_cmid_"]');
         sesscbx.forEach((cbx) => {
             var cboxid = cbx.id.split('_')[4];
-            debugger;
+            var itemid = cbx.id.split('_')[2];
                 if ((cboxid == sessionid) && (cboxid > 0)) {
+                    hiddencbx = 'id_activitygroup_activity_'+itemid;
+                    var hiddencbx = document.getElementById(hiddencbx);
+                    hiddencbx.checked = !cbx.checked;
                     cbx.checked = !cbx.checked;
                 }
         });

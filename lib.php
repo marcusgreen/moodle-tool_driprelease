@@ -208,6 +208,8 @@ function get_table_data(\stdClass $driprelease) : array {
 }
 /**
  * Get from and to dates as unixtimestamps
+ * Used if availability is in database
+ * but matching checkbox item is not selected.
  *
  * @param string $availability // In json format.
  * @return array // Two elements from and in unixtime format
