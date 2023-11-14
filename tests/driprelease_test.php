@@ -223,10 +223,11 @@ class driprelease_test extends \advanced_testcase {
      */
     public function test_add_header() {
         $this->resetAfterTest();
-        $header = add_header([]);
+        $row = ['sessioncounter' => 1];
+        $header = add_header($row);
         $this->assertEquals(true, $header['isheader']);
         $this->assertEquals('Session', $header['name']);
-        $this->assertEquals(-1, $header['cm']->id);
+        $this->assertEquals(1, $header['cm']->id);
     }
 
     /**
