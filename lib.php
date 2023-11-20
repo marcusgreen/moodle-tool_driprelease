@@ -187,7 +187,6 @@ function get_table_data(\stdClass $driprelease) : array {
                 $row['calculatedavailability'] = driprelease_calculate_availability($driprelease, $sessioncounter);
                 $sessioncounter++;
             } else {
-                 //$sessioncounter++;
                  $record = $DB->get_record(
                     'course_modules',
                     ['id' => $cm->id],

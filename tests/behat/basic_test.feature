@@ -158,5 +158,3 @@ Feature: Drip release modifies activity availability
     # Skip date count over the unselected items.
     And I press "Save and display"
     Then I should see "1 Mar 2017" in the "Quiz6" "table_row"
-    #There may still be some inconsistancies in the start from checked code.
-

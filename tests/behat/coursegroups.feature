@@ -1,5 +1,5 @@
 @tool @tool_driprelease @tool_driprelease_coursegroups
-Feature: Drip release modifies activity availability
+Feature: Add coursegroups to restrictionsfs
     In order to set a course activities for drip/sequential availabiliy
   Background:
     Given the following "users" exist:
