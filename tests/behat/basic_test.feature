@@ -77,8 +77,8 @@ Feature: Drip release modifies activity availability
     Then I should see "3" in the "Quiz1" "table_row"
     # Confirm that module discriptions wrap and are not truncated
     And I should see "descriptionend"
-    # Confirm that a common "off by 1 error has not crept in"
-    And I should not see "Session 0"
+    # With no items selected the session counter never gets incremented"
+    And I should see "Session 0"
 
     # Check the validation checks for empty fields works
     And I set the field "sessionlength" to ""
@@ -148,6 +148,8 @@ Feature: Drip release modifies activity availability
     Then I should see "1 Feb 2017" in the "Quiz5" "table_row"
     # The next session
     Then I should see "8 Feb 2017" in the "Quiz6" "table_row"
+    And I set the field "schedulestart[month]" to "March"
+
     And I click on "select" "checkbox" in the "Quiz1" "table_row"
     And I click on "select" "checkbox" in the "Quiz2" "table_row"
     And I click on "select" "checkbox" in the "Quiz3" "table_row"
@@ -155,8 +157,6 @@ Feature: Drip release modifies activity availability
     And I click on "select" "checkbox" in the "Quiz5" "table_row"
     # Skip date count over the unselected items.
     And I press "Save and display"
-    And I pause
-
-    Then I should see "1 Feb 2017" in the "Quiz6" "table_row"
+    Then I should see "1 Mar 2017" in the "Quiz6" "table_row"
     #There may still be some inconsistancies in the start from checked code.
 
