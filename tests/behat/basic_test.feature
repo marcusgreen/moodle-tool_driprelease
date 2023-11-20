@@ -102,7 +102,6 @@ Feature: Drip release modifies activity availability
     And I press "Save and return to course"
     And I navigate to "Drip release" in current page administration
     # Check the table and modules availability has been updated
-
     Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
     Then I should not see "1 Jan 2017" in the "Quiz2" "table_row"
@@ -156,6 +155,8 @@ Feature: Drip release modifies activity availability
     And I click on "select" "checkbox" in the "Quiz5" "table_row"
     # Skip date count over the unselected items.
     And I press "Save and display"
+    And I pause
+
     Then I should see "1 Feb 2017" in the "Quiz6" "table_row"
     #There may still be some inconsistancies in the start from checked code.
 

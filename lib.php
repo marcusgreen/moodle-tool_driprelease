@@ -211,17 +211,16 @@ function get_table_data(\stdClass $driprelease) : array {
  * Used if availability is in database
  * but matching checkbox item is not selected.
  *
- * @param string $availability // In json format.
+ * @param string|null $availability // In json format.
  * @return array // Two elements from and in unixtime format
  */
-function get_from_to(string $availability) :array {
-
-    $ob = json_decode($availability);
-    if (!$ob) {
+function get_from_to(?string $availability) :array {
+    if (!$availability) {
         return [];
     }
-    $fromto['from'] = $ob->c[1]->t;
-    $fromto['to'] = $ob->c[2]->t;
+    $ob = json_decode($availability);
+    $fromto['from'] = $ob->c[1]->t ?? "";
+    $fromto['to'] = $ob->c[2]->t ?? "";
     return $fromto;
 }
 /**
