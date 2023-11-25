@@ -76,7 +76,9 @@
         {{#isheader}}
             <tr>
                 <td colspan="6">
+                {{#sessioncounter}}
                 <button id=sessionid_{{sessioncounter}}>Session</button>
+                {{/sessioncounter}}
                     {{#str}} session, tool_driprelease {{/str}} {{{sessioncounter}}}:
                     {{#calculatedavailability.start}}
                     {{< core/time_element }}
