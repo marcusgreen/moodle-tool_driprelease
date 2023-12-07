@@ -59,7 +59,7 @@
 <table class = "table table-hover table-bordered table-striped " >
     <thead>
         <tr>
-            <th><input type='checkbox' name='selectall' title="Toggle selection of all items" id='id_selectall' >   </th>
+            <th><input type='checkbox' name='selectall' title="{{#str}} toggleall, tool_driprelease{{/str}}" id='id_selectall' >   </th>
             <th class="col-md-0">{{#str}}name{{/str}}</th>
             <th class="col-md-4">{{#str}}description{{/str}}</th>
             <th class="col-md-1">{{#str}}questioncount,tool_driprelease {{/str}} </th>
@@ -77,7 +77,9 @@
             <tr>
                 <td colspan="6">
                 {{#sessioncounter}}
-                <button id=sessionid_{{sessioncounter}}>Session</button>
+                <button id=sessionid_{{sessioncounter}}
+                title= '{{#str}} toggleallsessiontitle, tool_driprelease {{/str}}'
+                > {{#str}} toggleallsession, tool_driprelease {{/str}}</button>
                 {{/sessioncounter}}
                     {{#str}} session, tool_driprelease {{/str}} {{{sessioncounter}}}:
                     {{#calculatedavailability.start}}
