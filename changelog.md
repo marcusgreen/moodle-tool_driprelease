@@ -1,4 +1,4 @@
-Version 1.0.0 of the Moodle driprelease tool Oct 2023
+### Version 1.0.0 of the Moodle driprelease tool Oct 2023
 
 Added course group option to create restriction sets to limit access both
 between dates and by course group membership.
@@ -11,10 +11,7 @@ Fix for deprecation message with PHP 8.1 "Deprecated: Automatic conversion of fa
 
 Updates to documentation and clarification of the help strings
 
-
-
-
-Version 1.0.1 of the Moodle driprelease tool Oct 2023
+### Version 1.0.1 of the Moodle driprelease tool Oct 2023
 
 Fixed errors in the form code that showed when Debug was set higher than Normal.
 Removed redundant variables (purely for code clarity)
