@@ -169,11 +169,13 @@ class driprelease_test extends \advanced_testcase {
         $this->assertEquals($row1['selected'], "checked");
         $this->assertEquals($row1['questioncount'], 0);
 
-        $this->assertEquals("Sun 1 Jan 2023 00:00", $row1['calculatedavailability']['startformatted']);
-        $this->assertEquals("Sun 1 Jan 2023 00:00", $row1['calculatedavailability']['endformatted']);
+        // Sundays quiz.
+        $this->assertEquals(mktime(0, 0, 0, 1, 1, 2023), $row1['calculatedavailability']['start']);
+        $this->assertEquals(mktime(0, 0, 0, 1, 1, 2023), $row1['calculatedavailability']['end']);
 
-        $this->assertEquals("Mon 2 Jan 2023 00:00", $row2['calculatedavailability']['startformatted']);
-        $this->assertEquals("Mon 2 Jan 2023 00:00", $row2['calculatedavailability']['endformatted']);
+        // Mondays quiz.
+        $this->assertEquals(mktime(0, 0, 0, 1, 2, 2023), $row2['calculatedavailability']['start']);
+        $this->assertEquals(mktime(0, 0, 0, 1, 2, 2023), $row2['calculatedavailability']['end']);
     }
     /**
      * Check that update doesn't fall over and
