@@ -42,6 +42,7 @@ $string['driprelease_header'] = 'Driprelease help';
 $string['driprelease:view'] = 'View driprelease for the course';
 $string['driprelease_header_help'] = 'A description of What Driprelease does';
 $string['dateformat'] = 'Date format';
+$string['from'] = 'From';
 $string['dripreleasename_help'] = 'Content scheduler help information';
 $string['hideunselected'] = 'Hide unselected';
 $string['hideunselected_help'] = 'Any item not selected will be hidden from students, including in the gradebook';
