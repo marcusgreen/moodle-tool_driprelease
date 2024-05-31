@@ -115,7 +115,10 @@ if ($fromform = $mform->get_data()) {
 }
 
 $tabledata = get_table_data($driprelease);
-
+xdebug_break();
+if ($modtype !== "quiz") {
+    $modtype = 'genericmod';
+}
 $out = $OUTPUT->render_from_template('tool_driprelease/'.$modtype, ['tabledata' => $tabledata]);
 
 $mform->set_data($driprelease);

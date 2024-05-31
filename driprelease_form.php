@@ -35,7 +35,7 @@ require_once($CFG->libdir . '/formslib.php');
  */
 class tool_driprelease_form extends moodleform {
     /** @var array options to be used with date_time_selector fields in the quiz. */
-    public static $datefieldoptions = array('optional' => false);
+    public static $datefieldoptions = ['optional' => false];
     /** @var array modules on the course */
     public $modules;
     /**
@@ -60,13 +60,12 @@ class tool_driprelease_form extends moodleform {
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
-        $mform->addElement('html', "<div id=hidemodtypes style='display:none;'>");
-        $modtypes = ['quiz' => 'Quiz', 'assign' => 'Assign'];
-        $mform->addElement('select', 'modtype', 'Module type', $modtypes);
-        $mform->setDefault('modtype', 'quiz');
-        $mform->addElement('html', "</div>");
 
+        $moduletypes = get_course_module_types($courseid);
+        $mform->addElement('select', 'modtype', 'Module type', $moduletypes);
+        $mform->setDefault('modtype', 'quiz');
         $mform->setType('modtype', PARAM_TEXT);
+
         $this->modules = $this->get_modules($course, $driprelease->modtype);
         if ($this->modules) {
             foreach ($this->modules as $module) {
@@ -198,7 +197,7 @@ class tool_driprelease_form extends moodleform {
      * @param string $modtype
      * @return array
      */
-    public function get_modules(\stdClass $course, string $modtype) : array {
+    public function get_modules(\stdClass $course, string $modtype): array {
 
         $modinfo = get_fast_modinfo($course);
         if (!isset($modinfo->instances[$modtype])) {
@@ -259,7 +258,7 @@ class tool_driprelease_form extends moodleform {
         $mform = $this->_form;
 
         // Elements in a row need a group.
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton2', $submit2label);
 
         if ($submitlabel !== false) {
@@ -270,7 +269,7 @@ class tool_driprelease_form extends moodleform {
             $buttonarray[] = &$mform->createElement('cancel');
         }
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->setType('buttonar', PARAM_RAW);
     }
 }
