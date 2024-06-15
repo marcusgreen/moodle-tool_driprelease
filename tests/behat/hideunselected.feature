@@ -8,11 +8,13 @@ Feature: Unselected course items are set to hidden on save
     And the following "courses" exist:
         | fullname | shortname | format | enablecompletion | category |
         | Course 1 | C1        | topics | 1                | 0        |
+    And the following config values are set as admin:
+      | enableasyncbackup | 0 |
     And I log in as "admin"
   @javascript @_file_upload
   Scenario: Restore course containing quizzes
     When I am on the "Course 1" "restore" page
-    And I press "Manage backup files"
+    And I press "Manage course backups"
     And I upload "admin/tool/driprelease/tests/fixtures/test_backup.mbz" file to "Files" filemanager
     And I press "Save changes"
     And I restore "test_backup.mbz" backup into a new course using this options:

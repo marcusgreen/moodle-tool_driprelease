@@ -43,7 +43,7 @@ Feature: Drip release modifies activity availability
 
         @javascript
         Scenario: Select/deselect activities to set their availability
-            Given I log in as "admin"
+            Given I log in as "teacher1"
 
               And I am on "Empty course" course homepage with editing mode on
               And I navigate to "Drip release" in current page administration

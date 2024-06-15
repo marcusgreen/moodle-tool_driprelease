@@ -155,6 +155,9 @@ function get_modules(\stdClass $driprelease): array {
     $course = $DB->get_record('course', ['id' => $driprelease->courseid]);
     $modinfo = get_fast_modinfo($course);
     $modules = [];
+    if (!$modinfo->instances) {
+        return $modules;
+    };
     foreach ($modinfo->instances[$driprelease->modtype] as $cm) {
         $modules[$cm->id] = $cm;
     }

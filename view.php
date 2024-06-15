@@ -115,7 +115,6 @@ if ($fromform = $mform->get_data()) {
 }
 
 $tabledata = get_table_data($driprelease);
-xdebug_break();
 if ($modtype !== "quiz") {
     $modtype = 'genericmod';
 }
