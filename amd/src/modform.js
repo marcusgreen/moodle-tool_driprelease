@@ -65,5 +65,12 @@ export const init = () => {
         });
         selectAllCheckBox.checked = allchecked;
     }
+    var modtypeSelect = document.getElementById('id_modtype');
+    modtypeSelect.addEventListener("change", function() {
+        var selectedValue = this.value;
+        // Do something with the selected value
+        window.location.reload();
+        //alert(selectedValue);
+    });
 };
 
