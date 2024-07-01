@@ -86,8 +86,8 @@ $eventdata = [
     'context' => context_course::instance($courseid),
     'other' => [
         'username' => $USER->username,
-        'course' => $course->shortname
-    ]
+        'course' => $course->shortname,
+    ],
 ];
 
 if ($fromform = $mform->get_data()) {
@@ -115,10 +115,23 @@ if ($fromform = $mform->get_data()) {
 }
 
 $tabledata = get_table_data($driprelease);
-if ($modtype !== "quiz") {
-    $modtype = 'genericmod';
+
+
+$templates = [];
+$iterator = new DirectoryIterator(__DIR__ . '/templates');
+foreach ($iterator as $item) {
+    if ($item->isDot()) {
+        continue;
+    }
+    $templates[] = strtok($item->getFilename(), ".");
 }
-$out = $OUTPUT->render_from_template('tool_driprelease/'.$modtype, ['tabledata' => $tabledata]);
+
+$templatefile = $modtype;
+if (!in_array($modtype, $templates)) {
+    $templatefile = 'genericmod';
+}
+
+$out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile, ['tabledata' => $tabledata, 'modtype' => $modtype]);
 
 $mform->set_data($driprelease);
 

@@ -69,8 +69,7 @@ export const init = () => {
     modtypeSelect.addEventListener("change", function() {
         var selectedValue = this.value;
         // Do something with the selected value
-        window.location.reload();
-        //alert(selectedValue);
+        // window.location.reload();
     });
 };
 

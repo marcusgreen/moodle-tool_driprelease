@@ -62,7 +62,7 @@
             <tr>
             <td> <input name = "select" type='checkbox' id='id_cmid_{{id}}' {{selected}} >
             </td>
-            <td><a href={{config.wwwroot}}/mod/assign/view.php?id={{id}} >{{{name}}}</a></td><td>{{{intro}}}</td>
+            <td><a href={{config.wwwroot}}/mod/{{modtype}}/view.php?id={{id}} >{{{name}}}</a></td><td>{{{intro}}}</td>
             <td>{{{moduleavailability.from}}}</td><td>{{{moduleavailability.to}}}</td>
             </tr>
         {{/isheader}}
