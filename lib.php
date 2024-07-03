@@ -49,7 +49,6 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
  */
 function driprelease_update(\stdClass $fromform , int $courseid): array {
     global $DB;
-    xdebug_break();
     $dripreleaseid = $DB->get_field('tool_driprelease', 'id', ['courseid' => $courseid]);
 
     if ($dripreleaseid) {

@@ -18,8 +18,9 @@
  * @copyright 2022 Marcus Green
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+import Url from 'core/url';
 
-export const init = () => {
+export const init = (courseid) => {
 
     var selectAllCheckBox = document.getElementById('id_selectall');
 
@@ -65,11 +66,23 @@ export const init = () => {
         });
         selectAllCheckBox.checked = allchecked;
     }
+    window.onbeforeunload = function () {
+        // Your Code here
+         return null;  // return null to avoid pop up
+    };
+
+    window.onbeforeunload  = null;
+
     var modtypeSelect = document.getElementById('id_modtype');
-    modtypeSelect.addEventListener("change", function() {
-        var selectedValue = this.value;
-        // Do something with the selected value
-        // window.location.reload();
+    modtypeSelect.addEventListener("change", function(event) {
+      event.preventDefault();
+       var modType = this.value;
+       const params = {
+         modtype: modType,
+         courseid: courseid
+        };
+        window.onbeforeunload  = null;
+        //window.location.assign(Url.relativeUrl("admin/tool/driprelease/view.php", params, false));
     });
 };
 

@@ -43,15 +43,16 @@ class tool_driprelease_form extends moodleform {
      */
     public function definition() {
         global $CFG, $DB, $PAGE, $COURSE;
+
         require_once($CFG->dirroot . '/course/externallib.php');
+        $modtype = optional_param('modtype', '', PARAM_RAW);
+        $courseid = optional_param('courseid', '', PARAM_INT);
+
+        $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init', ['courseid' => $courseid]);
 
         $mform = $this->_form;
-
         $driprelease = (object) $this->_customdata['driprelease'];
 
-        $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init');
-
-        $courseid = optional_param('courseid', '', PARAM_INT);
         $course = $DB->get_record('course', ['id' => $courseid]);
 
         $mform->addElement('hidden', 'courseid', $courseid);
@@ -62,9 +63,12 @@ class tool_driprelease_form extends moodleform {
         $mform->setType('courseid', PARAM_INT);
 
         $moduletypes = get_course_module_types($courseid);
-        $mform->addElement('select', 'modtype', 'Module type', $moduletypes);
-        $mform->setDefault('modtype', 'quiz');
-        $mform->setType('modtype', PARAM_TEXT);
+        $group[] = $mform->createElement('select', 'modtype', 'Module type', $moduletypes);
+        $group[] = $mform->createElement('submit', 'refresh', get_string('refresh', 'tool_driprelease'), []);
+        $mform->addgroup($group, '', 'Activity type', [''], true);
+        $mform->setDefault('modtype', $modtype ?? 'quiz');
+        //$mform->setType('modtype', PARAM_TEXT);
+        // $mform->addElement('submit', 'refresh', 'Refresh');
 
         $this->modules = $this->get_modules($course, $driprelease->modtype);
         if ($this->modules) {

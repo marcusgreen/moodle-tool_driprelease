@@ -130,8 +130,7 @@ $templatefile = $modtype;
 if (!in_array($modtype, $templates)) {
     $templatefile = 'genericmod';
 }
-
-$out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile, ['tabledata' => $tabledata, 'modtype' => $modtype]);
+$out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile, ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
 
 $mform->set_data($driprelease);
 
