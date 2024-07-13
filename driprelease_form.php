@@ -67,8 +67,6 @@ class tool_driprelease_form extends moodleform {
         $group[] = $mform->createElement('submit', 'refresh', get_string('refresh', 'tool_driprelease'), []);
         $mform->addgroup($group, '', 'Activity type', [''], true);
         $mform->setDefault('modtype', $modtype ?? 'quiz');
-        //$mform->setType('modtype', PARAM_TEXT);
-        // $mform->addElement('submit', 'refresh', 'Refresh');
 
         $this->modules = $this->get_modules($course, $driprelease->modtype);
         if ($this->modules) {

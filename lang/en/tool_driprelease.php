@@ -100,3 +100,4 @@ $string['stayavailable_help'] = 'Items  will stay available at the session end. 
 $string['stayavailable_text'] = 'Stay available after session finish, set no end date';
 $string['timing'] = 'Timing';
 $string['to'] = 'To';
+$string['activitytype'] = 'Activity type';
