@@ -91,11 +91,13 @@ $eventdata = [
 ];
 
 if ($fromform = $mform->get_data()) {
-    if (isset($fromform->submitbutton) || isset($fromform->submitbutton2)) {
+
+    if (isset($fromform->submitbutton) || isset($fromform->submitbutton2) || isset($fromform->refresh)) {
         $driprelease->schedulestart = $fromform->schedulestart;
         $driprelease->stayavailable = $fromform->stayavailable;
         $driprelease->hideunselected = $fromform->hideunselected;
         $driprelease->coursegroup = $fromform->coursegroup;
+        $driprelease->moduletype = $fromform->moduletype;
 
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         if (count($selections) == 0) {
