@@ -25,13 +25,12 @@
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/lib.php');
 
-use \tool_driprelease\event\driprelease_updated;
-use \tool_driprelease\event\driprelease_viewed;
+use tool_driprelease\event\driprelease_updated;
+use tool_driprelease\event\driprelease_viewed;
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
-
-$modtype = optional_param('modtype', 'quiz', PARAM_RAW);
+$modtype = optional_param('modtype', '', PARAM_RAW);
 
 if (!$courseid) {
     redirect(new moodle_url('/'));
@@ -98,9 +97,9 @@ if ($fromform = $mform->get_data()) {
         $driprelease->hideunselected = $fromform->hideunselected;
         $driprelease->coursegroup = $fromform->coursegroup;
         $driprelease->moduletype = $fromform->moduletype;
-
+        $driprelease->refresh = true;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
-        if (count($selections) == 0) {
+        if (count($selections) == 0 && !isset($fromform->refresh)) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
@@ -132,6 +131,7 @@ $templatefile = $modtype;
 if (!in_array($modtype, $templates)) {
     $templatefile = 'genericmod';
 }
+xdebug_break();
 $out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile,
      ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
 

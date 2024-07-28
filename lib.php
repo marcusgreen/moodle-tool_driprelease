@@ -302,8 +302,11 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
     }
     $modulenameplural = get_string('modulenameplural', $driprelease->modtype);
     $msg = get_string('updated', 'moodle', $updatecount). " ".$modulenameplural;
-    \core\notification::add($msg, \core\notification::SUCCESS);
-    rebuild_course_cache($COURSE->id);
+    $refresh = optional_param('refresh', 0, PARAM_RAW);
+    if (! $refresh) {
+        \core\notification::add($msg, \core\notification::SUCCESS);
+        rebuild_course_cache($COURSE->id);
+    }
 }
 
 
