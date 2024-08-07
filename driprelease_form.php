@@ -45,7 +45,7 @@ class tool_driprelease_form extends moodleform {
         global $CFG, $DB, $PAGE, $COURSE;
 
         require_once($CFG->dirroot . '/course/externallib.php');
-        $modtype = optional_param('modtype', '', PARAM_RAW);
+        $modtype = optional_param('modtype', 'quiz', PARAM_RAW);
         $courseid = optional_param('courseid', '', PARAM_INT);
 
         $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init', ['courseid' => $courseid]);

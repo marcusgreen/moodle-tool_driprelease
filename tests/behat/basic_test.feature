@@ -100,12 +100,13 @@ Feature: Drip release modifies activity availability
               And I set the field "schedulestart[day]" to "1"
               And I set the field "schedulestart[month]" to "January"
               And I set the field "schedulestart[year]" to "2017"
+
               And I click on "select" "checkbox" in the "Quiz1" "table_row"
+
     # Typically you would press Save and display, but this is to confirm this button works
               And I press "Save and return to course"
               And I navigate to "Drip release" in current page administration
     # Check the table and modules availability has been updated
-
              Then I should see "1 Jan 2017" in the "Quiz1" "table_row"
     # Confirm only the row with a selected checkbox have been updated
              Then I should not see "1 Jan 2017" in the "Quiz2" "table_row"

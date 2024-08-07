@@ -30,7 +30,7 @@ use tool_driprelease\event\driprelease_viewed;
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
-$modtype = optional_param('modtype', '', PARAM_RAW);
+$modtype = optional_param('modtype', 'quiz', PARAM_RAW);
 
 if (!$courseid) {
     redirect(new moodle_url('/'));
@@ -52,7 +52,7 @@ $PAGE->set_context($context);
 
 $PAGE->set_url('/admin/tool/driprelease/view.php', ['courseid' => $courseid]);
 
-if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+if (!$course = $DB->get_record('course', ['id' => $courseid])) {
     throw new moodle_exception('invalid course id');
 }
 
@@ -68,7 +68,7 @@ if (!$driprelease) {
         'activitiespersession' => $config->activitiespersession ?? 0,
         'schedulestart' => time(),
         'coursegroup' => '',
-        'sessionlength' => $config->sessionlength ?? 0
+        'sessionlength' => $config->sessionlength ?? 0,
     ];
 } else {
     $driprelease->modtype = $modtype;
@@ -96,7 +96,8 @@ if ($fromform = $mform->get_data()) {
         $driprelease->stayavailable = $fromform->stayavailable;
         $driprelease->hideunselected = $fromform->hideunselected;
         $driprelease->coursegroup = $fromform->coursegroup;
-        $driprelease->moduletype = $fromform->moduletype;
+        xdebug_break();
+        $driprelease->moduletype = $fromform->modtype;
         $driprelease->refresh = true;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
         if (count($selections) == 0 && !isset($fromform->refresh)) {
@@ -117,7 +118,6 @@ if ($fromform = $mform->get_data()) {
 
 $tabledata = get_table_data($driprelease);
 
-
 $templates = [];
 $iterator = new DirectoryIterator(__DIR__ . '/templates');
 foreach ($iterator as $item) {
@@ -131,7 +131,7 @@ $templatefile = $modtype;
 if (!in_array($modtype, $templates)) {
     $templatefile = 'genericmod';
 }
-xdebug_break();
+
 $out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile,
      ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
 
