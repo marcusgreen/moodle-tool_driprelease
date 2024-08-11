@@ -152,6 +152,19 @@ final class driprelease_test extends \advanced_testcase {
         $modulecount = count($modules);
         $this->assertEquals(count($this->modules), $modulecount);
     }
+
+    /**
+     * Confirm modules/quizzes in a course are returned
+     * as expected
+     *
+     *
+     * @covers ::get_course_module_types()
+     */
+    public function test_get_course_module_types(): void {
+        $this->resetAfterTest();
+        $moduletypes = get_course_module_types($this->course1->id);
+        $this->assertArrayHasKey('quiz', $moduletypes);
+    }
     /**
      * Get the data that will be output by the mustache table
      *
@@ -245,4 +258,57 @@ final class driprelease_test extends \advanced_testcase {
         $cmids = get_modules($this->driprelease);
         $this->assertCount(3, $cmids);
     }
+
+    /**
+     * Test get_availability with date restrictions
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_dates(): void {
+        $this->resetAfterTest();
+
+        $this->setTimezone('GMT');
+        $json = json_encode([
+            'c' => [
+                ['type' => 'date', 'd' => '>=', 't' => 1609459200], // 1 Jan 2021 00:00
+                ['type' => 'date', 'd' => '<', 't' => 1612137600],  // 1 Feb 2021 00:00
+            ],
+        ]);
+        $expectedoutput = [
+            'from' => 'Fri 1 Jan 2021 00:00',
+            'to' => 'Mon 1 Feb 2021 00:00',
+        ];
+
+        $availability = get_availability($json);
+
+        // Assert the output.
+        $this->assertSame($expectedoutput, $availability);
+    }
+
+    /**
+     * Test get_availability with no date restrictions
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_no_dates(): void {
+        $this->resetAfterTest();
+
+        $json = '{}';
+        $availability = get_availability($json);
+
+        // Assert the output
+        $this->assertSame([], $availability);
+    }
+
+    /**
+     * Test get_availability with null json
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_null(): void {
+        $this->resetAfterTest();
+
+        $availability = get_availability(null);
+
+        // Assert the output
+        $this->assertSame([], $availability);
+    }
+
 }

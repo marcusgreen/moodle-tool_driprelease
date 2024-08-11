@@ -317,8 +317,10 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
  * @return array
  */
 function get_availability(?string $json): array {
+    global $USER;
     $availability = [];
-    if ($json > "") {
+
+    if ($json > "" && $json <> '{}') {
         $decoded = json_decode($json);
         foreach ($decoded->c as $restriction) {
             if (property_exists($restriction, 'type') && $restriction->type == "date") {
