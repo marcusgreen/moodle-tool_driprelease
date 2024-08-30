@@ -291,10 +291,10 @@ final class driprelease_test extends \advanced_testcase {
     public function test_get_availability_with_no_dates(): void {
         $this->resetAfterTest();
 
-        $json = '{}';
+        $json = "";
         $availability = get_availability($json);
 
-        // Assert the output
+        // Assert the output.
         $this->assertSame([], $availability);
     }
 
@@ -307,7 +307,7 @@ final class driprelease_test extends \advanced_testcase {
 
         $availability = get_availability(null);
 
-        // Assert the output
+        // Assert the output.
         $this->assertSame([], $availability);
     }
 

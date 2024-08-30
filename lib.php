@@ -311,32 +311,44 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
 
 
 /**
- * Get the date related availability for an activity
+ * Take an optional JSON string as input and return an array containing
+ * the date-related availability information.
+ * *
+ * If the input JSON is empty, the function returns an empty array.
  *
- * @param string $json
- * @return array
+ * Loop through each restriction in the JSON object and checks
+ * if the restriction type is "date". If true, it extracts the operator and
+ * timestamp from the restriction object.
+ *
+ * Based on the operator, the function updates the availability array with
+ * the formatted date string using userdate() function.
+ *
+ * The function returns the availability array containing the 'from' and 'to'
+ * dates in a human-readable format.
+ * @param string $json The optional JSON input string containing the availability restrictions
+ * @return array The availability array containing the 'from' and 'to' dates
  */
 function get_availability(?string $json): array {
-    global $USER;
     $availability = [];
-
-    if ($json > "" && $json <> '{}') {
-        $decoded = json_decode($json);
-        foreach ($decoded->c as $restriction) {
-            if (property_exists($restriction, 'type') && $restriction->type == "date") {
-                $operator = $restriction->d;
-                if ($operator == ">=") {
-                    $datetime = $restriction->t;
-                    $availability['from'] = userdate($datetime, '%a %d %b %Y %H:%M');
-                } else {
-                    $datetime = $restriction->t;
-                    $availability['to'] = userdate($datetime, '%a %d %b %Y %H:%M');
-                }
+    if (empty($json)) {
+        return $availability;
+    }
+    $decoded = json_decode($json);
+    foreach ($decoded->c as $restriction) {
+        if (property_exists($restriction, 'type') && $restriction->type == "date") {
+            $operator = $restriction->d;
+            if ($operator == ">=") {
+                $datetime = $restriction->t;
+                $availability['from'] = userdate($datetime, '%a %d %b %Y %H:%M');
+            } else {
+                $datetime = $restriction->t;
+                $availability['to'] = userdate($datetime, '%a %d %b %Y %H:%M');
             }
         }
     }
     return $availability;
 }
+
 
   /**
    * Calculate the dripping out of availability and format the dates for the session labels
