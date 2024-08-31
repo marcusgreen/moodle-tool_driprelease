@@ -15,15 +15,16 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- * @copyright 2022 Marcus Green
+ * @copyright 2024 Marcus Green
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-export const init = (courseid) => {
+export const init = () => {
 
     var selectAllCheckBox = document.getElementById('id_selectall');
 
-    selectAllCheckBox.addEventListener('click', e => { // Hidden.
+    selectAllCheckBox.addEventListener('click', e => {
+        // Hidden.
         document.querySelectorAll("[id^='id_activity']").forEach(checkbox => {
             checkbox.checked = e.target.checked ? true : false;
         });
@@ -47,7 +48,7 @@ export const init = (courseid) => {
         var id = e.currentTarget.id.split('_')[2];
         var checkboxid = 'id_activitygroup_activity_' + id;
         var checkbox = document.getElementById(checkboxid);
-        checkbox.checked = ! checkbox.checked;
+        checkbox.checked = !checkbox.checked;
         configureSelectAll();
     }
 
@@ -64,21 +65,5 @@ export const init = (courseid) => {
         });
         selectAllCheckBox.checked = allchecked;
     }
-    window.onbeforeunload = function () { // Your Code here
-        return null; // return null to avoid pop up
-    };
-
-    window.onbeforeunload = null;
-
-    var modtypeSelect = document.getElementById('id_modtype');
-    modtypeSelect.addEventListener("change", function (event) {
-        event.preventDefault();
-        var modType = this.value;
-        const params = {
-            modtype: modType,
-            courseid: courseid
-        };
-        window.onbeforeunload = null;
-        // window.location.assign(Url.relativeUrl("admin/tool/driprelease/view.php", params, false));
-    });
 };
+
