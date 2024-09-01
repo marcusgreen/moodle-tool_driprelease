@@ -25,15 +25,15 @@ Feature: Drip release modifies activity availability
           | Test questions   | shortanswer | Short answer 3 | Where is the capital city of Germany?   | Berlin   | 100%  |
 
     And the following "activities" exist:
-          | activity | name  | course | intro            | completionusegrade |
-          | quiz     | Quiz1 | C1     | quiz1description | 1                  |
-          | quiz     | Quiz2 | C1     | 1                |                    |
-          | quiz     | Quiz3 | C1     | 1                |                    |
-          | quiz     | Quiz4 | C1     | 1                |                    |
-          | quiz     | Quiz5 | C1     | 1                |                    |
-          | quiz     | Quiz6 | C1     | 1                |                    |
-          | quiz     | Quiz7 | C1     | 1                |                    |
-          | quiz     | Quiz8 | C1     | 1                |                    |
+          | activity | name  | course | intro            | 
+          | quiz     | Quiz1 | C1     | quiz1description | 
+          | quiz     | Quiz2 | C1     | 1                |
+          | quiz     | Quiz3 | C1     | 1                |
+          | quiz     | Quiz4 | C1     | 1                |
+          | quiz     | Quiz5 | C1     | 1                |
+          | quiz     | Quiz6 | C1     | 1                |
+          | quiz     | Quiz7 | C1     | 1                |
+          | quiz     | Quiz8 | C1     | 1                |
 
     And quiz "Quiz1" contains the following questions:
           | question       | page |
@@ -59,8 +59,12 @@ Feature: Drip release modifies activity availability
 
     # Need to set a grade for the first quiz so the second can be set to
     # depend on it in restrictions
-    And I set the field "Add requirements" to "1"
+#     And I set the field "Add requirements" to "1"
+#     And I set the field "Receive a grade" to "1"
 
+    And I set the following fields to these values:
+          | Add requirements | 1 |
+          | Receive a grade  | 1 |
     And I press "Save and return to course"
 
     When I open "Quiz2" actions menu
