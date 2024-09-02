@@ -96,7 +96,6 @@ if ($fromform = $mform->get_data()) {
         $driprelease->stayavailable = $fromform->stayavailable;
         $driprelease->hideunselected = $fromform->hideunselected;
         $driprelease->coursegroup = $fromform->coursegroup;
-        xdebug_break();
         $driprelease->moduletype = $fromform->modtype;
         $driprelease->refresh = true;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
