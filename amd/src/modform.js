@@ -15,7 +15,7 @@
  * along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- * @copyright 2024 Marcus Green
+ * @copyright 2022 Marcus Green
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -24,7 +24,7 @@ export const init = () => {
     var selectAllCheckBox = document.getElementById('id_selectall');
 
     selectAllCheckBox.addEventListener('click', e => {
-        // Hidden.
+         // Hidden.
         document.querySelectorAll("[id^='id_activity']").forEach(checkbox => {
             checkbox.checked = e.target.checked ? true : false;
         });
@@ -35,7 +35,7 @@ export const init = () => {
     });
 
     var cmids = document.querySelectorAll('input[id^="id_cmid_"]');
-    cmids.forEach(function (e) {
+    cmids.forEach(function(e) {
         e.addEventListener('click', cmidClick);
     });
     configureSelectAll();
@@ -45,11 +45,11 @@ export const init = () => {
      * @param {*} e
      */
     function cmidClick(e) {
-        var id = e.currentTarget.id.split('_')[2];
-        var checkboxid = 'id_activitygroup_activity_' + id;
-        var checkbox = document.getElementById(checkboxid);
-        checkbox.checked = !checkbox.checked;
-        configureSelectAll();
+            var id = e.currentTarget.id.split('_')[2];
+            var checkboxid = 'id_activitygroup_activity_' +id;
+            var checkbox = document.getElementById(checkboxid);
+            checkbox.checked = !checkbox.checked;
+            configureSelectAll();
     }
 
     /**
