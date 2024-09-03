@@ -53,19 +53,14 @@ Feature: Drip release modifies activity availability
     And I click on "Quiz1" "link" in the "Quiz1" "table_row"
     And I should see "Preview quiz"
     And I am on "Course 1" course homepage with editing mode on
+
     When I open "Quiz1" actions menu
     And I click on "Edit settings" "link" in the "Quiz1" activity
     And I expand all fieldsets
-
-    # Need to set a grade for the first quiz so the second can be set to
-    # depend on it in restrictions
-#     And I set the field "Add requirements" to "1"
-#     And I set the field "Receive a grade" to "1"
-
-    And I set the following fields to these values:
-          | Add requirements | 1 |
-          | Receive a grade  | 1 |
+    And I set the field "Add requirements" to "1"
+    And I set the field "completionusegrade" to "1"
     And I press "Save and return to course"
+
 
     When I open "Quiz2" actions menu
     And I click on "Edit settings" "link" in the "Quiz2" activity
