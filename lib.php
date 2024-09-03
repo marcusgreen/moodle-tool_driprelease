@@ -21,7 +21,7 @@
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use \core_availability\tree;
+use core_availability\tree;
 
 /**
  * A core callback to make ther plugin appear in the "more" dropdown of courses
@@ -33,7 +33,7 @@ use \core_availability\tree;
  */
 function tool_driprelease_extend_navigation_course(navigation_node $navigation, stdClass $course, context_course $context) {
     if (has_capability('moodle/course:update', $context)) {
-        $url = new moodle_url('/admin/tool/driprelease/view.php', array('courseid' => $course->id));
+        $url = new moodle_url('/admin/tool/driprelease/view.php', ['courseid' => $course->id]);
         $name = get_string('pluginname', 'tool_driprelease');
         $navigation->add($name, $url, navigation_node::TYPE_SETTING, null, null, new pix_icon('icon', 'Driprelease',
                      'tool_driprelease'));
@@ -47,9 +47,8 @@ function tool_driprelease_extend_navigation_course(navigation_node $navigation, 
  * @param int $courseid
  * @return array
  */
-function driprelease_update(\stdClass $fromform , int $courseid) : array {
+function driprelease_update(\stdClass $fromform , int $courseid): array {
     global $DB;
-
     $dripreleaseid = $DB->get_field('tool_driprelease', 'id', ['courseid' => $courseid]);
 
     if ($dripreleaseid) {
@@ -65,7 +64,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
             'resetunselected' => $fromform->resetunselected,
-            'displaydisabled' => $fromform->displaydisabled
+            'displaydisabled' => $fromform->displaydisabled,
         ];
         $DB->update_record('tool_driprelease', $driprelease);
         manage_selections($fromform, $dripreleaseid);
@@ -81,7 +80,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
             'stayavailable' => $fromform->stayavailable,
             'hideunselected' => $fromform->hideunselected,
             'resetunselected' => $fromform->resetunselected,
-            'displaydisabled' => $fromform->displaydisabled
+            'displaydisabled' => $fromform->displaydisabled,
         ];
         $dripreleaseid = $DB->insert_record('tool_driprelease', $driprelease);
         $driprelease->id = $dripreleaseid;
@@ -98,7 +97,7 @@ function driprelease_update(\stdClass $fromform , int $courseid) : array {
  * @param int $dripreleaseid
  * @return int $insertedcount // For future testing purposes.
  */
-function manage_selections(\stdClass $fromform, int $dripreleaseid) : int {
+function manage_selections(\stdClass $fromform, int $dripreleaseid): int {
     global $DB;
     if (!isset($fromform->activitygroup)) {
         return 0;
@@ -121,12 +120,27 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) : int {
     foreach ($toinsert as $moduleid) {
         $dataobject = (object) [
             'driprelease' => $dripreleaseid,
-            'coursemoduleid' => $moduleid
+            'coursemoduleid' => $moduleid,
         ];
         $DB->insert_record('tool_driprelease_cmids', $dataobject);
         $insertedcount ++;
     }
     return $insertedcount;
+}
+/**
+ * Get names of modules on course for showing
+ * in the select element on the form.
+ *
+ * @param int $courseid
+ * @return array
+ */
+function get_course_module_types(int $courseid): array {
+    $modinfo = get_fast_modinfo($courseid);
+    $modtypes = [];
+    foreach ($modinfo->cms as $cm) {
+        $modtypes[$cm->modname] = get_string('pluginname', $cm->modname);
+    }
+    return $modtypes;
 }
 
 /**
@@ -135,14 +149,13 @@ function manage_selections(\stdClass $fromform, int $dripreleaseid) : int {
  * @param \stdClass $driprelease
  * @return array
  */
-function get_modules(\stdClass $driprelease) : array {
+function get_modules(\stdClass $driprelease): array {
     global $DB;
     $course = $DB->get_record('course', ['id' => $driprelease->courseid]);
-
     $modinfo = get_fast_modinfo($course);
-    if (!isset($modinfo->instances[$driprelease->modtype])) {
+    if (!$modinfo->instances || (!array_key_exists($driprelease->modtype, $modinfo->instances))) {
         return [];
-    }
+    };
     $modules = [];
     foreach ($modinfo->instances[$driprelease->modtype] as $cm) {
         $modules[$cm->id] = $cm;
@@ -155,7 +168,7 @@ function get_modules(\stdClass $driprelease) : array {
  * @param array $row
  * @return array
  */
-function add_header(array $row) :array {
+function add_header(array $row): array {
     $header = $row;
     $header['isheader'] = true;
     $header['cm'] = (object) ['id' => -1];
@@ -168,7 +181,7 @@ function add_header(array $row) :array {
  * @param \stdClass $driprelease
  * @return array
  */
-function get_table_data(\stdClass $driprelease) : array {
+function get_table_data(\stdClass $driprelease): array {
     global $DB;
     $modules = get_modules($driprelease);
     $contentcounter = 0;
@@ -202,7 +215,7 @@ function get_table_data(\stdClass $driprelease) : array {
  * @param cm_info $cm
  * @return array
  */
-function row_fill(array $row, cm_info $cm) : array {
+function row_fill(array $row, cm_info $cm): array {
     global $DB;
 
     $details = $DB->get_record($row['modtype'], ['id' => $cm->instance]);
@@ -245,7 +258,7 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                         'course_modules',
                         'availability',
                         '',
-                        array('id' => $module['cm']->id)
+                        ['id' => $module['cm']->id]
                     );
                 }
                 continue;
@@ -282,43 +295,60 @@ function update_availability(array $tabledata, \stdClass $driprelease) {
                 'course_modules',
                 'availability',
                 json_encode($restrictionsclass),
-                array('id' => $module['cm']->id)
+                ['id' => $module['cm']->id]
             );
             $updatecount++;
         }
     }
     $modulenameplural = get_string('modulenameplural', $driprelease->modtype);
     $msg = get_string('updated', 'moodle', $updatecount). " ".$modulenameplural;
-    \core\notification::add($msg, \core\notification::SUCCESS);
-    rebuild_course_cache($COURSE->id);
+    $refresh = optional_param('refresh', 0, PARAM_RAW);
+    if (! $refresh) {
+        \core\notification::add($msg, \core\notification::SUCCESS);
+        rebuild_course_cache($COURSE->id);
+    }
 }
 
 
 /**
- * Get the date related availability for an activity
+ * Take an optional JSON string as input and return an array containing
+ * the date-related availability information.
+ * *
+ * If the input JSON is empty, the function returns an empty array.
  *
- * @param string $json
- * @return array
+ * Loop through each restriction in the JSON object and checks
+ * if the restriction type is "date". If true, it extracts the operator and
+ * timestamp from the restriction object.
+ *
+ * Based on the operator, the function updates the availability array with
+ * the formatted date string using userdate() function.
+ *
+ * The function returns the availability array containing the 'from' and 'to'
+ * dates in a human-readable format.
+ * @param string $json The optional JSON input string containing the availability restrictions
+ * @return array The availability array containing the 'from' and 'to' dates
  */
-function get_availability(?string $json) : array {
+function get_availability(?string $json): array {
     $availability = [];
-    if ($json > "") {
-        $decoded = json_decode($json);
-        foreach ($decoded->c as $restriction) {
-            if (property_exists($restriction, 'type') && $restriction->type == "date") {
-                $operator = $restriction->d;
-                if ($operator == ">=") {
-                    $datetime = $restriction->t;
-                    $availability['from'] = userdate($datetime, '%a %d %b %Y %H:%M');
-                } else {
-                    $datetime = $restriction->t;
-                    $availability['to'] = userdate($datetime, '%a %d %b %Y %H:%M');
-                }
+    if (empty($json)) {
+        return $availability;
+    }
+    $decoded = json_decode($json);
+    foreach ($decoded->c as $restriction) {
+        if (property_exists($restriction, 'type') && $restriction->type == "date") {
+            $operator = $restriction->d;
+            if ($operator == ">=") {
+                $datetime = $restriction->t;
+                $availability['from'] = userdate($datetime, '%a %d %b %Y %H:%M');
+            } else {
+                $datetime = $restriction->t;
+                $availability['to'] = userdate($datetime, '%a %d %b %Y %H:%M');
             }
         }
     }
     return $availability;
 }
+
 
   /**
    * Calculate the dripping out of availability and format the dates for the session labels
@@ -327,7 +357,7 @@ function get_availability(?string $json) : array {
    * @param int $sessioncounter
    * @return array
    */
-function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter) : array {
+function driprelease_calculate_availability(\stdClass $driprelease, int $sessioncounter): array {
     $row = [];
     $daysrepeat = $sessioncounter * $driprelease->sessionlength;
     $daysoffset = " + $daysrepeat day";
@@ -354,7 +384,7 @@ function driprelease_calculate_availability(\stdClass $driprelease, int $session
  * @param \stdClass $data
  * @return array
  */
-function get_sequence(\stdClass $data) : array {
+function get_sequence(\stdClass $data): array {
     global $DB;
     $sql = 'SELECT sequence FROM {course_sections} WHERE course = :course AND sequence > "" ORDER BY section';
     $coursesequence = $DB->get_records_sql($sql, ['course' => $data->course]);

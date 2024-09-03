@@ -35,7 +35,7 @@ require_once($CFG->libdir . '/formslib.php');
  */
 class tool_driprelease_form extends moodleform {
     /** @var array options to be used with date_time_selector fields in the quiz. */
-    public static $datefieldoptions = array('optional' => false);
+    public static $datefieldoptions = ['optional' => false];
     /** @var array modules on the course */
     public $modules;
     /**
@@ -43,15 +43,16 @@ class tool_driprelease_form extends moodleform {
      */
     public function definition() {
         global $CFG, $DB, $PAGE, $COURSE;
+
         require_once($CFG->dirroot . '/course/externallib.php');
+        $modtype = optional_param('modtype', 'quiz', PARAM_RAW);
+        $courseid = optional_param('courseid', '', PARAM_INT);
+
+        $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init', ['courseid' => $courseid]);
 
         $mform = $this->_form;
-
         $driprelease = (object) $this->_customdata['driprelease'];
 
-        $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init');
-
-        $courseid = optional_param('courseid', '', PARAM_INT);
         $course = $DB->get_record('course', ['id' => $courseid]);
 
         $mform->addElement('hidden', 'courseid', $courseid);
@@ -60,17 +61,19 @@ class tool_driprelease_form extends moodleform {
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
-        $mform->addElement('html', "<div id=hidemodtypes style='display:none;'>");
-        $modtypes = ['quiz' => 'Quiz', 'assign' => 'Assign'];
-        $mform->addElement('select', 'modtype', 'Module type', $modtypes);
-        $mform->setDefault('modtype', 'quiz');
-        $mform->addElement('html', "</div>");
 
-        $mform->setType('modtype', PARAM_TEXT);
-        $this->modules = $this->get_modules($course, $driprelease->modtype);
+        $moduletypes = get_course_module_types($courseid);
+        $group[] = $mform->createElement('select', 'modtype', get_string('activitytype', 'tool_driprelease'), $moduletypes);
+        $group[] = $mform->createElement('submit', 'refresh', get_string('refresh', 'tool_driprelease'));
+        $string = get_string('activity', 'tool_driprelease');
+        $mform->addgroup($group, '', $string, [''], true);
+
+        $mform->setDefault('modtype', $modtype ?? 'quiz');
+
+        $this->modules = $this->get_modules($course, $modtype);
         if ($this->modules) {
             foreach ($this->modules as $module) {
-                    $activitycbx[] = $mform->createElement('advcheckbox', 'activity_'.$module->id, null, null, ['hidden=true']);
+                    $activitycbx[] = $mform->createElement('advcheckbox', 'activity_'.$module->id, null, null, ['hidden' => true]);
             }
             $mform->addGroup( $activitycbx, 'activitygroup');
         }
@@ -198,7 +201,7 @@ class tool_driprelease_form extends moodleform {
      * @param string $modtype
      * @return array
      */
-    public function get_modules(\stdClass $course, string $modtype) : array {
+    public function get_modules(\stdClass $course, string $modtype): array {
 
         $modinfo = get_fast_modinfo($course);
         if (!isset($modinfo->instances[$modtype])) {
@@ -259,7 +262,7 @@ class tool_driprelease_form extends moodleform {
         $mform = $this->_form;
 
         // Elements in a row need a group.
-        $buttonarray = array();
+        $buttonarray = [];
         $buttonarray[] = &$mform->createElement('submit', 'submitbutton2', $submit2label);
 
         if ($submitlabel !== false) {
@@ -270,7 +273,7 @@ class tool_driprelease_form extends moodleform {
             $buttonarray[] = &$mform->createElement('cancel');
         }
 
-        $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
         $mform->setType('buttonar', PARAM_RAW);
     }
 }

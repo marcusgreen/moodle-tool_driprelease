@@ -25,12 +25,11 @@
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/lib.php');
 
-use \tool_driprelease\event\driprelease_updated;
-use \tool_driprelease\event\driprelease_viewed;
+use tool_driprelease\event\driprelease_updated;
+use tool_driprelease\event\driprelease_viewed;
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
-
 $modtype = optional_param('modtype', 'quiz', PARAM_RAW);
 
 if (!$courseid) {
@@ -53,7 +52,7 @@ $PAGE->set_context($context);
 
 $PAGE->set_url('/admin/tool/driprelease/view.php', ['courseid' => $courseid]);
 
-if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+if (!$course = $DB->get_record('course', ['id' => $courseid])) {
     throw new moodle_exception('invalid course id');
 }
 
@@ -69,7 +68,7 @@ if (!$driprelease) {
         'activitiespersession' => $config->activitiespersession ?? 0,
         'schedulestart' => time(),
         'coursegroup' => '',
-        'sessionlength' => $config->sessionlength ?? 0
+        'sessionlength' => $config->sessionlength ?? 0,
     ];
 } else {
     $driprelease->modtype = $modtype;
@@ -86,19 +85,21 @@ $eventdata = [
     'context' => context_course::instance($courseid),
     'other' => [
         'username' => $USER->username,
-        'course' => $course->shortname
-    ]
+        'course' => $course->shortname,
+    ],
 ];
 
 if ($fromform = $mform->get_data()) {
-    if (isset($fromform->submitbutton) || isset($fromform->submitbutton2)) {
+
+    if (isset($fromform->submitbutton) || isset($fromform->submitbutton2) || isset($fromform->refresh)) {
         $driprelease->schedulestart = $fromform->schedulestart;
         $driprelease->stayavailable = $fromform->stayavailable;
         $driprelease->hideunselected = $fromform->hideunselected;
         $driprelease->coursegroup = $fromform->coursegroup;
-
+        $driprelease->moduletype = $fromform->modtype;
+        $driprelease->refresh = true;
         list($selections, $driprelease) = driprelease_update($fromform, $courseid);
-        if (count($selections) == 0) {
+        if (count($selections) == 0 && !isset($fromform->refresh)) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
@@ -116,7 +117,22 @@ if ($fromform = $mform->get_data()) {
 
 $tabledata = get_table_data($driprelease);
 
-$out = $OUTPUT->render_from_template('tool_driprelease/'.$modtype, ['tabledata' => $tabledata]);
+$templates = [];
+$iterator = new DirectoryIterator(__DIR__ . '/templates');
+foreach ($iterator as $item) {
+    if ($item->isDot()) {
+        continue;
+    }
+    $templates[] = strtok($item->getFilename(), ".");
+}
+
+$templatefile = $modtype;
+if (!in_array($modtype, $templates)) {
+    $templatefile = 'genericmod';
+}
+
+$out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile,
+     ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
 
 $mform->set_data($driprelease);
 

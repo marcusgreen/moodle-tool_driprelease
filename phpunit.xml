@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="../../../lib/phpunit/bootstrap.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" backupGlobals="false" backupStaticAttributes="false" cacheResult="false" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" beStrictAboutTestsThatDoNotTestAnything="false" beStrictAboutOutputDuringTests="true">
+  <coverage>
+    <include>
+      <directory suffix=".php">.</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">tests</directory>
+      <directory suffix=".php">lang</directory>
+      <directory suffix=".php">db</directory>
+      <file>settings.php</file>
+      <file>version.php</file>
+      <file>index.php</file>
+    </exclude>
+    <report>
+      <html outputDirectory="tests/coverage-html"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="tool_driprelease">
+      <directory suffix=".php">tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

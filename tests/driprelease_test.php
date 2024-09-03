@@ -33,12 +33,14 @@ require_once($CFG->dirroot . '/admin/tool/driprelease/lib.php');
 global $CFG;
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 /**
- * Unit tests for admin_tool_driprelease
+ * Unit test for the driprelease functionality.
  *
+ * @package    tool_driprelease
+ * @category   test
  * @copyright  2023 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class driprelease_test extends \advanced_testcase {
+final class driprelease_test extends \advanced_testcase {
 
     /**
      * Test course
@@ -68,7 +70,7 @@ class driprelease_test extends \advanced_testcase {
      */
     public $fromform;
 
-    public function setUp() : void {
+    public function setUp(): void {
         global $CFG, $DB;
          // Create course with availability enabled.
         $CFG->enableavailability = true;
@@ -118,7 +120,7 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::update_availability()
      */
-    public function test_update_availability() {
+    public function test_update_availability(): void {
         $this->resetAfterTest();
         global $DB;
         $coursemodules = $DB->get_records('course_modules');
@@ -142,20 +144,33 @@ class driprelease_test extends \advanced_testcase {
      * as expected
      *
      *
-     * @covers ::get_course_modules()
+     * @covers ::get_modules()
      */
-    public function test_get_course_modules() {
+    public function test_get_course_modules(): void {
         $this->resetAfterTest();
         $modules = get_modules($this->driprelease);
         $modulecount = count($modules);
         $this->assertEquals(count($this->modules), $modulecount);
+    }
+
+    /**
+     * Confirm modules/quizzes in a course are returned
+     * as expected
+     *
+     *
+     * @covers ::get_course_module_types()
+     */
+    public function test_get_course_module_types(): void {
+        $this->resetAfterTest();
+        $moduletypes = get_course_module_types($this->course1->id);
+        $this->assertArrayHasKey('quiz', $moduletypes);
     }
     /**
      * Get the data that will be output by the mustache table
      *
      * @covers ::get_table_data()
      */
-    public function test_get_table_data() {
+    public function test_get_table_data(): void {
         $this->resetAfterTest();
         $tabledata = get_table_data($this->driprelease);
         // First row is header row.
@@ -183,7 +198,7 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::driprelease_update()
      */
-    public function test_update_instance() {
+    public function test_update_instance(): void {
         $this->resetAfterTest();
         $activitygroup = [];
 
@@ -195,6 +210,7 @@ class driprelease_test extends \advanced_testcase {
         $this->assertCount(3, $selections);
         $this->assertEquals($driprelease->id, $this->driprelease->id);
     }
+
     /**
      * Check manage_selections adds modules
      * when when they have been selected in
@@ -202,7 +218,7 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::manage_selections()
      */
-    public function test_manage_selections() {
+    public function test_manage_selections(): void {
         $this->resetAfterTest();
         global $DB;
         $cmids = $DB->get_records('tool_driprelease_cmids');
@@ -223,7 +239,7 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::add_header()
      */
-    public function test_add_header() {
+    public function test_add_header(): void {
         $this->resetAfterTest();
         $header = add_header([]);
         $this->assertEquals(true, $header['isheader']);
@@ -237,9 +253,62 @@ class driprelease_test extends \advanced_testcase {
      *
      * @covers ::get_modules()
      */
-    public function test_get_modules() {
+    public function test_get_modules(): void {
         $this->resetAfterTest();
         $cmids = get_modules($this->driprelease);
         $this->assertCount(3, $cmids);
     }
+
+    /**
+     * Test get_availability with date restrictions
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_dates(): void {
+        $this->resetAfterTest();
+
+        $this->setTimezone('GMT');
+        $json = json_encode([
+            'c' => [
+                ['type' => 'date', 'd' => '>=', 't' => 1609459200], // 1 Jan 2021 00:00
+                ['type' => 'date', 'd' => '<', 't' => 1612137600],  // 1 Feb 2021 00:00
+            ],
+        ]);
+        $expectedoutput = [
+            'from' => 'Fri 1 Jan 2021 00:00',
+            'to' => 'Mon 1 Feb 2021 00:00',
+        ];
+
+        $availability = get_availability($json);
+
+        // Assert the output.
+        $this->assertSame($expectedoutput, $availability);
+    }
+
+    /**
+     * Test get_availability with no date restrictions
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_no_dates(): void {
+        $this->resetAfterTest();
+
+        $json = "";
+        $availability = get_availability($json);
+
+        // Assert the output.
+        $this->assertSame([], $availability);
+    }
+
+    /**
+     * Test get_availability with null json
+     * @covers ::get_availability()
+     */
+    public function test_get_availability_with_null(): void {
+        $this->resetAfterTest();
+
+        $availability = get_availability(null);
+
+        // Assert the output.
+        $this->assertSame([], $availability);
+    }
+
 }
