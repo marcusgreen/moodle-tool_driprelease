@@ -3,15 +3,14 @@
 [![Moodle Plugin CI](https://github.com/marcusgreen/moodle-tool_driprelease/actions/workflows/moodle-ci.yml/badge.svg)](https://github.com/marcusgreen/moodle-tool_driprelease/actions/workflows/moodle-ci.yml) [![GitHub Release](https://img.shields.io/github/release/marcusgreen/moodle-tool_driprelease.svg)](https://github.com/marcusgreen//moodle-qtype_gapfill/releases)
 [![Moodle Support](https://img.shields.io/badge/Moodle-%3E%3D%204.0-blue)](https://github.com/marcusgreen/moodle-tool_driprelease/actions)
 
-Make quiz activities available on a timed release basis. For example An example of its use is to make a new quiz become available each  day and then replaced by a new quiz on the following day. Another scenario is to make 5 quizzes available for a week, and the following week another 5 quizzes are made available.
+Make Course activities available on a timed release basis. For example An example of its use is to make a new quiz become available each  day and then replaced by a new quiz on the following day. Another scenario is to make a new Text and media area (label) automatically appear with the current weeks topic.
 
 
-
-![alt text](./docs/images/driprelease.png)
+![Animation of updating availability using dripreleaswe](./docs/images/driprelease_demo.gif)
 
 This project was funded by Sojo University Japan and initiated by Rob Hirschel and Chris Tempest.
 
-For Moodle development and consultancy, contact Moodle partner Catalyst EU 
+For Moodle development and consultancy, contact Moodle partner Catalyst EU
 
 https://www.catalyst-eu.net/contact-us/brighton
 
