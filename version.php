@@ -18,14 +18,14 @@
  * Plugin version and other meta-data are defined here.
  *
  * @package     tool_driprelease
- * @copyright   2023 Marcus Green
+ * @copyright   2024 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_driprelease';
-$plugin->release = '1.0.1';
-$plugin->version = 2024063000;
+$plugin->release = '1.1.0';
+$plugin->version = 2024092100;
 $plugin->requires = 2020110900;
 $plugin->maturity = MATURITY_BETA;
