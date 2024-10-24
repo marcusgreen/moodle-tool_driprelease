@@ -27,6 +27,8 @@ require_once(__DIR__.'/lib.php');
 
 use tool_driprelease\event\driprelease_updated;
 use tool_driprelease\event\driprelease_viewed;
+use tool_driprelease\driprelease;
+$driprelease = new driprelease();
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
@@ -59,26 +61,30 @@ if (!$course = $DB->get_record('course', ['id' => $courseid])) {
 $PAGE->set_course($course);
 global $DB, $USER;
 
-$driprelease = $DB->get_record('tool_driprelease' , ['courseid' => $courseid], '*', IGNORE_MISSING);
-if (!$driprelease) {
+$dripdata = $DB->get_record('tool_driprelease' , ['courseid' => $courseid], '*', IGNORE_MISSING);
+if (!$dripdata) {
     $config = get_config('tool_driprelease');
-    $driprelease = (object)[
+    $dripdata = (object)[
         'courseid' => $courseid,
         'modtype' => $modtype,
         'activitiespersession' => $config->activitiespersession ?? 0,
         'schedulestart' => time(),
         'coursegroup' => '',
         'sessionlength' => $config->sessionlength ?? 0,
+        'mydtype' => '',
     ];
 } else {
-    $driprelease->modtype = $modtype;
+    $dripdata->modtype = $modtype;
 }
 
-if (!$driprelease) {
-    $driprelease = (object) ['courseid' => $courseid];
+if (!$dripdata) {
+    $dripdata = (object) [
+        'courseid' => $courseid,
+        'modtype' => '',
+    ];
 }
 
-$mform = new tool_driprelease_form(null, ['driprelease' => $driprelease]);
+$mform = new tool_driprelease_form(null, ['driprelease' => $dripdata]);
 
 navigation_node::override_active_url(new moodle_url('admin/tool/driprelease/view.php', ['courseid' => $courseid]));
 $eventdata = [
@@ -92,20 +98,20 @@ $eventdata = [
 if ($fromform = $mform->get_data()) {
 
     if (isset($fromform->submitbutton) || isset($fromform->submitbutton2) || isset($fromform->refresh)) {
-        $driprelease->schedulestart = $fromform->schedulestart;
-        $driprelease->stayavailable = $fromform->stayavailable;
-        $driprelease->hideunselected = $fromform->hideunselected;
-        $driprelease->coursegroup = $fromform->coursegroup;
-        $driprelease->moduletype = $fromform->modtype;
-        $driprelease->refresh = true;
-        list($selections, $driprelease) = driprelease_update($fromform, $courseid);
+        $dripdata->schedulestart = $fromform->schedulestart;
+        $dripdata->stayavailable = $fromform->stayavailable;
+        $dripdata->hideunselected = $fromform->hideunselected;
+        $dripdata->coursegroup = $fromform->coursegroup;
+        $dripdata->moduletype = $fromform->modtype;
+        $dripdata->refresh = true;
+        list($selections, $dripdata) = $driprelease->update($fromform, $courseid);
         if (count($selections) == 0 && !isset($fromform->refresh)) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
         }
 
-        $tabledata = get_table_data($driprelease);
-        update_availability($tabledata, $driprelease);
+        $tabledata = $driprelease->get_table_data($dripdata);
+        $driprelease->update_availability($tabledata, $dripdata);
 
         $event = driprelease_updated::create($eventdata);
         $event->trigger();
@@ -115,7 +121,7 @@ if ($fromform = $mform->get_data()) {
     }
 }
 
-$tabledata = get_table_data($driprelease);
+$tabledata = $driprelease->get_table_data($dripdata);
 
 $templates = [];
 $iterator = new DirectoryIterator(__DIR__ . '/templates');
@@ -134,7 +140,7 @@ if (!in_array($modtype, $templates)) {
 $out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile,
      ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
 
-$mform->set_data($driprelease);
+$mform->set_data($dripdata);
 
 $event = driprelease_viewed::create($eventdata);
 $event->trigger();

@@ -23,7 +23,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-
+use tool_driprelease\driprelease;
 require_once($CFG->libdir . '/formslib.php');
 
 /**
@@ -61,8 +61,7 @@ class tool_driprelease_form extends moodleform {
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
-
-        $moduletypes = get_course_module_types($courseid);
+        $moduletypes = driprelease::get_course_module_types($courseid);
         $group[] = $mform->createElement('select', 'modtype', get_string('activitytype', 'tool_driprelease'), $moduletypes);
         $group[] = $mform->createElement('submit', 'refresh', get_string('refresh', 'tool_driprelease'));
         $string = get_string('activity', 'tool_driprelease');
