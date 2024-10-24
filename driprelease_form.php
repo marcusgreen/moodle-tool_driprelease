@@ -190,7 +190,7 @@ class tool_driprelease_form extends moodleform {
         if ($errors) {
             return $errors;
         } else {
-            return true;
+            return [];
         }
     }
 
