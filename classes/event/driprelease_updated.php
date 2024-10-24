@@ -28,7 +28,7 @@ namespace tool_driprelease\event;
  * The ool_driprelease  viewed event class.
  *
  * @package     tool_driprelease
- * @copyright   2022 Marcus Green
+ * @copyright   2024 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class driprelease_updated extends \core\event\base {
@@ -46,7 +46,8 @@ class driprelease_updated extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return 'User '.$this->data['other']['username']. ' updated driprelease for course '.$this->data['other']['course'];
+        return get_string('user').' '.$this->data['other']['username']. get_string('updatedforcourse', 'tool_driprelease').
+            $this->data['other']['course'];
     }
 
 }

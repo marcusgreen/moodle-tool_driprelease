@@ -75,3 +75,4 @@ $string['stayavailable'] = 'Stay available after session finish';
 $string['stayavailable_help'] = 'Items  will stay available at the session end. The equivalent of not setting the Until field in the restrictions setting';
 $string['stayavailable_text'] = 'Stay available after session finish, set no end date';
 $string['to'] = 'To';
+$string['updatedforcourse'] = 'updated driprelease for course';

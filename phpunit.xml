@@ -8,6 +8,8 @@
       <directory suffix=".php">tests</directory>
       <directory suffix=".php">lang</directory>
       <directory suffix=".php">db</directory>
+      <directory suffix=".php">classes/event</directory>
+      <directory suffix=".php">classes/privacy</directory>
       <file>settings.php</file>
       <file>version.php</file>
       <file>index.php</file>

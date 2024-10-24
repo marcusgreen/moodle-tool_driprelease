@@ -32,15 +32,25 @@ require_once($CFG->dirroot . '/admin/tool/driprelease/lib.php');
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
-/**
+
+/***
  * Unit test for the driprelease functionality.
  *
  * @package    tool_driprelease
  * @category   test
- * @copyright  2023 Marcus Green
+ * @copyright  2024 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+use tool_driprelease;
+/**
+ * Test the code mainly in the tool_driprelease class
+ */
 final class driprelease_test extends \advanced_testcase {
+    /**
+     * Instance containing most of the code
+     * @var driprelease
+     */
+    public $driprelease;
 
     /**
      * Test course
@@ -57,11 +67,10 @@ final class driprelease_test extends \advanced_testcase {
     public $modules;
 
     /**
-     * instance of driprelease
-     *
+     * data to be processed
      * @var \stdClass
      */
-    public $driprelease;
+    public $dripdata;
 
     /**
      * data from form submission
@@ -72,6 +81,7 @@ final class driprelease_test extends \advanced_testcase {
 
     public function setUp(): void {
         global $CFG, $DB;
+        $this->driprelease = new driprelease();
          // Create course with availability enabled.
         $CFG->enableavailability = true;
         $generator = $this->getDataGenerator();
@@ -80,17 +90,17 @@ final class driprelease_test extends \advanced_testcase {
 
         $quizgenerator = $generator->get_plugin_generator('mod_quiz');
 
-        $this->modules[] = $quizgenerator->create_instance(array('course' => $course->id,
+        $this->modules[] = $quizgenerator->create_instance(['course' => $course->id,
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
-                'attempts' => 10));
+                'attempts' => 10]);
 
-        $this->modules[] = $quizgenerator->create_instance(array('course' => $course->id,
+        $this->modules[] = $quizgenerator->create_instance(['course' => $course->id,
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
-                'attempts' => 10));
+                'attempts' => 10]);
 
-        $this->modules[] = $quizgenerator->create_instance(array('course' => $course->id,
+        $this->modules[] = $quizgenerator->create_instance(['course' => $course->id,
                 'grademethod' => QUIZ_GRADEHIGHEST, 'grade' => 100.0, 'sumgrades' => 10.0,
-                'attempts' => 10));
+                'attempts' => 10]);
 
         foreach ($this->modules as $module) {
             $activitygroup['activity_'.$module->cmid] = 1;
@@ -110,15 +120,15 @@ final class driprelease_test extends \advanced_testcase {
             'displaydisabled' => 0,
         ];
 
-        list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
+        list($selections, $this->dripdata) = $this->driprelease->update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
-        $this->driprelease = $DB->get_record('tool_driprelease', ['id' => $driprelease->id]);
+        $this->dripdata = $DB->get_record('tool_driprelease', ['id' => $this->dripdata->id]);
     }
     /**
      * Confirm course_modules table has been
      * written to
      *
-     * @covers ::update_availability()
+     * @covers \tool_driprelease\driprelease::update_availability()
      */
     public function test_update_availability(): void {
         $this->resetAfterTest();
@@ -126,13 +136,14 @@ final class driprelease_test extends \advanced_testcase {
         $coursemodules = $DB->get_records('course_modules');
         $cm = reset($coursemodules);
         $this->assertEquals($cm->availability, '');
-        $tabledata = get_table_data($this->driprelease);
+        $tabledata = $this->driprelease->get_table_data($this->dripdata);
         // Element 0 is a header row.
         $tabledata[1]['selected'] = 1;
-        update_availability($tabledata, $this->driprelease);
+
+        $this->driprelease->update_availability($tabledata, $this->dripdata);
         $coursemodules = $DB->get_records('course_modules');
         $cm = reset($coursemodules);
-        $startdate = $this->driprelease->schedulestart;
+        $startdate = $this->dripdata->schedulestart;
 
         // Sessions set to one day in setUp.
         $this->assertStringContainsString($startdate, $cm->availability);
@@ -140,15 +151,41 @@ final class driprelease_test extends \advanced_testcase {
     }
 
     /**
+     * If reset unselected is checked then the availability data
+     * for the module will be blanked out
+     *
+     * @covers \tool_driprelease\driprelease::process_unselected
+     *
+     * @return void
+     */
+    public function test_process_unselected(): void {
+        $this->resetAfterTest();
+        global $DB;
+        $modules = $this->driprelease->get_table_data($this->dripdata);
+        $module = $modules[1]; // A non header.
+        $DB->set_field(
+            'course_modules',
+            'availability',
+            'XXX',
+            ['id' => $module['cm']->id]
+        );
+        $before = $DB->get_record('course_modules', ['id' => $module['cm']->id]);
+        $this->assertEquals($before->availability, 'XXX');
+        $this->dripdata->resetunselected = 1;
+        $this->driprelease->process_unselected($module, $this->dripdata);
+        $after = $DB->get_record('course_modules', ['id' => $module['cm']->id]);
+        $this->assertEquals($after->availability, '');
+
+    }
+
+    /**
      * Confirm modules/quizzes in a course are returned
      * as expected
-     *
-     *
-     * @covers ::get_modules()
+     * @covers \tool_driprelease\driprelease::get_modules
      */
     public function test_get_course_modules(): void {
         $this->resetAfterTest();
-        $modules = get_modules($this->driprelease);
+        $modules = $this->driprelease->get_modules($this->dripdata);
         $modulecount = count($modules);
         $this->assertEquals(count($this->modules), $modulecount);
     }
@@ -158,21 +195,21 @@ final class driprelease_test extends \advanced_testcase {
      * as expected
      *
      *
-     * @covers ::get_course_module_types()
+     * @covers \tool_driprelease\driprelease::get_course_module_types()
      */
     public function test_get_course_module_types(): void {
         $this->resetAfterTest();
-        $moduletypes = get_course_module_types($this->course1->id);
+        $moduletypes = $this->driprelease->get_course_module_types($this->course1->id);
         $this->assertArrayHasKey('quiz', $moduletypes);
     }
     /**
      * Get the data that will be output by the mustache table
      *
-     * @covers ::get_table_data()
+     * @covers \tool_driprelease\driprelease::get_table_data()
      */
     public function test_get_table_data(): void {
         $this->resetAfterTest();
-        $tabledata = get_table_data($this->driprelease);
+        $tabledata = $this->driprelease->get_table_data($this->dripdata);
         // First row is header row.
         $header = $tabledata[0];
         $this->assertEquals($header['isheader'], true);
@@ -196,7 +233,7 @@ final class driprelease_test extends \advanced_testcase {
      * Check that update doesn't fall over and
      * selections are set as expected
      *
-     * @covers ::driprelease_update()
+     * @covers \tool_driprelease\driprelease::update()
      */
     public function test_update_instance(): void {
         $this->resetAfterTest();
@@ -206,9 +243,9 @@ final class driprelease_test extends \advanced_testcase {
             $activitygroup['activity_'.$module->id] = 1;
         }
         $this->fromform->activitygroup = $activitygroup;
-        list($selections, $driprelease) = driprelease_update($this->fromform , $this->course1->id);
+        list($selections, $this->dripdata) = $this->driprelease->update($this->fromform , $this->course1->id);
         $this->assertCount(3, $selections);
-        $this->assertEquals($driprelease->id, $this->driprelease->id);
+        $this->assertEquals($this->dripdata->id, $this->dripdata->id);
     }
 
     /**
@@ -216,7 +253,7 @@ final class driprelease_test extends \advanced_testcase {
      * when when they have been selected in
      * the form.
      *
-     * @covers ::manage_selections()
+     * @covers \tool_driprelease\driprelease::manage_selections()
      */
     public function test_manage_selections(): void {
         $this->resetAfterTest();
@@ -225,7 +262,7 @@ final class driprelease_test extends \advanced_testcase {
         // Three records created by setUp.
         $this->assertCount(3, $cmids);
         $this->fromform->activitygroup['activity_101'] = 1;
-        manage_selections($this->fromform, $this->driprelease->id);
+        $this->driprelease->manage_selections($this->fromform, $this->dripdata->id);
         $cmids = $DB->get_records('tool_driprelease_cmids');
         // Four after manage_selections was called.
         $this->assertCount(4, $cmids);
@@ -237,11 +274,11 @@ final class driprelease_test extends \advanced_testcase {
      * and end of a activity session,
      * e.g. a weeks worth of quizzes.
      *
-     * @covers ::add_header()
+     * @covers \tool_driprelease\driprelease::add_header()
      */
     public function test_add_header(): void {
         $this->resetAfterTest();
-        $header = add_header([]);
+        $header = $this->driprelease->add_header([]);
         $this->assertEquals(true, $header['isheader']);
         $this->assertEquals('Session', $header['name']);
         $this->assertEquals(-1, $header['cm']->id);
@@ -251,17 +288,17 @@ final class driprelease_test extends \advanced_testcase {
      * Check get_modules returns items
      * configured in setUp function
      *
-     * @covers ::get_modules()
+     * @covers \tool_driprelease\driprelease::get_modules()
      */
     public function test_get_modules(): void {
         $this->resetAfterTest();
-        $cmids = get_modules($this->driprelease);
+        $cmids = $this->driprelease->get_modules($this->dripdata);
         $this->assertCount(3, $cmids);
     }
 
     /**
      * Test get_availability with date restrictions
-     * @covers ::get_availability()
+     * @covers \tool_driprelease\driprelease::get_availability()
      */
     public function test_get_availability_with_dates(): void {
         $this->resetAfterTest();
@@ -278,7 +315,7 @@ final class driprelease_test extends \advanced_testcase {
             'to' => 'Mon 1 Feb 2021 00:00',
         ];
 
-        $availability = get_availability($json);
+        $availability = $this->driprelease->get_availability($json);
 
         // Assert the output.
         $this->assertSame($expectedoutput, $availability);
@@ -286,13 +323,13 @@ final class driprelease_test extends \advanced_testcase {
 
     /**
      * Test get_availability with no date restrictions
-     * @covers ::get_availability()
+     * @covers \tool_driprelease\driprelease::get_availability()
      */
     public function test_get_availability_with_no_dates(): void {
         $this->resetAfterTest();
 
         $json = "";
-        $availability = get_availability($json);
+        $availability = $this->driprelease->get_availability($json);
 
         // Assert the output.
         $this->assertSame([], $availability);
@@ -300,12 +337,12 @@ final class driprelease_test extends \advanced_testcase {
 
     /**
      * Test get_availability with null json
-     * @covers ::get_availability()
+     * @covers \tool_driprelease\driprelease::get_availability()
      */
     public function test_get_availability_with_null(): void {
         $this->resetAfterTest();
 
-        $availability = get_availability(null);
+        $availability = $this->driprelease->get_availability(null);
 
         // Assert the output.
         $this->assertSame([], $availability);
