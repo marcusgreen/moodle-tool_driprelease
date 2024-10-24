@@ -39,7 +39,7 @@ if ($hassiteconfig) {
                 'tool_driprelease/activitiespersession',
                 get_string('activitiespersession', 'tool_driprelease'),
                 get_string('activitiespersession_text', 'tool_driprelease'),
-                '5',
+                '2',
                 PARAM_ALPHANUMEXT,
                 3
         ));
