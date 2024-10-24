@@ -316,7 +316,10 @@ class driprelease {
      */
     public function get_sequence(\stdClass $data): array {
         global $DB;
-        $sql = 'SELECT sequence FROM {course_sections} WHERE course = :course AND sequence > "" ORDER BY section';
+        $sql = 'SELECT sequence FROM {course_sections}
+                WHERE course = :course
+                AND sequence > ""
+                ORDER BY section';
         $coursesequence = $DB->get_records_sql($sql, ['course' => $data->course]);
         $activitiesordered = [];
         $i = 0;
