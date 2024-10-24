@@ -80,6 +80,7 @@ final class driprelease_test extends \advanced_testcase {
     public $fromform;
 
     public function setUp(): void {
+        parent::setUp();
         global $CFG, $DB;
         $this->driprelease = new driprelease();
          // Create course with availability enabled.
