@@ -160,7 +160,7 @@ class driprelease {
         }
         $modulenameplural = get_string('modulenameplural', $dripdata->modtype);
         $msg = get_string('updated', 'moodle', $updatecount). " ".$modulenameplural;
-        $refresh = optional_param('refresh', 0, PARAM_RAW);
+        $refresh = optional_param('refresh', 0, PARAM_INT);
         if (! $refresh) {
             \core\notification::add($msg, \core\notification::SUCCESS);
             rebuild_course_cache($COURSE->id);

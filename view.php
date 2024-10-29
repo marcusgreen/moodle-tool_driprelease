@@ -32,7 +32,7 @@ $driprelease = new driprelease();
 
 // Course module id.
 $courseid = optional_param('courseid', 0, PARAM_INT);
-$modtype = optional_param('modtype', 'quiz', PARAM_RAW);
+$modtype = optional_param('modtype', 'quiz', PARAM_TEXT);
 
 if (!$courseid) {
     redirect(new moodle_url('/'));

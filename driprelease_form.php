@@ -45,7 +45,7 @@ class tool_driprelease_form extends moodleform {
         global $CFG, $DB, $PAGE, $COURSE;
 
         require_once($CFG->dirroot . '/course/externallib.php');
-        $modtype = optional_param('modtype', 'quiz', PARAM_RAW);
+        $modtype = optional_param('modtype', 'quiz', PARAM_TEXT);
         $courseid = optional_param('courseid', '', PARAM_INT);
 
         $PAGE->requires->js_call_amd('tool_driprelease/modform', 'init', ['courseid' => $courseid]);
@@ -119,7 +119,7 @@ class tool_driprelease_form extends moodleform {
             ['value' => $driprelease->sessionlength, 'size' => 2]);
         $mform->addRule('sessionlength', null, 'required', null, 'client');
 
-        $mform->setType('sessionlength', PARAM_RAW);
+        $mform->setType('sessionlength', PARAM_INT);
         $mform->addHelpButton('sessionlength', 'session', 'tool_driprelease');
 
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
@@ -273,6 +273,5 @@ class tool_driprelease_form extends moodleform {
         }
 
         $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
-        $mform->setType('buttonar', PARAM_RAW);
     }
 }
