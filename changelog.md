@@ -1,3 +1,7 @@
+## Version 1.2.0 of the Moodle driprelease tool Jan 2025
+
+Refactored most lib code into a driprlease class. Added a new unit test and other linting issues.
+
 ## Version 1.1.0 of the Moodle driprelease tool Sept 2024
 
 Added support for any valid course module. This introduces a new
