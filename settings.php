@@ -18,50 +18,48 @@
  * Data to control defaults when creating an instance of dripreleaswe
  *
  * @package    tool_driprelease
- * @copyright  2022Marcus Green
+ * @copyright  2022 Marcus Green
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-        $settings = new admin_settingpage('tool_driprelease_settings', new lang_string('pluginname', 'tool_driprelease'));
+    $settings = new admin_settingpage('tool_driprelease_settings', new lang_string('pluginname', 'tool_driprelease'));
 
-        $settings->add(new admin_setting_configtext(
-                'tool_driprelease/sessionlength',
-                get_string('sessionlength', 'tool_driprelease'),
-                get_string('sessionlength_text', 'tool_driprelease'),
-                '7',
-                PARAM_ALPHANUMEXT,
-                3
-        ));
+    $settings->add(new admin_setting_configtext(
+        'tool_driprelease/sessionlength',
+        get_string('sessionlength', 'tool_driprelease'),
+        get_string('sessionlength_text', 'tool_driprelease'),
+        '7',
+        PARAM_ALPHANUMEXT,
+        3
+    ));
 
-        $settings->add(new admin_setting_configtext(
-                'tool_driprelease/activitiespersession',
-                get_string('activitiespersession', 'tool_driprelease'),
-                get_string('activitiespersession_text', 'tool_driprelease'),
-                '2',
-                PARAM_ALPHANUMEXT,
-                3
-        ));
-        $settings->add(new admin_setting_configcheckbox(
-                'tool_driprelease/stayavailable',
-                get_string('stayavailable', 'tool_driprelease'),
-                get_string('stayavailable_text', 'tool_driprelease'),
-                0,
-                PARAM_ALPHANUMEXT,
-                0
-        ));
+    $settings->add(new admin_setting_configtext(
+        'tool_driprelease/activitiespersession',
+        get_string('activitiespersession', 'tool_driprelease'),
+        get_string('activitiespersession_text', 'tool_driprelease'),
+        '2',
+        PARAM_ALPHANUMEXT,
+        3
+    ));
+    $settings->add(new admin_setting_configcheckbox(
+        'tool_driprelease/stayavailable',
+        get_string('stayavailable', 'tool_driprelease'),
+        get_string('stayavailable_text', 'tool_driprelease'),
+        0,
+        PARAM_ALPHANUMEXT,
+        0
+    ));
 
-        $settings->add(new admin_setting_configcheckbox(
-                'tool_driprelease/hideunselected',
-                get_string('hideunselected', 'tool_driprelease'),
-                get_string('hideunselected_text', 'tool_driprelease'),
-                0,
-                PARAM_ALPHANUMEXT,
-                0
-        ));
+    $settings->add(new admin_setting_configcheckbox(
+        'tool_driprelease/hideunselected',
+        get_string('hideunselected', 'tool_driprelease'),
+        get_string('hideunselected_text', 'tool_driprelease'),
+        0,
+        PARAM_ALPHANUMEXT,
+        0
+    ));
 
-
-        $ADMIN->add('tools', $settings);
-
+    $ADMIN->add('tools', $settings);
 }

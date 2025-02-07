@@ -157,12 +157,12 @@ class tool_driprelease_form extends moodleform {
      *
      * @param array $fromform
      * @param array $tabledata
-     * @return boolean
+     * @return array
      */
-    public function validation($fromform, $tabledata) {
+    public function validation($fromform, $tabledata): array {
+        $errors = [];
         parent::validation($fromform, $tabledata);
         $modulecount = count($this->modules);
-        $errors = [];
         $activitiespersession = $fromform['activitiespersession'];
         $sessionlength = $fromform['sessionlength'];
         $duration = round(($fromform['schedulefinish'] - $fromform['schedulestart']) / DAYSECS);
@@ -186,11 +186,8 @@ class tool_driprelease_form extends moodleform {
             $errors['activitiespersession'] = get_string('activitiespersessionerror', 'tool_driprelease', $a);
         }
 
-        if ($errors) {
-            return $errors;
-        } else {
-            return [];
-        }
+        return $errors;
+
     }
 
     /**

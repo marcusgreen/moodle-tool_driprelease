@@ -21,7 +21,6 @@
  * @copyright   2022 Marcus Green
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-use core_availability\tree;
 use tool_driprelease\lib;
 /**
  * A core callback to make ther plugin appear in the "more" dropdown of courses
