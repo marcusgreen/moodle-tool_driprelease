@@ -259,14 +259,14 @@ class tool_driprelease_form extends moodleform {
 
         // Elements in a row need a group.
         $buttonarray = [];
-        $buttonarray[] = &$mform->createElement('submit', 'submitbutton2', $submit2label);
+        $buttonarray[] = $mform->createElement('submit', 'submitbutton2', $submit2label);
 
         if ($submitlabel !== false) {
-            $buttonarray[] = &$mform->createElement('submit', 'submitbutton', $submitlabel);
+            $buttonarray[] = $mform->createElement('submit', 'submitbutton', $submitlabel);
         }
 
         if ($cancel) {
-            $buttonarray[] = &$mform->createElement('cancel');
+            $buttonarray[] = $mform->createElement('cancel');
         }
 
         $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
