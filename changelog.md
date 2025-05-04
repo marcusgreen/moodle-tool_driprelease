@@ -1,3 +1,8 @@
+## Version 1.3.0 of the Moodle driprelease tool May 2025
+
+Ran automated tests to confirm Moodle 5.0 compatibility
+Filter out question banks from activities as they do not support setting availability
+
 ## Version 1.2.0 of the Moodle driprelease tool Jan 2025
 
 Refactored most lib code into a driprlease class. Added a new unit test and other linting issues.
