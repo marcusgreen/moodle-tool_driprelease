@@ -225,6 +225,10 @@ class driprelease {
         $modinfo = get_fast_modinfo($courseid);
         $modtypes = [];
         foreach ($modinfo->cms as $cm) {
+            // Qbank is not a "real" activity and cannot have availability set.
+            if ($cm->modname == 'qbank') {
+                continue;
+            }
             $modtypes[$cm->modname] = get_string('pluginname', $cm->modname);
         }
         return $modtypes;
@@ -257,7 +261,8 @@ class driprelease {
      *
      * The function returns the availability array containing the 'from' and 'to'
      * dates in a human-readable format.
-     * @param string $json The optional JSON input string containing the availability restrictions
+     *
+     * @param ?string $json The optional JSON input string containing the availability restrictions
      * @return array The availability array containing the 'from' and 'to' dates
      */
     public function get_availability(?string $json): array {

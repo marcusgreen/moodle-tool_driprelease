@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_driprelease';
-$plugin->release = '1.2.0';
-$plugin->version = 2025012802;
+$plugin->release = '1.3.0';
+$plugin->version = 2025050400;
 $plugin->requires = 2022040100;  // Moodle 4.0.
-$plugin->supported = [401, 405];
+$plugin->supported = [401, 500];
 $plugin->maturity = MATURITY_BETA;
