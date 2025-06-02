@@ -6,6 +6,8 @@ Filter out question banks from activities as they do not support setting availab
 ## Version 1.2.0 of the Moodle driprelease tool Jan 2025
 
 Refactored most lib code into a driprlease class. Added a new unit test and other linting issues.
+Thanks to Dan Marsden for reporting this as part of the review for the plugins databsae
+https://github.com/marcusgreen/moodle-tool_driprelease/issues/2
 
 ## Version 1.1.0 of the Moodle driprelease tool Sept 2024
 
