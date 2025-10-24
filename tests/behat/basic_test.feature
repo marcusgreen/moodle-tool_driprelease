@@ -48,6 +48,7 @@ Feature: Drip release modifies activity availability
     And I navigate to "Drip release" in current page administration
     Then I should see "No modules in course"
     And I am on "Course 1" course homepage with editing mode on
+    And I should see "Quiz1"
     And I navigate to "Drip release" in current page administration
     # Can I follow the link to view the settings of the quiz
     And I click on "Quiz1" "link" in the "Quiz1" "table_row"
@@ -55,14 +56,15 @@ Feature: Drip release modifies activity availability
     And I am on "Course 1" course homepage with editing mode on
 
     When I open "Quiz1" actions menu
+    And I wait "1" seconds
     And I click on "Edit settings" "link" in the "Quiz1" activity
     And I expand all fieldsets
     And I set the field "Add requirements" to "1"
     And I set the field "completionusegrade" to "1"
     And I press "Save and return to course"
 
-
     When I open "Quiz2" actions menu
+    And I wait "1" seconds
     And I click on "Edit settings" "link" in the "Quiz2" activity
     And I expand all fieldsets
 
