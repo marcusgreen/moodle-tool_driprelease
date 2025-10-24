@@ -73,8 +73,7 @@ class tool_driprelease_form extends moodleform {
         $this->modules = $this->get_modules($course, $modtype);
         if ($this->modules) {
             foreach ($this->modules as $module) {
-                    $activitycbx[] = $mform->createElement('advcheckbox', 'activity_' .
-                    $module->id, $module->id, null, null, ['hidden' => true]);
+                $activitycbx[] = $mform->createElement('advcheckbox', 'activity_' . $module->id, null, null, ['hidden' => true]);
             }
             $mform->addGroup($activitycbx, 'activitygroup');
         }
