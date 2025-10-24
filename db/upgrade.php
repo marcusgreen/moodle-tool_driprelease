@@ -31,7 +31,6 @@ function xmldb_tool_driprelease_upgrade($oldversion = 0) {
 
     $dbman = $DB->get_manager();
     if ($oldversion < 2023100300) {
-
         // Define field coursegroup to be added to tool_driprelease.
         $table = new xmldb_table('tool_driprelease');
         $field = new xmldb_field('coursegroup', XMLDB_TYPE_CHAR, '50', null, null, null, null, 'sessionlength');

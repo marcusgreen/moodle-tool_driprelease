@@ -31,7 +31,7 @@ class driprelease {
      * @param int $courseid
      * @return array
      */
-    public function update(\stdClass $fromform , int $courseid): array {
+    public function update(\stdClass $fromform, int $courseid): array {
         global $DB;
         $dripreleaseid = $DB->get_field('tool_driprelease', 'id', ['courseid' => $courseid]);
 
@@ -86,8 +86,12 @@ class driprelease {
         $sessioncounter = 0;
         $selections = [];
         if (isset($dripdata->id)) {
-            $selections = $DB->get_records_menu('tool_driprelease_cmids', ['driprelease' => $dripdata->id],
-            null, 'id,coursemoduleid');
+            $selections = $DB->get_records_menu(
+                'tool_driprelease_cmids',
+                ['driprelease' => $dripdata->id],
+                null,
+                'id,coursemoduleid'
+            );
         }
         foreach ($modules as $cm) {
             $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
@@ -150,16 +154,16 @@ class driprelease {
                 $restrictionsclass = tree::get_root_json($restrictions, tree::OP_AND, $showc);
 
                 $DB->set_field(
-                'course_modules',
-                'availability',
-                json_encode($restrictionsclass),
-                ['id' => $module['cm']->id]
+                    'course_modules',
+                    'availability',
+                    json_encode($restrictionsclass),
+                    ['id' => $module['cm']->id]
                 );
                 $updatecount++;
             }
         }
         $modulenameplural = get_string('modulenameplural', $dripdata->modtype);
-        $msg = get_string('updated', 'moodle', $updatecount). " ".$modulenameplural;
+        $msg = get_string('updated', 'moodle', $updatecount) . " " . $modulenameplural;
         $refresh = optional_param('refresh', 0, PARAM_INT);
         if (! $refresh) {
             \core\notification::add($msg, \core\notification::SUCCESS);
@@ -184,10 +188,10 @@ class driprelease {
 
         if ($dripdata->resetunselected) {
             $DB->set_field(
-            'course_modules',
-            'availability',
-            '',
-            ['id' => $module['cm']->id]
+                'course_modules',
+                'availability',
+                '',
+                ['id' => $module['cm']->id]
             );
         }
     }
@@ -303,7 +307,7 @@ class driprelease {
 
         $midnight = strtotime('today midnight', $driprelease->schedulefinish);
         $endminutes = $driprelease->schedulefinish - $midnight;
-        $end = strtotime('today midnight', $end );
+        $end = strtotime('today midnight', $end);
         $end += $endminutes;
 
         $row['sessioncounter'] = $sessioncounter + 1;
@@ -361,7 +365,7 @@ class driprelease {
 
         $todelete = array_diff($selections, $moduleids);
         if ($todelete) {
-            list($insql, $inparams) = $DB->get_in_or_equal($todelete);
+            [$insql, $inparams] = $DB->get_in_or_equal($todelete);
             $DB->delete_records_select("tool_driprelease_cmids", "coursemoduleid $insql", $inparams);
         }
         $toinsert = array_diff($moduleids, $selections);
@@ -372,7 +376,7 @@ class driprelease {
             'coursemoduleid' => $moduleid,
             ];
             $DB->insert_record('tool_driprelease_cmids', $dataobject);
-            $insertedcount ++;
+            $insertedcount++;
         }
         return $insertedcount;
     }
@@ -395,5 +399,4 @@ class driprelease {
         }
         return $modules;
     }
-
 }

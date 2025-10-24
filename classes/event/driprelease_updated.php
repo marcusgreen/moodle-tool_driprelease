@@ -32,7 +32,6 @@ namespace tool_driprelease\event;
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class driprelease_updated extends \core\event\base {
-
     /**
      * Init method.
      */
@@ -46,9 +45,7 @@ class driprelease_updated extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return get_string('user').' '.$this->data['other']['username']. get_string('updatedforcourse', 'tool_driprelease').
+        return get_string('user') . ' ' . $this->data['other']['username'] . get_string('updatedforcourse', 'tool_driprelease') .
             $this->data['other']['course'];
     }
-
 }
-

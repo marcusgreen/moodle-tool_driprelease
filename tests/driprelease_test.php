@@ -104,7 +104,7 @@ final class driprelease_test extends \advanced_testcase {
                 'attempts' => 10]);
 
         foreach ($this->modules as $module) {
-            $activitygroup['activity_'.$module->cmid] = 1;
+            $activitygroup['activity_' . $module->cmid] = 1;
         }
 
         $this->fromform = (object) [
@@ -121,7 +121,7 @@ final class driprelease_test extends \advanced_testcase {
             'displaydisabled' => 0,
         ];
 
-        list($selections, $this->dripdata) = $this->driprelease->update($this->fromform , $this->course1->id);
+        [$selections, $this->dripdata] = $this->driprelease->update($this->fromform, $this->course1->id);
         $this->assertCount(3, $selections);
         $this->dripdata = $DB->get_record('tool_driprelease', ['id' => $this->dripdata->id]);
     }
@@ -148,7 +148,6 @@ final class driprelease_test extends \advanced_testcase {
 
         // Sessions set to one day in setUp.
         $this->assertStringContainsString($startdate, $cm->availability);
-
     }
 
     /**
@@ -176,7 +175,6 @@ final class driprelease_test extends \advanced_testcase {
         $this->driprelease->process_unselected($module, $this->dripdata);
         $after = $DB->get_record('course_modules', ['id' => $module['cm']->id]);
         $this->assertEquals($after->availability, '');
-
     }
 
     /**
@@ -241,10 +239,10 @@ final class driprelease_test extends \advanced_testcase {
         $activitygroup = [];
 
         foreach ($this->modules as $module) {
-            $activitygroup['activity_'.$module->id] = 1;
+            $activitygroup['activity_' . $module->id] = 1;
         }
         $this->fromform->activitygroup = $activitygroup;
-        list($selections, $this->dripdata) = $this->driprelease->update($this->fromform , $this->course1->id);
+        [$selections, $this->dripdata] = $this->driprelease->update($this->fromform, $this->course1->id);
         $this->assertCount(3, $selections);
         $this->assertEquals($this->dripdata->id, $this->dripdata->id);
     }
@@ -308,7 +306,7 @@ final class driprelease_test extends \advanced_testcase {
         $json = json_encode([
             'c' => [
                 ['type' => 'date', 'd' => '>=', 't' => 1609459200], // 1 Jan 2021 00:00
-                ['type' => 'date', 'd' => '<', 't' => 1612137600],  // 1 Feb 2021 00:00
+                ['type' => 'date', 'd' => '<', 't' => 1612137600], // 1 Feb 2021 00:00
             ],
         ]);
         $expectedoutput = [
@@ -348,5 +346,4 @@ final class driprelease_test extends \advanced_testcase {
         // Assert the output.
         $this->assertSame([], $availability);
     }
-
 }

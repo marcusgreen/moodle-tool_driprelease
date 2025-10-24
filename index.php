@@ -22,7 +22,7 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- require(__DIR__.'/../../../config.php');
+ require(__DIR__ . '/../../../config.php');
 
 require_login();
 

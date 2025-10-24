@@ -57,7 +57,8 @@ class tool_driprelease_form extends moodleform {
 
         $mform->addElement('hidden', 'courseid', $courseid);
 
-        $mform->addElement('header', 'driprelease', get_string('dripreleaseforcourse', 'tool_driprelease')." ".$course->shortname);
+        $mform->addElement('header', 'driprelease', get_string('dripreleaseforcourse', 'tool_driprelease') .
+            " " . $course->shortname);
         $mform->setExpanded('driprelease');
 
         $mform->setType('courseid', PARAM_INT);
@@ -72,9 +73,10 @@ class tool_driprelease_form extends moodleform {
         $this->modules = $this->get_modules($course, $modtype);
         if ($this->modules) {
             foreach ($this->modules as $module) {
-                    $activitycbx[] = $mform->createElement('advcheckbox', 'activity_'.$module->id, null, null, ['hidden' => true]);
+                    $activitycbx[] = $mform->createElement('advcheckbox', 'activity_' .
+                    $module->id, $module->id, null, null, ['hidden' => true]);
             }
-            $mform->addGroup( $activitycbx, 'activitygroup');
+            $mform->addGroup($activitycbx, 'activitygroup');
         }
         $driprelease->schedulestart = $driprelease->schedulestart ?? time();
         // Start dates.
@@ -108,15 +110,19 @@ class tool_driprelease_form extends moodleform {
         foreach ($groupinfo as $coursegroup) {
             $coursegroups[$coursegroup->id] = $coursegroup->name;
         }
-        if (count($coursegroups) == 0 ) {
+        if (count($coursegroups) == 0) {
             $coursegroups = ['' => get_string('courshasnogroups', 'tool_driprelease')];
         }
-        $mform->addElement('select', 'coursegroup', get_string('coursegroups', 'tool_driprelease' ), $coursegroups);
+        $mform->addElement('select', 'coursegroup', get_string('coursegroups', 'tool_driprelease'), $coursegroups);
 
         $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
 
-        $mform->addElement('text', 'sessionlength', get_string('sessionlength', 'tool_driprelease'),
-            ['value' => $driprelease->sessionlength, 'size' => 2]);
+        $mform->addElement(
+            'text',
+            'sessionlength',
+            get_string('sessionlength', 'tool_driprelease'),
+            ['value' => $driprelease->sessionlength, 'size' => 2]
+        );
         $mform->addRule('sessionlength', null, 'required', null, 'client');
 
         $mform->setType('sessionlength', PARAM_INT);
@@ -125,8 +131,10 @@ class tool_driprelease_form extends moodleform {
         $mform->addElement('text', 'activitiespersession', get_string('activitiespersession', 'tool_driprelease'), ['size' => '3']);
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
         $mform->setType('activitiespersession', PARAM_INT);
-        $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config('activitiespersession',
-             'tool_driprelease'));
+        $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config(
+            'activitiespersession',
+            'tool_driprelease'
+        ));
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
 
         $mform->addElement('advcheckbox', 'stayavailable', get_string('stayavailable', 'tool_driprelease'));
@@ -187,7 +195,6 @@ class tool_driprelease_form extends moodleform {
         }
 
         return $errors;
-
     }
 
     /**
@@ -227,8 +234,12 @@ class tool_driprelease_form extends moodleform {
         $mform->getElement('coursegroup')->setValue($driprelease->coursegroup);
         $activitygroup = $mform->getElement('activitygroup');
         $checkboxes = $activitygroup->getElements();
-        $dbselections = $DB->get_records_menu('tool_driprelease_cmids',
-                ['driprelease' => $driprelease->id], null, 'id,coursemoduleid');
+        $dbselections = $DB->get_records_menu(
+            'tool_driprelease_cmids',
+            ['driprelease' => $driprelease->id],
+            null,
+            'id,coursemoduleid'
+        );
 
         foreach ($checkboxes as $checkbox) {
             $name = $checkbox->getAttributes()['name'];
@@ -246,7 +257,7 @@ class tool_driprelease_form extends moodleform {
      * @param string $submit2label
      * @return void
      */
-    public function add_action_buttons($cancel=true, $submitlabel=null, $submit2label=null) {
+    public function add_action_buttons($cancel = true, $submitlabel = null, $submit2label = null) {
         if (is_null($submitlabel)) {
             $submitlabel = get_string('savechangesanddisplay');
         }

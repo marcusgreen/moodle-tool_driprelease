@@ -22,8 +22,8 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(__DIR__.'/../../../config.php');
-require_once(__DIR__.'/lib.php');
+require(__DIR__ . '/../../../config.php');
+require_once(__DIR__ . '/lib.php');
 
 use tool_driprelease\event\driprelease_updated;
 use tool_driprelease\event\driprelease_viewed;
@@ -44,7 +44,7 @@ if (!has_capability('moodle/course:update', $context)) {
 }
 $cancel = optional_param('cancel', null, PARAM_TEXT);
 if (isset($cancel)) {
-    redirect (new moodle_url('/course/view.php', ['id' => $courseid]));
+    redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
 }
 require_login($courseid);
 
@@ -61,7 +61,7 @@ if (!$course = $DB->get_record('course', ['id' => $courseid])) {
 $PAGE->set_course($course);
 global $DB, $USER;
 
-$dripdata = $DB->get_record('tool_driprelease' , ['courseid' => $courseid], '*', IGNORE_MISSING);
+$dripdata = $DB->get_record('tool_driprelease', ['courseid' => $courseid], '*', IGNORE_MISSING);
 if (!$dripdata) {
     $config = get_config('tool_driprelease');
     $dripdata = (object)[
@@ -96,7 +96,6 @@ $eventdata = [
 ];
 
 if ($fromform = $mform->get_data()) {
-
     if (isset($fromform->submitbutton) || isset($fromform->submitbutton2) || isset($fromform->refresh)) {
         $dripdata->schedulestart = $fromform->schedulestart;
         $dripdata->stayavailable = $fromform->stayavailable;
@@ -104,7 +103,7 @@ if ($fromform = $mform->get_data()) {
         $dripdata->coursegroup = $fromform->coursegroup;
         $dripdata->moduletype = $fromform->modtype;
         $dripdata->refresh = true;
-        list($selections, $dripdata) = $driprelease->update($fromform, $courseid);
+        [$selections, $dripdata] = $driprelease->update($fromform, $courseid);
         if (count($selections) == 0 && !isset($fromform->refresh)) {
             $msg = get_string('noselections', 'tool_driprelease');
             \core\notification::add($msg, \core\notification::WARNING);
@@ -117,7 +116,7 @@ if ($fromform = $mform->get_data()) {
         $event->trigger();
     }
     if (isset($fromform->submitbutton2)) {
-        redirect (new moodle_url('/course/view.php', ['id' => $courseid]));
+        redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
     }
 }
 
@@ -137,8 +136,10 @@ if (!in_array($modtype, $templates)) {
     $templatefile = 'genericmod';
 }
 
-$out = $OUTPUT->render_from_template('tool_driprelease/'.$templatefile,
-     ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]);
+$out = $OUTPUT->render_from_template(
+    'tool_driprelease/' . $templatefile,
+    ['tabledata' => $tabledata, 'modtype' => get_string("pluginname", $modtype)]
+);
 
 $mform->set_data($dripdata);
 
@@ -149,4 +150,3 @@ echo $OUTPUT->header();
 $mform->display();
 echo $out;
 echo $OUTPUT->footer();
-
