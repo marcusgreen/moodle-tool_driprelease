@@ -25,15 +25,15 @@ Feature: Drip release modifies activity availability
           | Test questions   | shortanswer | Short answer 3 | Where is the capital city of Germany?   | Berlin   | 100%  |
 
     And the following "activities" exist:
-          | activity | name  | course | intro            |
-          | quiz     | Quiz1 | C1     | quiz1description |
-          | quiz     | Quiz2 | C1     | 1                |
-          | quiz     | Quiz3 | C1     | 1                |
-          | quiz     | Quiz4 | C1     | 1                |
-          | quiz     | Quiz5 | C1     | 1                |
-          | quiz     | Quiz6 | C1     | 1                |
-          | quiz     | Quiz7 | C1     | 1                |
-          | quiz     | Quiz8 | C1     | 1                |
+          | activity | name  | course | intro            | idnumber |
+          | quiz     | Quiz1 | C1     | quiz1description | quiz1    |
+          | quiz     | Quiz2 | C1     | 1                | quiz2    |
+          | quiz     | Quiz3 | C1     | 1                |          |
+          | quiz     | Quiz4 | C1     | 1                |          |
+          | quiz     | Quiz5 | C1     | 1                |          |
+          | quiz     | Quiz6 | C1     | 1                |          |
+          | quiz     | Quiz7 | C1     | 1                |          |
+          | quiz     | Quiz8 | C1     | 1                |          |
 
     And quiz "Quiz1" contains the following questions:
           | question       | page |
@@ -55,17 +55,13 @@ Feature: Drip release modifies activity availability
     And I should see "Preview quiz"
     And I am on "Course 1" course homepage with editing mode on
 
-    When I open "Quiz1" actions menu
-    And I wait "1" seconds
-    And I click on "Edit settings" "link" in the "Quiz1" activity
+    When I am on the "quiz1" "activity editing" page
     And I expand all fieldsets
     And I set the field "Add requirements" to "1"
     And I set the field "completionusegrade" to "1"
     And I press "Save and return to course"
 
-    When I open "Quiz2" actions menu
-    And I wait "1" seconds
-    And I click on "Edit settings" "link" in the "Quiz2" activity
+    When I am on the "quiz2" "activity editing" page
     And I expand all fieldsets
 
     And I click on "Add restriction..." "button"

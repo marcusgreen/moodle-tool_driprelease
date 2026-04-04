@@ -29,14 +29,14 @@ Feature: Drip with course groups
         | Test questions   | shortanswer | Short answer 3 | Where is the capital city of Germany?   | Berlin   | 100%  |
 
     And the following "activities" exist:
-        | activity | name  | course | intro                                                                                                                                  |
-        | quiz     | Quiz1 | C1     | Loren sum dolor sit mate, sol um cu quo, est ea accustom investiture. Nahum slum vociferous e viz, ad discern inimical descriptionend. |
-        | quiz     | Quiz2 | C1     |                                                                                                                                        |
-        | quiz     | Quiz3 | C1     |                                                                                                                                        |
-        | quiz     | Quiz4 | C1     |                                                                                                                                        |
-        | quiz     | Quiz5 | C1     |                                                                                                                                        |
-        | quiz     | Quiz6 | C1     |                                                                                                                                        |
-        | quiz     | Quiz7 | C1     |                                                                                                                                        |
+        | activity | name  | course | intro                                                                                                                                  | idnumber |
+        | quiz     | Quiz1 | C1     | Loren sum dolor sit mate, sol um cu quo, est ea accustom investiture. Nahum slum vociferous e viz, ad discern inimical descriptionend. | quiz1    |
+        | quiz     | Quiz2 | C1     |                                                                                                                                        | quiz2    |
+        | quiz     | Quiz3 | C1     |                                                                                                                                        |          |
+        | quiz     | Quiz4 | C1     |                                                                                                                                        |          |
+        | quiz     | Quiz5 | C1     |                                                                                                                                        |          |
+        | quiz     | Quiz6 | C1     |                                                                                                                                        |          |
+        | quiz     | Quiz7 | C1     |                                                                                                                                        |          |
 
     And quiz "Quiz1" contains the following questions:
         | question       | page |
