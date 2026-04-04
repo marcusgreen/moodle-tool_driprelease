@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_driprelease';
-$plugin->release = '1.4.0';
-$plugin->version = 2025102400;
+$plugin->release = '1.4.1';
+$plugin->version = 2026040400;
 $plugin->requires = 2025031400;  // Moodle 5.0.
-$plugin->supported = [500, 501];
-$plugin->maturity = MATURITY_BETA;
+$plugin->supported = [500, 502];
+$plugin->maturity = MATURITY_STABLE;

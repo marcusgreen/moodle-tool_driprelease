@@ -46,7 +46,7 @@ export const init = () => {
      */
     function cmidClick(e) {
             var id = e.currentTarget.id.split('_')[2];
-            var checkboxid = 'id_activitygroup_activity_' +id;
+            var checkboxid = 'id_activitygroup_activity_' + id;
             var checkbox = document.getElementById(checkboxid);
             checkbox.checked = !checkbox.checked;
             configureSelectAll();
