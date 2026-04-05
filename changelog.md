@@ -1,3 +1,10 @@
+## Version 1.4.1 of the Moodle driprelease tool April 2026
+Ran automated tests to confirm Moodle 5.2 compatibility
+Updated flags in version.php
+
+## Version 1.4.0 of the Moodle driprelease tool Oct 2025
+Moodle 5.1 compatibility
+
 ## Version 1.3.0 of the Moodle driprelease tool May 2025
 
 Ran automated tests to confirm Moodle 5.0 compatibility
