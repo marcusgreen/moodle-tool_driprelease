@@ -85,6 +85,8 @@ class driprelease {
         $contentcounter = 0;
         $sessioncounter = 0;
         $selections = [];
+        // Guard against a missing or zero setting, which would cause a modulo by zero.
+        $activitiespersession = max(1, (int) ($dripdata->activitiespersession ?? 0));
         if (isset($dripdata->id)) {
             $selections = $DB->get_records_menu(
                 'tool_driprelease_cmids',
@@ -96,7 +98,7 @@ class driprelease {
         foreach ($modules as $cm) {
             $row['selected'] = in_array($cm->id, $selections) ? 'checked' : "";
 
-            if ($contentcounter % ($dripdata->activitiespersession) == 0) {
+            if ($contentcounter % $activitiespersession == 0) {
                 if ($row['selected'] > "") {
                     $row['calculatedavailability'] = $this->calculate_availability($dripdata, $sessioncounter);
                     $sessioncounter++;

@@ -67,10 +67,10 @@ if (!$dripdata) {
     $dripdata = (object)[
         'courseid' => $courseid,
         'modtype' => $modtype,
-        'activitiespersession' => $config->activitiespersession ?? 0,
+        'activitiespersession' => ($config->activitiespersession ?? 0) ?: 1,
         'schedulestart' => time(),
         'coursegroup' => '',
-        'sessionlength' => $config->sessionlength ?? 0,
+        'sessionlength' => ($config->sessionlength ?? 0) ?: 1,
         'mydtype' => '',
     ];
 } else {

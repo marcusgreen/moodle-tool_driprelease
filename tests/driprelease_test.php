@@ -229,6 +229,20 @@ final class driprelease_test extends \advanced_testcase {
         $this->assertEquals(mktime(0, 0, 0, 1, 2, 2023), $row2['calculatedavailability']['end']);
     }
     /**
+     * A missing or zero activitiespersession must not cause a modulo by zero.
+     *
+     * @covers \tool_driprelease\driprelease::get_table_data()
+     */
+    public function test_get_table_data_zero_activitiespersession(): void {
+        $this->resetAfterTest();
+        $this->dripdata->activitiespersession = 0;
+        $tabledata = $this->driprelease->get_table_data($this->dripdata);
+        $this->assertTrue($tabledata[0]['isheader']);
+        unset($this->dripdata->activitiespersession);
+        $tabledata = $this->driprelease->get_table_data($this->dripdata);
+        $this->assertTrue($tabledata[0]['isheader']);
+    }
+    /**
      * Check that update doesn't fall over and
      * selections are set as expected
      *
