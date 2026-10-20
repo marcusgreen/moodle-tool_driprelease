@@ -33,6 +33,31 @@
       "url": "https://github.com/marcusgreen/moodle-tool_driprelease/archive/refs/heads/main.zip"
     },
     {
+      "step": "setConfigs",
+      "configs": [
+        {
+          "plugin": "tool_driprelease",
+          "name": "sessionlength",
+          "value": "7"
+        },
+        {
+          "plugin": "tool_driprelease",
+          "name": "activitiespersession",
+          "value": "2"
+        },
+        {
+          "plugin": "tool_driprelease",
+          "name": "stayavailable",
+          "value": "0"
+        },
+        {
+          "plugin": "tool_driprelease",
+          "name": "hideunselected",
+          "value": "0"
+        }
+      ]
+    },
+    {
       "step": "createCategory",
       "name": "Test Courses"
     },
