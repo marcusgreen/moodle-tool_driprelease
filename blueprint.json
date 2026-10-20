@@ -1,0 +1,221 @@
+{
+  "$schema": "https://ateeducacion.github.io/moodle-playground/assets/blueprints/blueprint-schema.json",
+  "preferredVersions": {
+    "php": "8.3",
+    "moodle": "5.3"
+  },
+  "landingPage": "/admin/tool/driprelease/view.php?courseid=2",
+  "constants": {
+    "ADMIN_USER": "admin",
+    "ADMIN_PASS": "test",
+    "ADMIN_EMAIL": "admin@example.com"
+  },
+  "steps": [
+    {
+      "step": "installMoodle",
+      "options": {
+        "adminUser": "{{ADMIN_USER}}",
+        "adminPass": "{{ADMIN_PASS}}",
+        "adminEmail": "{{ADMIN_EMAIL}}",
+        "siteName": "Drip Release Demo",
+        "locale": "en",
+        "timezone": "Europe/London"
+      }
+    },
+    {
+      "step": "login",
+      "username": "{{ADMIN_USER}}"
+    },
+    {
+      "step": "installMoodlePlugin",
+      "pluginType": "tool",
+      "pluginName": "driprelease",
+      "url": "https://github.com/marcusgreen/moodle-tool_driprelease/archive/refs/heads/main.zip"
+    },
+    {
+      "step": "createCategory",
+      "name": "Test Courses"
+    },
+    {
+      "step": "createCourse",
+      "fullname": "Drip Release Demo Course",
+      "shortname": "DRIP01",
+      "category": "Test Courses",
+      "format": "topics",
+      "numsections": 6,
+      "summary": "Demo course with one quiz and one page per week, ready to be released on a timed basis with the Drip release tool."
+    },
+    {
+      "step": "createUser",
+      "username": "student",
+      "password": "test",
+      "email": "student@example.com",
+      "firstname": "Demo",
+      "lastname": "Student"
+    },
+    {
+      "step": "enrolUser",
+      "username": "{{ADMIN_USER}}",
+      "course": "DRIP01",
+      "role": "editingteacher"
+    },
+    {
+      "step": "enrolUser",
+      "username": "student",
+      "course": "DRIP01",
+      "role": "student"
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 1,
+      "name": "Week 1 quiz",
+      "intro": "<p>Quiz for week 1.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 1,
+      "name": "Week 1 reading",
+      "intro": "<p>Reading for week 1.</p>",
+      "content": "<h3>Week 1 reading</h3><p>Content for week 1 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 2,
+      "name": "Week 2 quiz",
+      "intro": "<p>Quiz for week 2.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 2,
+      "name": "Week 2 reading",
+      "intro": "<p>Reading for week 2.</p>",
+      "content": "<h3>Week 2 reading</h3><p>Content for week 2 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 3,
+      "name": "Week 3 quiz",
+      "intro": "<p>Quiz for week 3.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 3,
+      "name": "Week 3 reading",
+      "intro": "<p>Reading for week 3.</p>",
+      "content": "<h3>Week 3 reading</h3><p>Content for week 3 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 4,
+      "name": "Week 4 quiz",
+      "intro": "<p>Quiz for week 4.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 4,
+      "name": "Week 4 reading",
+      "intro": "<p>Reading for week 4.</p>",
+      "content": "<h3>Week 4 reading</h3><p>Content for week 4 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 5,
+      "name": "Week 5 quiz",
+      "intro": "<p>Quiz for week 5.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 5,
+      "name": "Week 5 reading",
+      "intro": "<p>Reading for week 5.</p>",
+      "content": "<h3>Week 5 reading</h3><p>Content for week 5 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "addModule",
+      "module": "quiz",
+      "course": "DRIP01",
+      "section": 6,
+      "name": "Week 6 quiz",
+      "intro": "<p>Quiz for week 6.</p>",
+      "preferredbehaviour": "deferredfeedback",
+      "browsersecurity": "-",
+      "password": "",
+      "subnet": "",
+      "grade": 10,
+      "questionsperpage": 1
+    },
+    {
+      "step": "addModule",
+      "module": "page",
+      "course": "DRIP01",
+      "section": 6,
+      "name": "Week 6 reading",
+      "intro": "<p>Reading for week 6.</p>",
+      "content": "<h3>Week 6 reading</h3><p>Content for week 6 of the course.</p>",
+      "contentformat": 1
+    },
+    {
+      "step": "runPhpCode",
+      "code": "if (!defined('CLI_SCRIPT')) { define('CLI_SCRIPT', true); }\nrequire('/www/moodle/config.php');\ntry {\n    global $DB;\n\n    $course = $DB->get_record('course', ['shortname' => 'DRIP01']);\n    if (!$course) {\n        throw new \\RuntimeException(\"Course 'DRIP01' was not found.\");\n    }\n    if ((int) $course->id !== 2) {\n        throw new \\RuntimeException(\"Course 'DRIP01' must have ID 2 for the configured landing page; found {$course->id}.\");\n    }\n\n    // The declarative addModule step inserts the quiz record directly and never\n    // creates the initial quiz_sections row that quiz_add_instance() provides;\n    // quiz_start_new_attempt() requires it to build the attempt layout.\n    foreach ($DB->get_records('quiz', ['course' => $course->id]) as $quiz) {\n        if (!$DB->record_exists('quiz_sections', ['quizid' => $quiz->id])) {\n            $DB->insert_record('quiz_sections', (object) ['quizid' => $quiz->id, 'firstslot' => 1, 'heading' => '', 'shufflequestions' => 0]);\n        }\n    }\n    rebuild_course_cache($course->id, true);\n\n    echo \"Provisioned course 'DRIP01' for the Drip release demo.\\n\";\n} catch (\\Throwable $e) {\n    fwrite(STDERR, 'Drip release demo provisioning failed: ' . $e->getMessage() . \"\\n\");\n}\n"
+    },
+    {
+      "step": "setLandingPage",
+      "path": "/admin/tool/driprelease/view.php?courseid=2"
+    }
+  ]
+}
