@@ -4,6 +4,8 @@ activities per session setting was missing or zero (e.g. when admin setting
 defaults had not been saved). Fixed the form reading the wrong config keys
 for the session length and activities per session defaults.
 
+Added a Moodle Playground demo (blueprint.json and README badge), based on the one in qtype_gapfill.
+
 ## Version 1.4.1 of the Moodle driprelease tool April 2026
 Ran automated tests to confirm Moodle 5.2 compatibility
 Updated flags in version.php
