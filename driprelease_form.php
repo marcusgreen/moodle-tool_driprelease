@@ -114,7 +114,7 @@ class tool_driprelease_form extends moodleform {
         }
         $mform->addElement('select', 'coursegroup', get_string('coursegroups', 'tool_driprelease'), $coursegroups);
 
-        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'tool_driprelease');
+        $driprelease->sessionlength = $driprelease->sessionlength ?? get_config('tool_driprelease', 'sessionlength');
 
         $mform->addElement(
             'text',
@@ -131,8 +131,8 @@ class tool_driprelease_form extends moodleform {
         $mform->addRule('activitiespersession', null, 'required', null, 'client');
         $mform->setType('activitiespersession', PARAM_INT);
         $mform->setDefault('activitiespersession', $driprelease->activitiespersession ?? get_config(
-            'activitiespersession',
-            'tool_driprelease'
+            'tool_driprelease',
+            'activitiespersession'
         ));
         $mform->addHelpButton('activitiespersession', 'activitiespersession', 'tool_driprelease');
 
